@@ -1,5 +1,5 @@
 <?php 
-    require_once "./libs/smarty4.1.1/Smarty.class.php";
+    require_once "./libs/smarty4_1_1/Smarty.class.php";
 
     class config_smarty{
         

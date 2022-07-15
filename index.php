@@ -3,5 +3,5 @@
 
     $control = new  control();
     $control->index();
-
+    echo "sample";
 ?>
