@@ -1,0 +1,16 @@
+libs/bootstrap
+
+libs/jquery
+libs/jquery-validation
+jquery-validation-unobtrusive
+
+libs/smarty4_1_1/plugins
+libs/smarty4_1_1/sysplugins
+libs/smarty4_1_1/Autoloader.php
+libs/smarty4_1_1/bootstrap.php
+libs/smarty4_1_1/debug.tpl
+libs/smarty4_1_1/Smarty.class.php
+
+view/templates_c
+controller/cache
+controller/configs
