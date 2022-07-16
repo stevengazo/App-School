@@ -1,8 +1,8 @@
-<?
+<?php
     /**
      * Dependencias
      */
-    require_once './connections/conexion.php';
+    require_once "./connections/conexion.php";
 
 
     // Modelo de clase para las notas

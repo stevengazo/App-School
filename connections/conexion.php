@@ -1,4 +1,4 @@
-<?
+<?php
     // clase para la conexión a la DB 
     class conexion{
         /* Atributos de la clase */
@@ -28,21 +28,20 @@
         /* 
             Instancia de la clase para uso de singleton
         */
-        private static $instance = null;
+     /*  public static $instance = null;
         /*
             Funcion estatica para implementacion Singleton
-        */
+        
         public static function getInstance(){
-            if( self::$instance == null){
+            if(self::$instance == null){
                 self::$instance == new conexion();
             }
             return self::$instance;
         }
-
+        */
         /**
          * Funcion para conectar con la DB
          */
-
          function conectar(){
             $this->conn = mysqli_connect($this->host,$this->usuario,$this->contrasena,$this->dbName);
             if(!$this->conn){
@@ -61,5 +60,4 @@
             mysqli_close($this->conn);
           }
     }
-
 ?>
