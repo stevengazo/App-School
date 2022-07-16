@@ -48,7 +48,7 @@
                 echo "Error, no se conecto a la DB"  +  $this->host + $this->dbName;            
                 exit;
             }else{
-                echo "conectado a la DB";
+                //echo "conectado a la DB";
                 return $this->conn;
             }            
          }

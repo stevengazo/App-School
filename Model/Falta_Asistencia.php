@@ -69,6 +69,28 @@ class Falta_Asistencia
      */
     function obtenerFaltaAsistencia($id)
     {
+        try{
+            $this->conexionDb = new conexion();
+            $this->objConexion = $this->conexionDb->conectar();
+            $sqlQuery = "SELECT id, alumno_id,asignatura_id, fecha, justificada FROM falta_asistencia where id = $id";
+            $sqlResults = $this->objConexion->query($sqlQuery);
+            $this->conexionDb->desconectar();
+
+            $arrayResult = array();
+            while($fila = $sqlResults->fetch_assoc()){
+                $arrayTmp= array();
+                $arrayTmp['id'] = $fila['id'];
+                $arrayTmp['alumno_id'] = $fila['alumno_id'];
+                $arrayTmp['asignatura_id'] = $fila['asignatura_id'];
+                $arrayTmp['fecha'] = $fila['fecha'];
+                $arrayTmp['justificada'] = $fila['justificada'];
+                $arrayResult[]= $arrayTmp;
+            }
+            return $arrayResult;
+        }catch(Exception $error){
+            echo "Error in obtenerListaFaltaAsistencia. Error" + $error->getMessage();
+            return null;
+        }
     }
 
     /**

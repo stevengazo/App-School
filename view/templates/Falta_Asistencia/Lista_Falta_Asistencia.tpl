@@ -42,6 +42,9 @@
                 <th>
                     Motivo
                 </th>
+                <th>
+                Accion
+                </th>
             </tr>
         </thead>
         <tbody>    
@@ -50,7 +53,7 @@
             <tr>                        
                 <!--id-->
                 <td>
-                {$ListaFaltasAsistencia[$counter].id}
+                    {$ListaFaltasAsistencia[$counter].id}
                 </td>
                 <!--id Estudiante-->
                 <td>
@@ -66,7 +69,13 @@
                 </td>
                 <!--Motivo-->
                 <td>
-                {$ListaFaltasAsistencia[$counter].alumno_id}
+                {$ListaFaltasAsistencia[$counter].justificada}
+                </td>
+                <!--Botton ver-->
+                <td>
+                <button type="button" class="btn btn-primary">
+                    <a class="text-light" href="index.php?action=verInfoFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver Detalles</a>
+                </button>
                 </td>
             </tr>
             {assign var='counter' value=$counter+1}
