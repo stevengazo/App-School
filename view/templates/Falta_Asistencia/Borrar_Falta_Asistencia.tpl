@@ -74,7 +74,12 @@
            </tr>          
     </tbody>
     </table>
+    <div>
+        <button class="btn btn-outline-danger">Eliminar Archivo</button>
+        <button class="btn btn-outline-info" ><a href="index.php?action=ListaFaltaAsistencia">Volver Atras</a></button>
     </div>
+    </div>
+
 </body>
 
 </html>

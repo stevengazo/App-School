@@ -83,14 +83,14 @@
                 <td>
                     <button type="button" class="btn btn-success">
                         <a class="text-light"
-                            href="index.php?action=verInfoFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
+                            href="index.php?action=EditarFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
                             Editar</a>
                     </button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger">
                         <a class="text-light"
-                            href="index.php?action=verInfoFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
+                            href="index.php?action=BorrarFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
                             Eliminar</a>
                     </button>
                 </td>
