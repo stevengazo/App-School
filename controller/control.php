@@ -61,6 +61,9 @@
                 case 'verInfoFaltas':
                     $id= $_REQUEST['idFalta'];
                         $this->getInfoFaltaAsistencia($id);
+                        break;  
+                case 'InsertarAusencia':
+                        $this->insertaFaltaAsistencia();
                         break;                                                                    
                 default:                
                     $this->index();
@@ -83,6 +86,12 @@
             $results = $this->FaltaAsistencia->obtenerFaltaAsistencia($id);
             $this->Smarty->setAssign('ObjetoFaltaAsistencia', $results[0]);
             $this->Smarty->setDisplay("Falta_Asistencia/Ver_Falta_Asistencia.tpl");
+        }
+
+        function insertaFaltaAsistencia(){
+            $SiguienteId =intval(  $this->FaltaAsistencia->getLastId()) +1;
+            $this->Smarty->setAssign('idObjeto', $SiguienteId);
+            $this->Smarty->setDisplay("Falta_Asistencia/Insertar_Falta_Asistencia.tpl");
         }
     }
 ?>

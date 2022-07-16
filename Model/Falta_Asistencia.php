@@ -54,10 +54,9 @@ class Falta_Asistencia
                 $arrayTmp['justificada'] = $fila['justificada'];
                 $arrayResult[]= $arrayTmp;
             }
-
             return $arrayResult;
         }catch(Exception $error){
-            echo "Error in obtenerListaFaltaAsistencia. Error" + $error->getMessage();
+            echo "Error in obtenerListaFaltaAsistencia. Error".$error->getMessage();
             return null;
         }
     }
@@ -88,9 +87,28 @@ class Falta_Asistencia
             }
             return $arrayResult;
         }catch(Exception $error){
-            echo "Error in obtenerListaFaltaAsistencia. Error" + $error->getMessage();
+            echo "Error in obtenerListaFaltaAsistencia. Error".$error->getMessage();
             return null;
         }
+    }
+
+    function getLastId(){
+        try{
+            $this->conexionDb = new conexion();
+            $this->objConexion = $this->conexionDb->conectar();
+            $sqlQuery = "select id from falta_asistencia order by id desc limit 1";
+            $sqlResults = $this->objConexion->query($sqlQuery);
+            $this->conexionDb->desconectar();
+            $result = null;
+            while($fila = $sqlResults->fetch_assoc()){
+                $result= $fila['id'];                
+            }
+            
+            return $result;
+        }catch(Exception $error){
+            echo "Error in obtenerListaFaltaAsistencia. Error".$error->getMessage();
+            return null;
+        }  
     }
 
     /**

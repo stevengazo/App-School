@@ -9,19 +9,54 @@
         crossorigin="anonymous"></script>
     <!-- Jquery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../../../js/templates/utilsFaltaAsistencia.js"></script>
 
     <title>Falta en Asistencia</title>
 </head>
 
-<body class= "container">
+<body class="container">
     <div>
         <div>
             <h4>
-               Insertar Falta de Asistencia
+                Insertar Falta de Asistencia
             </h4>
             <p>
                 Por Favor seleccione la información e introduzca lo necesario.
             </p>
+            <div>
+                <form action="index.php" method="post" id="frmInsercionAusencia" name="frmInsercionAusencia"  onSubmit="submitHanlder()">
+                    <div class="from-group">
+                        <label>Id </label>
+                        <input type="number" name="id" class="form-control" readonly value={$idObjeto}>
+                    </div>
+                    <div class="from-group">
+                        <label>Id de Alumno</label>
+                        <input id="alumno_id" type="text" name="alumno_id" list="lista-Estudiantes" class="form-control">
+                        <datalist id="lista-Estudiantes">
+                            <option>Estudiante</option>
+                        </datalist>
+                    </div>
+                    <div class="from-group">
+                        <label>Id de Asignatura </label>
+                        <input type="text" name="asignatura_id" list="lista-asignatura" class="form-control">
+                        <datalist id="lista-asignatura">
+                            <option>Asignatura</option>
+                        </datalist>
+                    </div>                                        
+                    <div class="from-group">
+                        <label>Fecha </label>
+                        <input type="date" id="fecha"  class="form-control">
+                    </div>               
+                    <div class="from-group">
+                        <label>Justificacion </label>
+                        <textarea name="justificada" class="form-control"></textarea>   
+                    </div>  
+                    <div class="from-group row">
+                        <button onclick="" class="col-sm-5 col-md-6 btn-outline-info btn"> Guardar</button>
+                        <button onclick="" class="col-sm-5 col-md-6 btn-outline-success btn"> Limpiar</button>
+                    </div>   
+                </form>
+            </div>
         </div>
     </div>
 

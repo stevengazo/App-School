@@ -13,7 +13,7 @@
     <title>Lista Falta Asistencia</title>
 </head>
 
-<body class= "container">
+<body class="container">
     <div>
         <div>
             <h4>
@@ -22,6 +22,7 @@
             <p>
                 A continuación se muestran las faltas realizadas por los estudiantes
             </p>
+            <a href="index.php?action=InsertarAusencia">Agregar Nueva Ausencia</a>
         </div>
     </div>
     <table class="table">
@@ -43,39 +44,55 @@
                     Motivo
                 </th>
                 <th>
-                Accion
+                    Accion
                 </th>
             </tr>
         </thead>
-        <tbody>    
-        {assign var='counter' value={0}}
-        {section name=item loop=$ListaFaltasAsistencia}                       
-            <tr>                        
+        <tbody>
+            {assign var='counter' value={0}}
+            {section name=item loop=$ListaFaltasAsistencia}
+            <tr>
                 <!--id-->
                 <td>
                     {$ListaFaltasAsistencia[$counter].id}
                 </td>
                 <!--id Estudiante-->
                 <td>
-                {$ListaFaltasAsistencia[$counter].alumno_id}
+                    {$ListaFaltasAsistencia[$counter].alumno_id}
                 </td>
                 <!--Id Materia-->
                 <td>
-                {$ListaFaltasAsistencia[$counter].asignatura_id}
+                    {$ListaFaltasAsistencia[$counter].asignatura_id}
                 </td>
                 <!--Dia-->
                 <td>
-                {$ListaFaltasAsistencia[$counter].fecha}
+                    {$ListaFaltasAsistencia[$counter].fecha}
                 </td>
                 <!--Motivo-->
                 <td>
-                {$ListaFaltasAsistencia[$counter].justificada}
+                    {$ListaFaltasAsistencia[$counter].justificada}
                 </td>
                 <!--Botton ver-->
                 <td>
-                <button type="button" class="btn btn-primary">
-                    <a class="text-light" href="index.php?action=verInfoFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver Detalles</a>
-                </button>
+                    <button type="button" class="btn btn-primary">
+                        <a class="text-light"
+                            href="index.php?action=verInfoFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
+                            Detalles</a>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-success">
+                        <a class="text-light"
+                            href="index.php?action=verInfoFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
+                            Editar</a>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger">
+                        <a class="text-light"
+                            href="index.php?action=verInfoFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
+                            Eliminar</a>
+                    </button>
                 </td>
             </tr>
             {assign var='counter' value=$counter+1}
