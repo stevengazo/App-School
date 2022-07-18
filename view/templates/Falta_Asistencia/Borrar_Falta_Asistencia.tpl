@@ -14,7 +14,7 @@
     ></script>
     <!-- Jquery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script src="js/templates/utilsFaltaAsistencia.js"></script>
     <title>Borrar</title>
   </head>
 
@@ -43,6 +43,13 @@
                 >Ausencias</a
               >
             </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="#"
+                >Notas</a
+              >
+            </li>            
           </ul>
         </div>
       </div>
@@ -61,7 +68,7 @@
           <tr>
             <th>id Falta de Asistencia</th>
             <!--id-->
-            <td>{$ObjetoFaltaAsistencia.id}</td>
+            <td id="objId">{$ObjetoFaltaAsistencia.id}</td>
           </tr>
           <tr>
             <th>id Estudiante</th>
@@ -88,8 +95,8 @@
       <div>
         <button
           class="btn btn-outline-danger"
-          action="BorrarAsistencia"
-          idAsistencia="{$ObjetoFaltaAsistencia.id}"
+          type="text"
+          onclick="onDeleteElement()"
         >
           Eliminar Archivo
         </button>

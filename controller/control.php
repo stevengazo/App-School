@@ -62,7 +62,12 @@
                 case 'BorrarFaltas':
                     $id= $_REQUEST['idFalta'];
                         $this->getBorrarFaltaAsistencia($id);
-                        break;                          
+                        break;  
+                case 'setBorrarFaltas':
+                        echo "borrarndo...";
+                        $id= $_REQUEST['id'];
+                        $this->setBorrarFaltasAsistencia($id);
+                        break;                                                  
                 case 'InsertarAusencia': // es el mismo metodo perdo con una diferente acciòn y respuesta
                         $this->insertaFaltaAsistencia("get"); // muestra el formulario
                         break;                                                                    
@@ -81,6 +86,17 @@
         }
 
 
+
+/**
+ * Descripción: envia a la DB el vvalor a borrar y regresa a la lista de asistencias
+ */
+        function setBorrarFaltasAsistencia($idToDelete){
+            $flagResults = $this->FaltaAsistencia->EliminarFaltaAsistencia($idToDelete);
+            if($flagResults   ){
+                echo "Borrado";
+                $this->getListaFaltaAsistencia();
+            }
+        }
 
         /**
          * Descripción: llama al modelo para obtener todas las asistencias y las renderiza en el navegador

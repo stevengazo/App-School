@@ -42,6 +42,13 @@
                 >Ausencias</a
               >
             </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="#"
+                >Notas</a
+              >
+            </li>
           </ul>
         </div>
       </div>

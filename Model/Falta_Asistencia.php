@@ -118,7 +118,7 @@ class Falta_Asistencia
     function insertarFaltaAsistencia($_id,$_alumno_id,$_asignatura_id, $_fecha,$_justificada)
     {
         try{
-            echo "iniciando conexión a la db...";
+            
             $this->conexionDb = new conexion();
             $this->objConexion = $this->conexionDb->conectar();
             // QUERY PARA INGRESAR A LA DB
@@ -126,7 +126,6 @@ class Falta_Asistencia
             $sqlQuery .= " values ($_id, 	$_alumno_id, $_asignatura_id, '$_fecha', '$_justificada'	);";
             $sqlResults = $this->objConexion->query($sqlQuery);
             $this->conexionDb->desconectar();
-            echo "cerrando conexión a la db";
             return true;
         }catch(Exception $error){
             echo "Error in insertarFaltaAsistencia- Class Falta_Asistencia.php;<hr>Error ".$error->getMessage();
@@ -143,8 +142,22 @@ class Falta_Asistencia
     /**
      * 
      */
-    function EliminarFaltaAsistencia()
+    function EliminarFaltaAsistencia ($id)
     {
+        try{
+            echo "iniciando conexión a la db...";
+            $this->conexionDb = new conexion();
+            $this->objConexion = $this->conexionDb->conectar();
+            // QUERY PARA INGRESAR A LA DB
+            $sqlQuery = "DELETE FROM falta_asistencia WHERE id = $id ";
+            $sqlResults = $this->objConexion->query($sqlQuery);
+            $this->conexionDb->desconectar();
+            echo "cerrando conexión a la db";
+            return true;
+        }catch(Exception $error){
+            echo "Error in EliminarFaltaAsistencia- Class Falta_Asistencia.php;<hr>Error ".$error->getMessage();
+            return false;
+        }  
     }
     /**
      * 

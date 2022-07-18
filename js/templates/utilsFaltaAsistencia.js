@@ -59,3 +59,25 @@ function onvalid() {
     frm.submit();
   }
 }
+
+
+function onDeleteElement(event){
+  // creación de formulario
+    const frm = document.createElement("form");
+    frm.action="index.php";
+    const intPutmp1 = document.createElement("input");
+    intPutmp1.name="action";
+    intPutmp1.value="setBorrarFaltas";
+    const inputId = document.createElement("input");
+    inputId.name="id";
+    const valueId = document.getElementById("objId").innerText;
+    console.log(`id ausencia: ${valueId}`);
+    inputId.value=valueId;
+    frm.appendChild(intPutmp1);
+    frm.appendChild(inputId);    
+    frm.style.display="none";
+    document.body.appendChild(frm);
+    frm.submit();
+
+    
+}

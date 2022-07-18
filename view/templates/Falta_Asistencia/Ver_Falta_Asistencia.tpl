@@ -27,7 +27,14 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="index.php?action=ListaFaltaAsistencia">Ausencias</a>
                     </li>
-                </ul>
+                    <li class="nav-item">
+                    <a
+                        class="nav-link active"
+                        href="#"
+                        >Notas</a
+                    >
+                    </li>                    
+                </ul>                
             </div>
         </div>
     </nav>
