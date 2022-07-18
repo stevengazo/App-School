@@ -22,6 +22,9 @@
             <p>
                 A continuación se muestran la información de la falta Seleccionada
             </p>
+            <p>
+                <!-- Error Messge-->
+            </p>
         </div>
     </div>
     <div>

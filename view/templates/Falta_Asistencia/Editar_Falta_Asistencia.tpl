@@ -27,32 +27,32 @@
                 <form action="index.php" method="post" id="frmInsercionAusencia" name="frmInsercionAusencia"  onSubmit="submitHanlder()">
                     <div class="from-group">
                         <label>Id </label>
-                        <input type="number" name="id" class="form-control" readonly value={$idObjeto}>
+                        <input type="number" name="id" class="form-control" readonly value={$ObjetoFaltaAsistencia.id}>
                     </div>
                     <div class="from-group">
                         <label>Id de Alumno</label>
-                        <input id="alumno_id" type="text" name="alumno_id" list="lista-Estudiantes" class="form-control">
+                        <input id="alumno_id" type="text" name="alumno_id" list="lista-Estudiantes" class="form-control" value={$ObjetoFaltaAsistencia.alumno_id}>
                         <datalist id="lista-Estudiantes">
                             <option>Estudiante</option>
                         </datalist>
                     </div>
                     <div class="from-group">
                         <label>Id de Asignatura </label>
-                        <input type="text" name="asignatura_id" list="lista-asignatura" class="form-control">
+                        <input type="text" name="asignatura_id" list="lista-asignatura" class="form-control" value={$ObjetoFaltaAsistencia.asignatura_id}>
                         <datalist id="lista-asignatura">
                             <option>Asignatura</option>
                         </datalist>
                     </div>                                        
                     <div class="from-group">
                         <label>Fecha </label>
-                        <input type="date" id="fecha"  class="form-control">
+                        <input type="text" id="fecha"  class="form-control"  value={$ObjetoFaltaAsistencia.fecha}>
                     </div>               
                     <div class="from-group">
                         <label>Justificacion </label>
-                        <textarea name="justificada" class="form-control"></textarea>   
+                        <textarea name="justificada" class="form-control" value={$ObjetoFaltaAsistencia.justificada}></textarea>   
                     </div>  
                     <div class="from-group row">
-                        <button onclick="" class="col-sm-5 col-md-6 btn-outline-info btn"> Guardar</button>
+                         <button onclick="" class="col-sm-5 col-md-6 btn-outline-info btn" > Guardar</button>
                         <button onclick="" class="col-sm-5 col-md-6 btn-outline-success btn"> Limpiar</button>
                     </div>   
                 </form>
