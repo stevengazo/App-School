@@ -17,19 +17,36 @@
 </head>
 
 <body style="padding:10px">
-    
-      <nav nav class="navbar navbar-expand-lg bg-light">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <a href="index.php?action=ListaFaltaAsistencia">Lista de Asistencias</a>
-            </li>
-            <li class="nav-item">
-                <a href="index.php?action=InsertarFaltaAsistencia">Insertar Falta de Asistencia</a>
-            </li>
-        </ul>        
-        </ul>
-      </nav>
 
+    <!--SIMPLE NAV VAR-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.php?">App_School</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="index.php?action=ListaFaltaAsistencia"
+                >Ausencias</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav> 
+     
 
     <body style="background-color: #c5c5c5; ">
     

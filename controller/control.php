@@ -104,16 +104,28 @@
          * Descripción: muestra la ventada para insertar una nueva asistencia
          */
         function insertaFaltaAsistencia($method){
-            echo $method;         
             switch ($method) {
                 case "post": // Trabaja con la informaciòn y la mueve a la  DB
-                    echo $method;
-                    echo "falta asistencia post - inserciòn dei nformaciòn";                    
+                    $id=$_REQUEST['id'];
+                    $alumno_id=$_REQUEST['alumno_id'];
+                    $asignatura_id=$_REQUEST['asignatura_id'];
+                    $fecha=$_REQUEST['fecha'];
+                    $justificada=$_REQUEST['justificada'];
+                    echo "insertando nueva Ausencia..." ;                    
+                    $FlagResult= $this->FaltaAsistencia->insertarFaltaAsistencia($id,$alumno_id,$asignatura_id, $fecha,$justificada);                    
+                    if($FlagResult == true){
+                        // Vista del elemento generado
+                        sleep(2);
+                        $this->getInfoFaltaAsistencia($id);
+                    }              else{
+                        echo "\n error al ingresar usuario";
+                    }  
                     break;                                
                 case "get": // Recoge informaciòn necesaria y la envia al usuaario para introducir el elemento.
                     $SiguienteId =intval(  $this->FaltaAsistencia->getLastId()) +1; // Trae el ultimo id de la Tabla y le suma uno para el nuevo usuario.
                     $this->Smarty->setAssign('idObjeto', $SiguienteId);
-                    $this->Smarty->setDisplay("Falta_Asistencia/Insertar_Falta_Asistencia.tpl");
+                    
+                    $this->Smarty->setDisplay("Falta_Asistencia/Insertar_Falta_Asistencia.tpl");                    
                     break;                
                 default:
                     echo $method;

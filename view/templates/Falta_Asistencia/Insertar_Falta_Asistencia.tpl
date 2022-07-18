@@ -9,12 +9,40 @@
         crossorigin="anonymous"></script>
     <!-- Jquery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="js/templates/utilsFaltaAsistencia.js" ></script>
+    <script src="js/templates/utilsFaltaAsistencia.js"></script>
 
     <title>Falta en Asistencia</title>
 </head>
 
 <body class="container">
+       <!--SIMPLE NAV VAR-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.php?">App_School</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="index.php?action=ListaFaltaAsistencia"
+                >Ausencias</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <div>
         <div>
             <h4>
@@ -24,9 +52,9 @@
                 Por Favor seleccione la información e introduzca lo necesario.
             </p>
             <div>
-            <form action="index.php"  id="frmInsercionAusencia" name="frmInsercionAusencia"  >
-                <!-- Este input oculto "setea" el acciòn con el value que le demos (dentro del switch asignatos se caso)-->
-                <input type="hidden" name="action" value="frmRegistroAusencia">
+                <form action="index.php" id="frmInsercionAusencia" name="frmInsercionAusencia">
+                    <!-- Este input oculto "setea" el acciòn con el value que le demos (dentro del switch asignatos se caso)-->
+                    <input type="hidden" name="action" value="frmRegistroAusencia">
                     <div class="from-group">
                         <label>Id </label>
                         <input type="number" name="id" class="form-control" readonly value={$idObjeto}>
@@ -34,7 +62,8 @@
                     </div>
                     <div class="from-group">
                         <label>Id de Alumno</label>
-                        <input id="alumno_id" type="text" name="alumno_id" list="lista-Estudiantes" class="form-control">
+                        <input id="alumno_id" type="text" name="alumno_id" list="lista-Estudiantes"
+                            class="form-control">
                         <datalist id="lista-Estudiantes">
                             <option>Estudiante</option>
                         </datalist>
@@ -42,26 +71,29 @@
                     </div>
                     <div class="from-group">
                         <label>Id de Asignatura </label>
-                        <input type="text" id="asignatura_id" name="asignatura_id" list="lista-asignatura" class="form-control">
+                        <input type="text" id="asignatura_id" name="asignatura_id" list="lista-asignatura"
+                            class="form-control">
                         <datalist id="lista-asignatura">
                             <option>Asignatura</option>
                         </datalist>
                         <label id="asignaturaMessage" class="text-danger"></label>
-                    </div>                                        
+                    </div>
                     <div class="from-group">
                         <label>Fecha </label>
-                        <input type="text" id="fecha"  class="form-control">
+                        <input type="text" id="fecha" name="fecha" class="form-control">
                         <label id="FechaMessage" class="text-danger"></label>
-                    </div>               
+                    </div>
                     <div class="from-group">
                         <label>Justificacion </label>
-                        <textarea id="justificada" name="justificada" class="form-control"></textarea>   
+                        <textarea id="justificada" name="justificada" class="form-control"></textarea>
                         <label id="JustificadaMessage" class="text-danger"></label>
-                    </div>  
-                <div class="from-group row">
-                        <button type="button"  onclick="onvalid()" class="col-sm-5 col-md-6 btn-outline-info btn"> Guardar</button>
-                        <button type="button" onclick="onclickClean()" class="col-sm-5 col-md-6 btn-outline-success btn"> Limpiar</button>
-                </div>                       
+                    </div>
+                    <div class="from-group row">
+                        <button type="button" onclick="onvalid()" class="col-sm-5 col-md-6 btn-outline-info btn">
+                            Guardar</button>
+                        <button type="button" onclick="onclickClean()"
+                            class="col-sm-5 col-md-6 btn-outline-success btn"> Limpiar</button>
+                    </div>
                 </form>
             </div>
         </div>

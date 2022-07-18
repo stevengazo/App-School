@@ -115,8 +115,24 @@ class Falta_Asistencia
      * Descripción: insetar una nueva Falta asistencia
      * Retorna: true si lo inserta, false si presenta error
      */
-    function insertarFaltaAsistencia()
+    function insertarFaltaAsistencia($_id,$_alumno_id,$_asignatura_id, $_fecha,$_justificada)
     {
+        try{
+            echo "iniciando conexión a la db...";
+            $this->conexionDb = new conexion();
+            $this->objConexion = $this->conexionDb->conectar();
+            // QUERY PARA INGRESAR A LA DB
+            $sqlQuery = "INSERT INTO falta_asistencia( id, alumno_id,asignatura_id, fecha, justificada) ";
+            $sqlQuery .= " values ($_id, 	$_alumno_id, $_asignatura_id, '$_fecha', '$_justificada'	);";
+            $sqlResults = $this->objConexion->query($sqlQuery);
+            $this->conexionDb->desconectar();
+            echo "cerrando conexión a la db";
+            return true;
+        }catch(Exception $error){
+            echo "Error in insertarFaltaAsistencia- Class Falta_Asistencia.php;<hr>Error ".$error->getMessage();
+            return null;
+        }  
+
     }
     /**
      * 

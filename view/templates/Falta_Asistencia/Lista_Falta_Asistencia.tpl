@@ -14,6 +14,38 @@
 </head>
 
 <body class="container">
+
+
+
+    <!--SIMPLE NAV VAR-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.php?">App_School</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="index.php?action=ListaFaltaAsistencia"
+                >Ausencias</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav> 
+ 
     <div>
         <div>
             <h4>
@@ -75,21 +107,21 @@
                 <!--Botton ver-->
                 <td>
                     <button type="button" class="btn btn-primary">
-                        <a class="text-light"
+                        <a class="text-light nav-link active"
                             href="index.php?action=verInfoFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
                             Detalles</a>
                     </button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-success">
-                        <a class="text-light"
+                        <a class="text-light nav-link active"
                             href="index.php?action=EditarFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
                             Editar</a>
                     </button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger">
-                        <a class="text-light"
+                        <a class="text-light nav-link active"
                             href="index.php?action=BorrarFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
                             Eliminar</a>
                     </button>

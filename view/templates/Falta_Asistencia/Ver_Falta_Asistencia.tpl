@@ -13,7 +13,24 @@
     <title>Falta en Asistencia</title>
 </head>
 
-<body class= "container">
+<body class="container">
+    <!--SIMPLE NAV VAR-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.php?">App_School</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.php?action=ListaFaltaAsistencia">Ausencias</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div>
         <div>
             <h4>
@@ -28,55 +45,57 @@
         </div>
     </div>
     <div>
-    <table class="table">
-    <tbody>                  
-            <tr>                 
-                <th>
-                    id Falta de Asistencia
-                </th>               
-                <!--id-->
-                <td>
-                    {$ObjetoFaltaAsistencia.id}
-                </td>
-           </tr>
-           <tr>
-                <th>
-                    id Estudiante
-                </th>        
-                <!--id Estudiante-->
-                <td>
-                {$ObjetoFaltaAsistencia.alumno_id}
-                </td>
-           </tr>
-           <tr>          
-                <th>
-                    Asignatura
-                </th>              
-                <!--Id Materia-->
-                <td>
-                {$ObjetoFaltaAsistencia.asignatura_id}
-                </td>
-           </tr>
-           <tr>               
-                <th>
-                    Fecha
-                </th>        
-                <!--Dia-->
-                <td>
-                {$ObjetoFaltaAsistencia.fecha}
-                </td>
-           </tr>
-           <tr>       
-                <th>
-                    Justificación
-                </th>        
-                <!--Motivo-->
-                <td>
-                {$ObjetoFaltaAsistencia.justificada}
-                </td>
-           </tr>          
-    </tbody>
-    </table>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>
+                        id Falta de Asistencia
+                    </th>
+                    <!--id-->
+                    <td>
+                        {$ObjetoFaltaAsistencia.id}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        id Estudiante
+                    </th>
+                    <!--id Estudiante-->
+                    <td>
+                        {$ObjetoFaltaAsistencia.alumno_id}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Asignatura
+                    </th>
+                    <!--Id Materia-->
+                    <td>
+                        {$ObjetoFaltaAsistencia.asignatura_id}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Fecha
+                    </th>
+                    <!--Dia-->
+                    <td>
+                        {$ObjetoFaltaAsistencia.fecha}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Justificación
+                    </th>
+                    <!--Motivo-->
+                    <td>
+                        {$ObjetoFaltaAsistencia.justificada}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-outline-info"> <a class=" nav-link active"
+                href="index.php?action=ListaFaltaAsistencia">Volver Atras</a></button>
     </div>
 </body>
 
