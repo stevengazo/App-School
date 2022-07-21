@@ -6,6 +6,7 @@
     require_once "Model/Falta_Asistencia.php";
     require_once "connections/conexion.php";
     require_once "Model/Nota.php";
+    require_once "controller/NotasController.php";
     /**
      * Controladores
      */
@@ -15,12 +16,14 @@
         private $FaltaAsistencia;
         private $Nota;
         private $FaltaAsistenciaController;
+        private $NotasController;
 
 
         function __construct(){
             $this->Smarty= new config_smarty();
             $this->FaltaAsistencia = Falta_Asistencia::getInstancia();
-            $this->Nota = Nota::getInstance();            
+            $this->Nota = Nota::getInstance();    
+            $this->NotasController = NotasController::getInstancia();        
         }
 
         /**
@@ -51,12 +54,33 @@
         /* 
         * Descripción: Gestiona las peticiones del navegador
         */
-        function gestor(){              
+        function gestor(){       
+            $Controller= "";                               
             $action = "";        
             if(isset($_REQUEST['action'])){ // Compruea que la variable "action" no sea nula
                 $action = $_REQUEST['action']; // si no es nula setea la variable acciòn con el valor recibido
             }
-            switch ($action) {                    
+            if(isset($_REQUEST['Controller'])){ // Compruea que la variable "action" no sea nula
+                $Controller = $_REQUEST['Controller']; // si no es nula setea la variable acciòn con el valor recibido
+            }
+            switch ($Controller) {
+                case 'Notas':
+                    $this->NotasController->Gestor($action);
+                    break;                
+                default:     
+                    $this->defaultGestor($action);
+                    break;
+            }
+
+        }
+
+
+        function defaultGestor($action){
+
+            switch ($action) { 
+                case 'ListaFaltaAsistencia':
+                    $this->getListaFaltaAsistencia();
+                    break;                      
                 case 'ListaFaltaAsistencia':
                     $this->getListaFaltaAsistencia();
                     break;   
@@ -92,8 +116,6 @@
                     break;
             }    
         }
-
-
 
         /**
          * Descripción: envia a la DB el vvalor a borrar y regresa a la lista de asistencias

@@ -1,0 +1,51 @@
+<?php
+
+    /**
+     * DEPENDENCIAS
+     */
+    require_once "libs/smarty4_1_1/config_smarty.php";
+    require_once "Model/Falta_Asistencia.php";
+    require_once "connections/conexion.php";
+    require_once "Model/Nota.php";
+
+    class NotasController{
+
+        private $Smarty;
+        private $NotaModel;
+        public static $instance;
+    
+
+        public static function getInstancia(){
+            if(self::$instance == null){
+                self::$instance =new NotasController();            
+            }
+            return self::$instance;
+        }
+
+        function __construct()
+        {
+            $this->Smarty= new config_smarty();
+        }
+        
+        function Gestor($accion){
+                        
+            switch ($accion) {
+                case "listaNotas":
+                    $this->listaNotas();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        function listaNotas(){
+            $this->Smarty->setAssign("titulo", "Lista de Notas");
+
+            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+            $this->Smarty->setDisplay("Shared/Head.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+            $this->Smarty->setDisplay("Notas/ListaNotas.tpl");     
+            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+        }
+    }

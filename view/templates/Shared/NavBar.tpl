@@ -13,7 +13,7 @@
                     <a class="nav-link active" href="index.php?action=ListaFaltaAsistencia&Controller=FaltaAsistencia">Ausencias</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Notas</a>
+                    <a class="nav-link active" href="index.php?action=listaNotas&Controller=Notas">Notas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Profesores</a>

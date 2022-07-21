@@ -19,25 +19,5 @@
             $this->Nota = Nota::getInstance();
         }
 
-        private static $instance = null;
 
-        /**
-         * Funcion para inicializar singleton
-         * Si hay más de una instancia borra  la información
-         */
-        public static function getInstancia(){
-            if(self::$instance == null ){
-                self::$instance = new Falta_Asistencia();
-            }
-            return self::$instance;
-        }    
-    
-     
-
-        /**
-         * Descripción: Gestión de la información recibida por el controllador
-         */
-       function gestor(){
-        
-        }
     }
