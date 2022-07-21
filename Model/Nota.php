@@ -31,11 +31,11 @@
          */
        public function obtenerNota($id){
             try{
-                $this->conexionDB= conexion::getInstance();
+                $this->conexionDB= new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
                 $sqlQuery = " SELECT * FROM Nota where id = $id  ";
                 $sqlResult = $this->objConexion->query($sqlQuery);
-                $this->objConexion->desconectar();
+                $this->conexionDB->desconectar();
                 return $sqlQuery;
             }catch(Exception $error){
                 echo "Error in class Nota, function obtenerNota - Error" + $error->getMessage();
@@ -49,7 +49,7 @@
          */
         public function obtenerListaNotas(){
             try{
-                $this->conexionDB= conexion::getInstance();
+                $this->conexionDB= new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
                 $sqlQuery = " SELECT * FROM Nota  ";
                 $sqlResult = $this->objConexion->query($sqlQuery);
@@ -68,12 +68,12 @@
          */
        public function insertaNota($id, $asignatura_has_alumno_alumno_id , $asignatura_has_asignatura_id,$trimestre, $nota){
             try{
-                $this->conexionDB= conexion::getInstance();
+                $this->conexionDB= new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
                 $sqlQuery = " INSERT INTO Nota (    id, asignatura_has_alumno_alumno_id , asignatura_has_asignatura_id, trimestre, nota) ";
                 $sqlQuery .= " values            ($id, $asignatura_has_alumno_alumno_id , $asignatura_has_asignatura_id, $trimestre, $nota)"; 
                 $sqlResult = $this->objConexion->query($sqlQuery);
-                $this->objConexion->desconectar();
+                $this->conexionDB->desconectar();
                 return true;
             }catch(Exception $error){
                 echo "Error in class Nota, function insertaNota - Error" + $error->getMessage();
@@ -87,13 +87,13 @@
          */
        public function modificarNota($id, $asignaturaHasAlumnoId , $asignaturaHasAsignaturaId,$trimestre, $nota){
             try{
-                $this->conexionDB= conexion::getInstance();
+                $this->conexionDB= new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
                 $sqlQuery = " UPDATE Nota ";
                 $sqlQuery .= " SET   asignatura_has_alumno_alumno_id = $asignaturaHasAlumnoId , asignatura_has_asignatura_id = $asignaturaHasAsignaturaId, trimestre = $trimestre, nota = $nota"; 
                 $sqlQuery .= " WHERE  id= $id ";
                 $sqlResult = $this->objConexion->query($sqlQuery);
-                $this->objConexion->desconectar();
+                $this->conexionDB->desconectar();
                 return true;
             }catch(Exception $error){
                 echo "Error in class Nota, function modificarNota - Error" + $error->getMessage();
@@ -106,11 +106,11 @@
          */
        public  function borrarNota($id){
             try{
-                $this->conexionDB= conexion::getInstance();
+                $this->conexionDB= new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
                 $sqlQuery = " DELETE FROM Nota where id = $id";                           
                 $sqlResult = $this->objConexion->query($sqlQuery);
-                $this->objConexion->desconectar();
+                $this->conexionDB->desconectar();
                 return true;
             }catch(Exception $error){
                 echo "Error in class Nota, function borrarNota - Error" + $error->getMessage();

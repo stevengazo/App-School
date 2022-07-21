@@ -38,7 +38,7 @@
             <li class="nav-item">
               <a
                 class="nav-link active"
-                href="index.php?action=ListaFaltaAsistencia"
+                href="index.php?action=ListaFaltaAsistencia&Controller=FaltaAsistencia"
                 >Ausencias</a
               >
             </li>

@@ -6,16 +6,21 @@
     require_once "Model/Falta_Asistencia.php";
     require_once "connections/conexion.php";
     require_once "Model/Nota.php";
+    /**
+     * Controladores
+     */
+    require_once 'FaltaAsistenciaController.php';
     class control{
         private $Smarty;
         private $FaltaAsistencia;
         private $Nota;
+        private $FaltaAsistenciaController;
 
 
         function __construct(){
             $this->Smarty= new config_smarty();
             $this->FaltaAsistencia = Falta_Asistencia::getInstancia();
-            $this->Nota = Nota::getInstance();
+            $this->Nota = Nota::getInstance();            
         }
 
         /**
@@ -37,7 +42,10 @@
             // Seteo y envio de datos a la interfaz
             $this->Smarty->setAssign("saludo","Inicio del proyecto");
             // llamada a la interfaz    
-            $this->Smarty->setDisplay("indexControl.php");               
+            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+            $this->Smarty->setDisplay("Shared/Head.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");                      
         }
 
         /* 
@@ -87,9 +95,9 @@
 
 
 
-/**
- * Descripción: envia a la DB el vvalor a borrar y regresa a la lista de asistencias
- */
+        /**
+         * Descripción: envia a la DB el vvalor a borrar y regresa a la lista de asistencias
+         */
         function setBorrarFaltasAsistencia($idToDelete){
             $flagResults = $this->FaltaAsistencia->EliminarFaltaAsistencia($idToDelete);
             if($flagResults   ){
@@ -98,13 +106,19 @@
             }
         }
 
-        /**
-         * Descripción: llama al modelo para obtener todas las asistencias y las renderiza en el navegador
-         */
+
         function getListaFaltaAsistencia(){
             $results = $this->FaltaAsistencia->obtenerListaFaltaAsistencia();
+        
             $this->Smarty->setAssign('ListaFaltasAsistencia', $results);
+            $this->Smarty->setAssign('titulo', "Lista Ausencias");
+
+            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+            $this->Smarty->setDisplay("Shared/Head.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
             $this->Smarty->setDisplay("Falta_Asistencia/Lista_Falta_Asistencia.tpl");
+            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+
         }
 
         /**
@@ -141,7 +155,14 @@
                     $SiguienteId =intval(  $this->FaltaAsistencia->getLastId()) +1; // Trae el ultimo id de la Tabla y le suma uno para el nuevo usuario.
                     $this->Smarty->setAssign('idObjeto', $SiguienteId);
                     
-                    $this->Smarty->setDisplay("Falta_Asistencia/Insertar_Falta_Asistencia.tpl");                    
+                    $this->Smarty->setAssign('titulo', "Insertar Falta Asistencia");
+
+                    $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+                    $this->Smarty->setDisplay("Shared/Head.tpl");       
+                    $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+                    $this->Smarty->setDisplay("Falta_Asistencia/Insertar_Falta_Asistencia.tpl");     
+                    $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+
                     break;                
                 default:
                     echo $method;
@@ -156,7 +177,17 @@
         function  getBorrarFaltaAsistencia($id= ''){
             $results = $this->FaltaAsistencia->obtenerFaltaAsistencia($id);
             $this->Smarty->setAssign('ObjetoFaltaAsistencia', $results[0]);
+
+
+            $this->Smarty->setAssign('titulo', "Borrar Asistencia");
+            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+            $this->Smarty->setDisplay("Shared/Head.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");    
             $this->Smarty->setDisplay("Falta_Asistencia/Borrar_Falta_Asistencia.tpl");
+            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+
+
+
         }
 
         /**
@@ -165,8 +196,20 @@
         function getEditarFaltaAsistencia($id= ''){
             $results = $this->FaltaAsistencia->obtenerFaltaAsistencia($id);
             $this->Smarty->setAssign('ObjetoFaltaAsistencia', $results[0]);
+
+                    
+            $this->Smarty->setAssign('titulo', "Insertar Falta Asistencia");
+
+            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+            $this->Smarty->setDisplay("Shared/Head.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");    
+
             $this->Smarty->setDisplay("Falta_Asistencia/Editar_Falta_Asistencia.tpl");
-        }
+            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+        }        
+
+
+
 
         
     }
