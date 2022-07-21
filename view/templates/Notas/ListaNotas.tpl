@@ -6,7 +6,7 @@
         <p>
             A continuación se muestra las notas registradas
         </p>
-        <a href="index.php?Controller=Notas&action=ListaNotas">Agregar nuevo registo de nota</a>
+        <a href="index.php?Controller=Notas&action=CrearNota">Agregar nuevo registo de nota</a>
     </div>
 </div>
 <table class="table">

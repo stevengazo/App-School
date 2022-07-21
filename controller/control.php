@@ -12,13 +12,18 @@
      */
     require_once 'FaltaAsistenciaController.php';
     class control{
+        /**
+         * vARIABLES INTERNAS DE LA CLASE
+         */
         private $Smarty;
         private $FaltaAsistencia;
         private $Nota;
         private $FaltaAsistenciaController;
         private $NotasController;
 
-
+        /**
+         * Funcion constructora
+         */
         function __construct(){
             $this->Smarty= new config_smarty();
             $this->FaltaAsistencia = Falta_Asistencia::getInstancia();
@@ -53,7 +58,7 @@
         }
 
         /* 
-        * Descripción: Gestiona las peticiones del navegador
+        * Descripción: Gestiona las peticiones del navegador, recibe un parametro controller y redirecciona al controlador especificado
         */
         function gestor(){       
             $Controller= "";                               
@@ -64,7 +69,6 @@
             if(isset($_REQUEST['Controller'])){ // Compruea que la variable "action" no sea nula
                 $Controller = $_REQUEST['Controller']; // si no es nula setea la variable acciòn con el valor recibido
             }
-            echo $Controller;
             switch ($Controller) {
                 case 'Notas':
                     $this->NotasController->Gestor($action);

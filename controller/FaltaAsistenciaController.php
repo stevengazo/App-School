@@ -12,11 +12,17 @@
         private $FaltaAsistencia;
         private $Nota;
 
+        /**
+         * Clase constructora
+         */
         function __construct(){
             $this->Smarty= new config_smarty();
             $this->FaltaAsistencia = Falta_Asistencia::getInstancia();
         }
 
+        /**
+         * Singleton
+         */
         private static $instance = null;
         public static function getInstancia(){
             if(self::$instance == null){
@@ -25,6 +31,9 @@
             return self::$instance;
         }
 
+        /***
+         * Recibe las llamadas desde control y gestiona la acciòn que debe tomar 
+         */
         function Gestor($accion){
             switch ($accion) {
                 case 'ListaFaltaAsistencia':
@@ -78,7 +87,6 @@
                     $asignatura_id=$_REQUEST['asignatura_id'];
                     $fecha=$_REQUEST['fecha'];
                     $justificada=$_REQUEST['justificada'];
-                    echo "insertando nueva Ausencia..." ;                    
                     $FlagResult= $this->FaltaAsistencia->insertarFaltaAsistencia($id,$alumno_id,$asignatura_id, $fecha,$justificada);                    
                     if($FlagResult == true){
                         // Vista del elemento generado
@@ -119,7 +127,6 @@
                 $fecha = $_REQUEST['fecha'];
                 $justificada = $_REQUEST['justificada'];
                 $flagResult = $this->FaltaAsistencia->modificarFaltaAsistencia($id,$alumno_id,$asignatura_id,$fecha,$justificada);
-                ECHO $flagResult;
                 if($flagResult){
                     $this->getInfoFaltaAsistencia($id);
                 }else{
@@ -157,7 +164,6 @@
         function setBorrarFaltasAsistencia($idToDelete){
             $flagResults = $this->FaltaAsistencia->EliminarFaltaAsistencia($idToDelete);
             if($flagResults   ){
-                echo "Borrado";
                 $this->getListaFaltaAsistencia();
             }
         }
@@ -166,7 +172,6 @@
          * Descripción: muestra la ventana para ver el dispositivo.
          */
         function getInfoFaltaAsistencia($id= ''){
-            echo "getinfoFaltaAsistencia";
             $results = $this->FaltaAsistencia->obtenerFaltaAsistencia($id);
             $this->Smarty->setAssign('ObjetoFaltaAsistencia', $results[0]);
 
@@ -193,8 +198,8 @@
             $this->Smarty->setDisplay("Shared/NavBar.tpl");       
             $this->Smarty->setDisplay("Falta_Asistencia/Lista_Falta_Asistencia.tpl");
             $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
-        }
-    
+        }    
+
     }
 
 

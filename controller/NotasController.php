@@ -33,6 +33,9 @@
                 case "listaNotas":
                     $this->listaNotas();
                     break;
+                case "CrearNota":
+                    $this->getInsertarNota();
+                    break;                    
                 default:
                     break;
             }
@@ -46,6 +49,16 @@
             $this->Smarty->setDisplay("Shared/Head.tpl");       
             $this->Smarty->setDisplay("Shared/NavBar.tpl");       
             $this->Smarty->setDisplay("Notas/ListaNotas.tpl");     
+            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+        }
+
+        function getInsertarNota(){
+            $this->Smarty->setAssign("titulo", "Crear Nota");
+
+            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+            $this->Smarty->setDisplay("Shared/Head.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+            $this->Smarty->setDisplay("Notas/Insertar_Nota.tpl");     
             $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
         }
     }
