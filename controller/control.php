@@ -68,11 +68,10 @@
                         $this->getInfoFaltaAsistencia($id);
                         break;  
                 case 'BorrarFaltas':
-                    $id= $_REQUEST['idFalta'];
+                        $id= $_REQUEST['idFalta'];
                         $this->getBorrarFaltaAsistencia($id);
                         break;  
                 case 'setBorrarFaltas':
-                        echo "borrarndo...";
                         $id= $_REQUEST['id'];
                         $this->setBorrarFaltasAsistencia($id);
                         break;                                                  
@@ -80,13 +79,14 @@
                         $this->insertaFaltaAsistencia("get"); // muestra el formulario
                         break;                                                                    
                 case 'frmRegistroAusencia':                     
-                    $this->insertaFaltaAsistencia("post"); // recibe la informaciòn del formulario
-                    break;    
-                case 'EditarFaltas':
-                    $id= $_REQUEST['idFalta'];
-                    $this->getEditarFaltaAsistencia($id);
+                        $this->insertaFaltaAsistencia("post"); // recibe la informaciòn del formulario
+                        break;    
+                case 'EditarFaltas':                        
+                        $this->getEditarFaltaAsistencia("get");
                     break; 
-                                
+                case 'EditandoFaltas':                        
+                        $this->getEditarFaltaAsistencia("post");
+                    break;                                 
                 default:                
                     $this->index();
                     break;
@@ -127,7 +127,16 @@
         function getInfoFaltaAsistencia($id= ''){
             $results = $this->FaltaAsistencia->obtenerFaltaAsistencia($id);
             $this->Smarty->setAssign('ObjetoFaltaAsistencia', $results[0]);
+
+            $this->Smarty->setAssign('titulo', "Ver Falta Asistencia");
+
+            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+            $this->Smarty->setDisplay("Shared/Head.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
             $this->Smarty->setDisplay("Falta_Asistencia/Ver_Falta_Asistencia.tpl");
+            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");     
+
+
         }
 
         /**
@@ -193,19 +202,30 @@
         /**
          * Descripción: muestra la ventana para editar una asistencia
          */
-        function getEditarFaltaAsistencia($id= ''){
+        function getEditarFaltaAsistencia($action = "get"){
+            $id= $_REQUEST['idFalta'];            
             $results = $this->FaltaAsistencia->obtenerFaltaAsistencia($id);
-            $this->Smarty->setAssign('ObjetoFaltaAsistencia', $results[0]);
-
-                    
-            $this->Smarty->setAssign('titulo', "Insertar Falta Asistencia");
-
-            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
-            $this->Smarty->setDisplay("Shared/Head.tpl");       
-            $this->Smarty->setDisplay("Shared/NavBar.tpl");    
-
-            $this->Smarty->setDisplay("Falta_Asistencia/Editar_Falta_Asistencia.tpl");
-            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+            if($action == "post"){
+                $alumno_id= $_REQUEST['alumno_id'];
+                $asignatura_id= $_REQUEST['asignatura_id'];
+                $fecha = $_REQUEST['fecha'];
+                $justificada = $_REQUEST['justificada'];
+                $flagResult = $this->FaltaAsistencia->modificarFaltaAsistencia($id,$alumno_id,$asignatura_id,$fecha,$justificada);
+                ECHO $flagResult;
+                if($flagResult){
+                    $this->getInfoFaltaAsistencia($id);
+                }else{
+                    $this->getEditarFaltaAsistencia("get");
+                }
+            }else{
+                $this->Smarty->setAssign('ObjetoFaltaAsistencia', $results[0]);                    
+                $this->Smarty->setAssign('titulo', "Editar Falta Asistencia");    
+                $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+                $this->Smarty->setDisplay("Shared/Head.tpl");       
+                $this->Smarty->setDisplay("Shared/NavBar.tpl");        
+                $this->Smarty->setDisplay("Falta_Asistencia/Editar_Falta_Asistencia.tpl");
+                $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+            }
         }        
 
 

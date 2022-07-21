@@ -136,8 +136,22 @@ class Falta_Asistencia
     /**
      * 
      */
-    function modificarFaltaAsistencia()
+    function modificarFaltaAsistencia($id,$alumno_id,$asignatura_id,$fecha,$justificada)    
     {
+        try{
+            $this->conexionDb = new conexion();
+            $this->objConexion = $this->conexionDb->conectar();
+            // QUERY PARA INGRESAR A LA DB
+            $sqlQuery = "UPDATE falta_asistencia  ";
+            $sqlQuery = $sqlQuery." set  alumno_id = $alumno_id, asignatura_id = $asignatura_id, fecha = '$fecha', justificada = '$justificada'";
+            $sqlQuery = $sqlQuery." WHERE id = $id;";
+            $sqlResults = $this->objConexion->query($sqlQuery);
+            $this->conexionDb->desconectar();            
+            return true;
+        }catch(Exception $error){
+            echo "Error in modificarFaltaAsistencia- Class Falta_Asistencia.php;<hr>Error ".$error->getMessage();
+            return false;
+        }  
     }
     /**
      * 

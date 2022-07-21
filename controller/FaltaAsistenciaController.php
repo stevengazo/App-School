@@ -38,12 +38,6 @@
          * Descripción: Gestión de la información recibida por el controllador
          */
        function gestor(){
-        $action = "";    
-        $Controller = "";    
-        if(isset($_REQUEST['action'])){ // Compruea que la variable "action" no sea nula
-            $action = $_REQUEST['action']; // si no es nula setea la variable acciòn con el valor recibido
-            $Controller = $_REQUEST['Controller'];           
+        
         }
-          echo "funcion gestor -".$action;        
-    }
     }

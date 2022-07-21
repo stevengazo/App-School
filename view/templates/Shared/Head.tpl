@@ -6,7 +6,9 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
     <!-- Jquery-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text"></script>
+
+        <script src="js/templates/utilsFaltaAsistencia.js" ></script>
     <!-- Title-->
     <title>{$titulo}}</title>
 </head>

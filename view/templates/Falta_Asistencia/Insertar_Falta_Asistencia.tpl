@@ -7,7 +7,7 @@
             Por Favor seleccione la información e introduzca lo necesario.
         </p>
         <div>
-            <form action="index.php" id="frmInsercionAusencia" name="frmInsercionAusencia">
+            <form action="index.php" method="post" id="frmInsercionAusencia" name="frmInsercionAusencia">
                 <!-- Este input oculto "setea" el acciòn con el value que le demos (dentro del switch asignatos se caso)-->
                 <input type="hidden" name="action" value="frmRegistroAusencia">
                 <div class="from-group">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="from-group row">
                     <button type="button" onclick="onvalid()" class="col-sm-5 col-md-6 btn-outline-info btn">
-                        Guardar</button>
+                        Agregar</button>
                     <button type="button" onclick="onclickClean()" class="col-sm-5 col-md-6 btn-outline-success btn">
                         Limpiar</button>
                 </div>
