@@ -62,6 +62,6 @@
             </tbody>
         </table>
         <button class="btn btn-outline-info"> <a class=" nav-link active"
-                href="index.php?action=ListaFaltaAsistencia">Volver Atras</a></button>
+                href="index.php?action=ListaFaltaAsistencia&Controller=FaltaAsistencia">Volver Atras</a></button>
     </div>
 </body>

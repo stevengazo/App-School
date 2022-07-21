@@ -54,6 +54,14 @@ function onvalid() {
   if (!flag) {
     // Setea una variable para obtener el formulario
     const frm = document.getElementById("frmInsercionAusencia");
+
+    const valueController = document.createElement("input");
+    valueController.name="Controller";
+    valueController.type="hidden";
+    valueController.value = "FaltaAsistencia";
+
+    frm.appendChild(valueController);
+
     // envia el formulario al servidor
     frm.submit();
   }
@@ -63,14 +71,24 @@ function onDeleteElement(event) {
   // creación de formulario
   const frm = document.createElement("form");
   frm.action = "index.php";
+ 
   const intPutmp1 = document.createElement("input");
   intPutmp1.name = "action";
   intPutmp1.value = "setBorrarFaltas";
+ 
   const inputId = document.createElement("input");
   inputId.name = "id";
+ 
   const valueId = document.getElementById("objId").innerText;
   console.log(`id ausencia: ${valueId}`);
   inputId.value = valueId;
+ 
+  const valueController = document.createElement("input");
+  valueController.name="Controller";
+  valueController.type="hidden";
+  valueController.value = "FaltaAsistencia";
+
+  frm.appendChild(valueController);
   frm.appendChild(intPutmp1);
   frm.appendChild(inputId);
   frm.style.display = "none";
@@ -120,6 +138,14 @@ function editData() {
   /* llama al servidor */
   if (!flag) {
     const frm = document.getElementById("frmEdicionAusencia");
+
+    const valueController = document.createElement("input");
+    valueController.name="Controller";
+    valueController.type="hidden";
+    valueController.value = "FaltaAsistencia";
+
+    frm.appendChild(valueController);
+
     frm.submit();
   }
 }

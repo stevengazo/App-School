@@ -6,7 +6,7 @@
             <p>
                 A continuación se muestran las faltas realizadas por los estudiantes
             </p>
-            <a href="index.php?action=InsertarAusencia">Agregar Nueva Ausencia</a>
+            <a href="index.php?action=InsertarAusencia&Controller=FaltaAsistencia">Agregar Nueva Ausencia</a>
         </div>
     </div>
     <table class="table">
@@ -60,21 +60,21 @@
                 <td>
                     <button type="button" class="btn btn-primary">
                         <a class="text-light nav-link active"
-                            href="index.php?action=verInfoFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
+                            href="index.php?action=verInfoFaltas&Controller=FaltaAsistencia&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
                             Detalles</a>
                     </button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-success">
                         <a class="text-light nav-link active"
-                            href="index.php?action=EditarFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
+                            href="index.php?action=EditarFaltas&Controller=FaltaAsistencia&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
                             Editar</a>
                     </button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger">
                         <a class="text-light nav-link active"
-                            href="index.php?action=BorrarFaltas&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
+                            href="index.php?action=BorrarFaltas&Controller=FaltaAsistencia&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
                             Eliminar</a>
                     </button>
                 </td>
