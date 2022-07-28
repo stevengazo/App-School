@@ -17,7 +17,7 @@
 
         public static function getInstancia(){
             if(self::$instance == null){
-                self::$instance =new NotasController();            
+                self::$instance =new NotasController();                            
             }
             return self::$instance;
         }
@@ -25,6 +25,7 @@
         function __construct()
         {
             $this->Smarty= new config_smarty();
+            $this->NotaModel = Nota::getInstancia();
         }
         
         function Gestor($accion){
@@ -43,9 +44,9 @@
 
 
         function listaNotas(){
+            $results = $this->NotaModel->obtenerListaNotas();
 
-
-            
+            $this->Smarty->setAssign("ListaNotas",$results);
             $this->Smarty->setAssign("titulo", "Lista de Notas");
 
             $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       

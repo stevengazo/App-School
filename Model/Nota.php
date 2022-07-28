@@ -17,13 +17,19 @@
         /**
          * Funcion para comprobar si hay más de una instancia creada, si no hay, la inicializa
          */
-        public static function getInstance(){
+        public static function getInstancia(){
             if(self::$instancia == null){
                 self::$instancia = new Nota();                
             }
             return self::$instancia;
         }
 
+
+        public function __construct()
+        {
+            
+        }
+        
         /**
          * id: id de la nota a buscar n\
          * Descripción: consulta en la base de datos el id de una nota y devuelve el registro.
@@ -52,17 +58,24 @@
             try{
                 $this->conexionDB= new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
-                $sqlQuery = " SELECT id, asignatura_has_alumno_id , asignatura_has_asignatura_id, trimestre , nota FROM Nota  ";
+                $sqlQuery = "select N.id, trimestre, nota, A.id as alumnoId , A.nombre, A.apellidos, ASG.id as asignaturaId, ASG.nombre as asignaturaNombre from nota as N ";
+                $sqlQuery = $sqlQuery." inner join asignatura_has_alumno as AA on N.asignatura_has_alumno_id = AA.id ";
+                $sqlQuery = $sqlQuery." inner join alumno as A on AA.alumno_id = A.id ";
+                $sqlQuery = $sqlQuery." inner join asignatura as ASG on AA.asignatura_id = ASG.id; ";                                
                 $sqlResult = $this->objConexion->query($sqlQuery);
                 $this->conexionDB->desconectar();
                 $arrayResult = array();
                 while($file = $sqlResult->fetch_assoc()){
                     $arrayTemp = array();
                     $arrayTemp['id'] = $file['id'];
-                    $arrayTemp['asignatura_has_alumno_id'] = $file['asignatura_has_alumno_id'];
-                    $arrayTemp['asignatura_has_asignatura_id'] = $file['asignatura_has_asignatura_id'];
                     $arrayTemp['trimestre'] = $file['trimestre'];
                     $arrayTemp['nota'] = $file['nota'];
+                    $arrayTemp['alumnoId'] = $file['alumnoId'];
+                    $arrayTemp['nombre'] = $file['nombre'];
+                    $arrayTemp['apellidos'] = $file['apellidos'];
+                    $arrayTemp['asignaturaId'] = $file['asignaturaId'];
+                    $arrayTemp['asignaturaNombre'] = $file['asignaturaNombre'];
+
                     $arrayResult[] =$arrayTemp;
                 }
                 return $arrayResult;;

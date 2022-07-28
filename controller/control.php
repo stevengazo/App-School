@@ -27,7 +27,7 @@
         function __construct(){
             $this->Smarty= new config_smarty();
             $this->FaltaAsistencia = Falta_Asistencia::getInstancia();
-            $this->Nota = Nota::getInstance();    
+            $this->Nota = Nota::getInstancia();    
             $this->NotasController = NotasController::getInstancia(); 
             $this->FaltaAsistenciaController = FaltaAsistenciaController::getInstancia();       
         }

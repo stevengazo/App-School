@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                N° Registro
+            </th>
+            <th>
                 Asignatura
             </th>
             <th>
@@ -20,9 +23,6 @@
             </th>
             <th>
                 Trimestre
-            </th>
-            <th>
-                Día
             </th>
             <th>
                 Nota
@@ -33,8 +33,34 @@
         </tr>
     </thead>
     <tbody>
-       
-       
+        {assign var='counter' value={0}}
+        {section name=item loop=$ListaNotas}
+        <tr>
+            <!--N° Registro-->
+            <td>
+                {$ListaNotas[$counter].id}
+            </td>
+            <!--Asignatura-->
+            <td>
+                {$ListaNotas[$counter].asignaturaNombre}
+            </td>
+            <!--Estudiante-->            
+            <td>
+                {$ListaNotas[$counter].apellidos}
+                {$ListaNotas[$counter].nombre}
+            </td>         
+            <!--Trimestre-->            
+            <td>
+                {$ListaNotas[$counter].trimestre}
+            </td>                        
+            <!--Nota-->            
+            <td>
+                {$ListaNotas[$counter].nota}
+            </td>                    
+        </tr>
+        {assign var='counter' value=$counter+1}
+        {/section}
+
     </tbody>
 </table>
 </body>
