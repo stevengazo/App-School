@@ -18,12 +18,12 @@
           <tr>
             <th>id Estudiante</th>
             <!--id Estudiante-->
-            <td>{$ObjetoFaltaAsistencia.alumno_id}</td>
+            <td>{$ObjetoFaltaAsistencia.apellidos} {$ObjetoFaltaAsistencia.nombre} </td>            
           </tr>
           <tr>
             <th>Asignatura</th>
             <!--Id Materia-->
-            <td>{$ObjetoFaltaAsistencia.asignatura_id}</td>
+            <td>{$ObjetoFaltaAsistencia.asignatura}</td>
           </tr>
           <tr>
             <th>Fecha</th>

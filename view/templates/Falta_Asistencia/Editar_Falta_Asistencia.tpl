@@ -17,7 +17,11 @@
                     <label>Id de Alumno</label>
                     <input id="alumno_id" type="text" name="alumno_id" list="lista-Estudiantes" class="form-control" value={$ObjetoFaltaAsistencia.alumno_id} >
                     <datalist id="lista-Estudiantes">
-                        <option>Estudiante</option>
+                        {assign var='counter' value={0}}
+                        {section name=item loop=$ListaAlumnos}
+                        <option value="{$ListaAlumnos[$counter].id}">{$ListaAlumnos[$counter].nombre}</option>
+                        {assign var='counter' value=$counter+1}
+                        {/section}
                     </datalist>
                     <label id="alumnoMessage" class="text-danger"></label>
                 </div>

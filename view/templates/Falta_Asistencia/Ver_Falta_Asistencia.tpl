@@ -25,11 +25,12 @@
                 </tr>
                 <tr>
                     <th>
-                        id Estudiante
+                        Estudiante
                     </th>
                     <!--id Estudiante-->
                     <td>
-                        {$ObjetoFaltaAsistencia.alumno_id}
+                        {$ObjetoFaltaAsistencia.apellidos}
+                        {$ObjetoFaltaAsistencia.nombre}
                     </td>
                 </tr>
                 <tr>
@@ -38,7 +39,7 @@
                     </th>
                     <!--Id Materia-->
                     <td>
-                        {$ObjetoFaltaAsistencia.asignatura_id}
+                        {$ObjetoFaltaAsistencia.asignatura}
                     </td>
                 </tr>
                 <tr>

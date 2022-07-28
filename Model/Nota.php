@@ -36,6 +36,7 @@
                 $sqlQuery = " SELECT * FROM Nota where id = $id  ";
                 $sqlResult = $this->objConexion->query($sqlQuery);
                 $this->conexionDB->desconectar();
+
                 return $sqlQuery;
             }catch(Exception $error){
                 echo "Error in class Nota, function obtenerNota - Error" + $error->getMessage();
@@ -51,10 +52,36 @@
             try{
                 $this->conexionDB= new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
-                $sqlQuery = " SELECT * FROM Nota  ";
+                $sqlQuery = " SELECT id, asignatura_has_alumno_id , asignatura_has_asignatura_id, trimestre , nota FROM Nota  ";
                 $sqlResult = $this->objConexion->query($sqlQuery);
-                $this->objConexion->desconectar();
-                return $sqlQuery;
+                $this->conexionDB->desconectar();
+                $arrayResult = array();
+                while($file = $sqlResult->fetch_assoc()){
+                    $arrayTemp = array();
+                    $arrayTemp['id'] = $file['id'];
+                    $arrayTemp['asignatura_has_alumno_id'] = $file['asignatura_has_alumno_id'];
+                    $arrayTemp['asignatura_has_asignatura_id'] = $file['asignatura_has_asignatura_id'];
+                    $arrayTemp['trimestre'] = $file['trimestre'];
+                    $arrayTemp['nota'] = $file['nota'];
+                    $arrayResult[] =$arrayTemp;
+                }
+                return $arrayResult;;
+            }catch(Exception $error){
+                echo "Error in class Nota, function obtenerListaNotas - Error" + $error->getMessage();
+                return null;
+            }
+        }
+
+        public function getUltimoId(){
+            try{
+                $this->conexionDB= new conexion();
+                $this->objConexion = $this->conexionDB->conectar();
+                $sqlQuery = " SELECT id, asignatura_has_alumno_id , asignatura_has_asignatura_id, trimestre , nota FROM Nota  ";
+                $sqlResult = $this->objConexion->query($sqlQuery);
+                $this->conexionDB->desconectar();
+                
+                
+                //return $arrayResult;;
             }catch(Exception $error){
                 echo "Error in class Nota, function obtenerListaNotas - Error" + $error->getMessage();
                 return null;

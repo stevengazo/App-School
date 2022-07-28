@@ -40,7 +40,9 @@ class Falta_Asistencia
         try{
             $this->conexionDb = new conexion();
             $this->objConexion = $this->conexionDb->conectar();
-            $sqlQuery = "SELECT id, alumno_id,asignatura_id, fecha, justificada FROM falta_asistencia";
+            $sqlQuery = "select falta_asistencia.id, alumno.nombre, alumno.apellidos, asignatura.nombre as nombreAsignatura  , fecha, justificada from falta_asistencia";
+            $sqlQuery = $sqlQuery." inner join alumno on alumno.id = falta_asistencia.alumno_id ";
+            $sqlQuery = $sqlQuery." inner join asignatura on falta_asistencia.asignatura_id = asignatura.id";
             $sqlResults = $this->objConexion->query($sqlQuery);
             $this->conexionDb->desconectar();
 
@@ -48,8 +50,9 @@ class Falta_Asistencia
             while($fila = $sqlResults->fetch_assoc()){
                 $arrayTmp= array();
                 $arrayTmp['id'] = $fila['id'];
-                $arrayTmp['alumno_id'] = $fila['alumno_id'];
-                $arrayTmp['asignatura_id'] = $fila['asignatura_id'];
+                $arrayTmp['nombre'] = $fila['nombre'];
+                $arrayTmp['apellidos'] = $fila['apellidos'];
+                $arrayTmp['asignatura'] = $fila['nombreAsignatura'];
                 $arrayTmp['fecha'] = $fila['fecha'];
                 $arrayTmp['justificada'] = $fila['justificada'];
                 $arrayResult[]= $arrayTmp;
@@ -71,7 +74,10 @@ class Falta_Asistencia
         try{
             $this->conexionDb = new conexion();
             $this->objConexion = $this->conexionDb->conectar();
-            $sqlQuery = "SELECT id, alumno_id,asignatura_id, fecha, justificada FROM falta_asistencia where id = $id";
+            $sqlQuery = "select falta_asistencia.id, alumno.id as alumnoId, asignatura.id as asignaturaId, alumno.nombre, alumno.apellidos, asignatura.nombre as nombreAsignatura , fecha, justificada from falta_asistencia";
+            $sqlQuery = $sqlQuery." inner join alumno on alumno.id = falta_asistencia.alumno_id  ";
+            $sqlQuery = $sqlQuery." inner join asignatura on falta_asistencia.asignatura_id = asignatura.id ";
+            $sqlQuery = $sqlQuery." where falta_asistencia.id = $id ";
             $sqlResults = $this->objConexion->query($sqlQuery);
             $this->conexionDb->desconectar();
 
@@ -79,8 +85,11 @@ class Falta_Asistencia
             while($fila = $sqlResults->fetch_assoc()){
                 $arrayTmp= array();
                 $arrayTmp['id'] = $fila['id'];
-                $arrayTmp['alumno_id'] = $fila['alumno_id'];
-                $arrayTmp['asignatura_id'] = $fila['asignatura_id'];
+                $arrayTmp['alumno_id'] = $fila['alumnoId'];
+                $arrayTmp['asignatura_id'] = $fila['asignaturaId'];
+                $arrayTmp['nombre'] = $fila['nombre'];
+                $arrayTmp['apellidos'] = $fila['apellidos'];
+                $arrayTmp['asignatura'] = $fila['nombreAsignatura'];
                 $arrayTmp['fecha'] = $fila['fecha'];
                 $arrayTmp['justificada'] = $fila['justificada'];
                 $arrayResult[]= $arrayTmp;
@@ -91,6 +100,7 @@ class Falta_Asistencia
             return null;
         }
     }
+    
 
     function getLastId(){
         try{

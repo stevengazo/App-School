@@ -43,6 +43,9 @@
 
 
         function listaNotas(){
+
+
+            
             $this->Smarty->setAssign("titulo", "Lista de Notas");
 
             $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       

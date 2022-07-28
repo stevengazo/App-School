@@ -42,11 +42,12 @@
                 </td>
                 <!--id Estudiante-->
                 <td>
-                    {$ListaFaltasAsistencia[$counter].alumno_id}
+                    {$ListaFaltasAsistencia[$counter].apellidos}
+                    {$ListaFaltasAsistencia[$counter].nombre}                    
                 </td>
                 <!--Id Materia-->
                 <td>
-                    {$ListaFaltasAsistencia[$counter].asignatura_id}
+                    {$ListaFaltasAsistencia[$counter].asignatura}
                 </td>
                 <!--Dia-->
                 <td>
@@ -67,14 +68,14 @@
                 <td>
                     <button type="button" class="btn btn-success">
                         <a class="text-light nav-link active"
-                            href="index.php?action=EditarFaltas&Controller=FaltaAsistencia&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
+                            href="index.php?action=EditarFaltas&Controller=FaltaAsistencia&idFalta={$ListaFaltasAsistencia[$counter].id}">
                             Editar</a>
                     </button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-danger">
                         <a class="text-light nav-link active"
-                            href="index.php?action=BorrarFaltas&Controller=FaltaAsistencia&idFalta={$ListaFaltasAsistencia[$counter].id}">Ver
+                            href="index.php?action=BorrarFaltas&Controller=FaltaAsistencia&idFalta={$ListaFaltasAsistencia[$counter].id}">
                             Eliminar</a>
                     </button>
                 </td>

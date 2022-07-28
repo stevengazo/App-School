@@ -5,12 +5,14 @@
      */
     require_once "libs/smarty4_1_1/config_smarty.php";
     require_once "Model/Falta_Asistencia.php";
+    require_once "Model/alumno.php";
     require_once "connections/conexion.php";
 
     class FaltaAsistenciaController{
         private $Smarty;
         private $FaltaAsistencia;
         private $Nota;
+        private $Alumno;
 
         /**
          * Clase constructora
@@ -18,6 +20,7 @@
         function __construct(){
             $this->Smarty= new config_smarty();
             $this->FaltaAsistencia = Falta_Asistencia::getInstancia();
+            $this->Alumno = Alumno::getInstancia();
         }
 
         /**
@@ -39,9 +42,6 @@
                 case 'ListaFaltaAsistencia':
                     $this->getListaFaltaAsistencia();
                     break;                      
-                case 'ListaFaltaAsistencia':
-                    $this->getListaFaltaAsistencia();
-                    break;   
                 case 'InsertarFaltaAsistencia':
                         $this->getListaFaltaAsistencia();
                         break;  
@@ -98,6 +98,8 @@
                     break;                                
                 case "get": // Recoge informaciòn necesaria y la envia al usuaario para introducir el elemento.
                     $SiguienteId =intval(  $this->FaltaAsistencia->getLastId()) +1; // Trae el ultimo id de la Tabla y le suma uno para el nuevo usuario.
+                    $infoAlumnos = $this->Alumno->obtenerArregloAlumnosSimple();
+                    $this->Smarty->setAssign('ListaAlumnos', $infoAlumnos);
                     $this->Smarty->setAssign('idObjeto', $SiguienteId);
                     
                     $this->Smarty->setAssign('titulo', "Insertar Falta Asistencia");
@@ -133,6 +135,8 @@
                     $this->getEditarFaltaAsistencia("get");
                 }
             }else{
+                $infoAlumnos = $this->Alumno->obtenerArregloAlumnosSimple();
+                $this->Smarty->setAssign('ListaAlumnos', $infoAlumnos);
                 $this->Smarty->setAssign('ObjetoFaltaAsistencia', $results[0]);                    
                 $this->Smarty->setAssign('titulo', "Editar Falta Asistencia");    
                 $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
@@ -142,6 +146,9 @@
                 $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
             }
         }  
+
+
+        
 
         /**
          * Descripción: muestra la ventana para borrar una asistencia
