@@ -36,13 +36,42 @@
                     break;
                 case "CrearNota":
                     $this->getInsertarNota();
+                    break;
+                case "VerNota":
+                    $id = $_REQUEST['idNota'];
+                    $this->VerNota($id);
                     break;                    
                 default:
                     break;
             }
         }
 
+        function VerNota($id){
+            $Result = $this->NotaModel->obtenerNotaPorId($id);
+            $this->Smarty->setAssign("NotaObjecto", $Result[0]);
+            $this->Smarty->setAssign("titulo", "Información Nota");            
+            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+            $this->Smarty->setDisplay("Shared/Head.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+            $this->Smarty->setDisplay("Notas/Ver_Nota.tpl");     
+            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");                   
+        }
 
+        function getInsertarNota(){
+            $id=  $this->NotaModel->getUltimoId() + 1;
+            $this->Smarty->setAssign("titulo", "Crear Nota");
+            $this->Smarty->setAssign("NuevoId", $id);
+            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+            $this->Smarty->setDisplay("Shared/Head.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+            $this->Smarty->setDisplay("Notas/Insertar_Nota.tpl");     
+            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+        }
+
+
+        /**
+         * Descripción: trae la lista de notas completa
+         */
         function listaNotas(){
             $results = $this->NotaModel->obtenerListaNotas();
 
@@ -56,13 +85,4 @@
             $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
         }
 
-        function getInsertarNota(){
-            $this->Smarty->setAssign("titulo", "Crear Nota");
-
-            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
-            $this->Smarty->setDisplay("Shared/Head.tpl");       
-            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
-            $this->Smarty->setDisplay("Notas/Insertar_Nota.tpl");     
-            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
-        }
     }

@@ -57,6 +57,26 @@
             <td>
                 {$ListaNotas[$counter].nota}
             </td>                    
+            <td>
+                <button class="btn btn-primary">
+                    <a class="text-light nav-link active"
+                    href="index.php?action=VerNota&Controller=Notas&idNota={$ListaNotas[$counter].id}">
+                        Ver
+                    </a>
+                </button>
+                <button class="btn btn-success">
+                    <a class="text-light nav-link active"
+                    href="#">
+                        Editar
+                    </a>
+                </button>
+                <button class="btn btn-danger">
+                    <a class="text-light nav-link active"
+                    href="#">
+                        Eliminar
+                    </a>
+                </button>
+            </td>                    
         </tr>
         {assign var='counter' value=$counter+1}
         {/section}

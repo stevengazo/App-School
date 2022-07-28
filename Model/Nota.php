@@ -49,6 +49,38 @@
                 return null;                
             }
         }
+
+
+        public function obtenerNotaPorId($id){
+            try{
+                $this->conexionDB= new conexion();
+                $this->objConexion = $this->conexionDB->conectar();
+                $sqlQuery = "select N.id, trimestre, nota, A.id as alumnoId , A.nombre, A.apellidos, ASG.id as asignaturaId, ASG.nombre as asignaturaNombre from nota as N ";
+                $sqlQuery = $sqlQuery." inner join asignatura_has_alumno as AA on N.asignatura_has_alumno_id = AA.id ";
+                $sqlQuery = $sqlQuery." inner join alumno as A on AA.alumno_id = A.id ";
+                $sqlQuery = $sqlQuery." inner join asignatura as ASG on AA.asignatura_id = ASG.id ";                                
+                $sqlQuery = $sqlQuery." where N.id = $id";
+                $sqlResult = $this->objConexion->query($sqlQuery);
+                $this->conexionDB->desconectar();
+                $arrayResult = array();
+                while($file = $sqlResult->fetch_assoc()){
+                    $arrayTemp = array();
+                    $arrayTemp['id'] = $file['id'];
+                    $arrayTemp['trimestre'] = $file['trimestre'];
+                    $arrayTemp['nota'] = $file['nota'];
+                    $arrayTemp['alumnoId'] = $file['alumnoId'];
+                    $arrayTemp['nombre'] = $file['nombre'];
+                    $arrayTemp['apellidos'] = $file['apellidos'];
+                    $arrayTemp['asignaturaId'] = $file['asignaturaId'];
+                    $arrayTemp['asignaturaNombre'] = $file['asignaturaNombre'];
+                    $arrayResult[] =$arrayTemp;
+                }
+                return $arrayResult;
+            }catch(Exception $error){
+                echo "Error in class Nota, function obtenerListaNotas - Error".$error->getMessage();
+                return null;
+            }
+        }
     
         /**
          * Descripción: Consulta la base de datos y retorna todas las notas existentes. \n
@@ -85,15 +117,19 @@
             }
         }
 
+        /*
+         * Descripción: Trae el ultimo id registrado en la base de datos 
+         */
         public function getUltimoId(){
             try{
                 $this->conexionDB= new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
-                $sqlQuery = " SELECT id, asignatura_has_alumno_id , asignatura_has_asignatura_id, trimestre , nota FROM Nota  ";
+                $sqlQuery = " SELECT id from nota order by id desc limit 1 ";
                 $sqlResult = $this->objConexion->query($sqlQuery);
-                $this->conexionDB->desconectar();
-                
-                
+                $this->conexionDB->desconectar();                
+                while($file = $sqlResult->fetch_assoc()){
+                    return $file['id'];
+                }
                 //return $arrayResult;;
             }catch(Exception $error){
                 echo "Error in class Nota, function obtenerListaNotas - Error" + $error->getMessage();

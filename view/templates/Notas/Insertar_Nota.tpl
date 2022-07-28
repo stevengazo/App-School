@@ -8,7 +8,7 @@
     <div class="form">
         <div class="form-group">
             <label>Id Nota</label>
-            <input type="text" class="form-control" id="Etiqueta1" readonly />
+            <input type="text" class="form-control" id="Etiqueta1" value="{$NuevoId}" readonly />
         </div>
         <div class="form-group">
             <label>Asignatura</label>
