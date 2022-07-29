@@ -6,6 +6,7 @@
     require_once "libs/smarty4_1_1/config_smarty.php";
     require_once "Model/Falta_Asistencia.php";
     require_once "Model/alumno.php";
+    require_once "Model/Asignatura.php";
     require_once "connections/conexion.php";
 
     class FaltaAsistenciaController{
@@ -13,6 +14,7 @@
         private $FaltaAsistencia;
         private $Nota;
         private $Alumno;
+        private $AsignaturaModel;
 
         /**
          * Clase constructora
@@ -21,6 +23,7 @@
             $this->Smarty= new config_smarty();
             $this->FaltaAsistencia = Falta_Asistencia::getInstancia();
             $this->Alumno = Alumno::getInstancia();
+            $this->AsignaturaModel = Asignatura::getInstancia();
         }
 
         /**
@@ -99,9 +102,10 @@
                 case "get": // Recoge informaciòn necesaria y la envia al usuaario para introducir el elemento.
                     $SiguienteId =intval(  $this->FaltaAsistencia->getLastId()) +1; // Trae el ultimo id de la Tabla y le suma uno para el nuevo usuario.
                     $infoAlumnos = $this->Alumno->obtenerArregloAlumnosSimple();
+                    $listaAsignaturas = $this->AsignaturaModel->obtenerArregloAsignaturaSimple();
                     $this->Smarty->setAssign('ListaAlumnos', $infoAlumnos);
                     $this->Smarty->setAssign('idObjeto', $SiguienteId);
-                    
+                    $this->Smarty->setAssign("listaAsignatura", $listaAsignaturas);
                     $this->Smarty->setAssign('titulo', "Insertar Falta Asistencia");
 
                     $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       

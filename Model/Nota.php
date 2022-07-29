@@ -51,6 +51,9 @@
         }
 
 
+        /**
+         * Descripción: obtiene la nota por medio de un id
+         */
         public function obtenerNotaPorId($id){
             try{
                 $this->conexionDB= new conexion();
@@ -142,17 +145,17 @@
          * Descripción: Inserta en la base de datos una nueva nota 
          * Retorna: retorna el id si la inserto, false si presento algún error
          */
-       public function insertaNota($id, $asignatura_has_alumno_alumno_id , $asignatura_has_asignatura_id,$trimestre, $nota){
+       public function insertaNota($id, $asignatura_has_alumno_id,$trimestre, $nota){
             try{
                 $this->conexionDB= new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
-                $sqlQuery = " INSERT INTO Nota (    id, asignatura_has_alumno_alumno_id , asignatura_has_asignatura_id, trimestre, nota) ";
-                $sqlQuery .= " values            ($id, $asignatura_has_alumno_alumno_id , $asignatura_has_asignatura_id, $trimestre, $nota)"; 
+                $sqlQuery = " INSERT INTO nota(id, asignatura_has_alumno_id,trimestre, nota) ";
+                $sqlQuery = $sqlQuery." values ($id,$asignatura_has_alumno_id,$trimestre,$nota) "; 
                 $sqlResult = $this->objConexion->query($sqlQuery);
                 $this->conexionDB->desconectar();
                 return true;
             }catch(Exception $error){
-                echo "Error in class Nota, function insertaNota - Error" + $error->getMessage();
+                echo "Error in class Nota, function insertaNota - Error". $error->getMessage();
                 return false;
             }
         }

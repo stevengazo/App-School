@@ -5,14 +5,19 @@
      */
     require_once "libs/smarty4_1_1/config_smarty.php";
     require_once "Model/Falta_Asistencia.php";
+    require_once "Model/Asignatura.php";
     require_once "connections/conexion.php";
     require_once "Model/Nota.php";
+    require_once "Model/Asignatura_has_Alumno.php";
 
     class NotasController{
 
         private $Smarty;
         private $NotaModel;
         public static $instance;
+        private $AsignaturaModel;
+        private $AlumnoModel;
+        private $Asignatura_has_AlumnoModel;
     
 
         public static function getInstancia(){
@@ -26,17 +31,24 @@
         {
             $this->Smarty= new config_smarty();
             $this->NotaModel = Nota::getInstancia();
+            $this->AsignaturaModel = Asignatura::getInstancia();
+            $this->AlumnoModel= Alumno::getInstancia();
+            $this->Asignatura_has_AlumnoModel= Asignatura_has_Alumno::getInstancia();
         }
         
         function Gestor($accion){
-                        
+
             switch ($accion) {
                 case "listaNotas":
                     $this->listaNotas();
                     break;
                 case "CrearNota":
-                    $this->getInsertarNota();
+                    $this->getInsertarNota("get");
                     break;
+                case "frmInsertarNota":
+
+                    $this->getInsertarNota("post");
+                    break;                    
                 case "VerNota":
                     $id = $_REQUEST['idNota'];
                     $this->VerNota($id);
@@ -57,15 +69,39 @@
             $this->Smarty->setDisplay("Shared/LayoutClose.tpl");                   
         }
 
-        function getInsertarNota(){
-            $id=  $this->NotaModel->getUltimoId() + 1;
-            $this->Smarty->setAssign("titulo", "Crear Nota");
-            $this->Smarty->setAssign("NuevoId", $id);
-            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
-            $this->Smarty->setDisplay("Shared/Head.tpl");       
-            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
-            $this->Smarty->setDisplay("Notas/Insertar_Nota.tpl");     
-            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+        function getInsertarNota($method){
+            if($method == "post"){
+                // Post
+
+               $id = $_REQUEST['id'];
+                $asignatura_has_alumno_id = $_REQUEST['asignatura_has_alumno_id'];
+                $trimestre = $_REQUEST['trimestre'];
+                $nota = $_REQUEST['nota'];
+                $flag= $this->NotaModel->insertaNota($id,$asignatura_has_alumno_id, $trimestre,$nota);
+                if($flag){
+                    $this->VerNota($id);
+                }else{
+                    echo "error al ingresar";
+                }
+
+            }else{
+                // Get
+                $listaAlumnos = $this->AlumnoModel->obtenerArregloAlumnosSimple();
+                $listaAsignaturas = $this->AsignaturaModel->obtenerArregloAsignaturaSimple();
+                $listAsigAlum = $this->Asignatura_has_AlumnoModel->getArregloAsigAlum();
+                $id=  $this->NotaModel->getUltimoId() + 1;
+                $this->Smarty->setAssign("ListAsigAlum",  $listAsigAlum);
+                $this->Smarty->setAssign("listaAlumnos", $listaAlumnos);
+                $this->Smarty->setAssign("listaAsignatura", $listaAsignaturas);
+                $this->Smarty->setAssign("titulo", "Crear Nota");
+                $this->Smarty->setAssign("NuevoId", $id);
+                $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+                $this->Smarty->setDisplay("Shared/Head.tpl");       
+                $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+                $this->Smarty->setDisplay("Notas/Insertar_Nota.tpl");     
+                $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+            }
+
         }
 
 

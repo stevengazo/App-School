@@ -31,6 +31,35 @@
         }
 
 
+
+
+        /**
+         * Descripción: solamente regresa el id de la asignatura, nombre
+         */
+        function obtenerArregloAsignaturaSimple(){
+            try{
+                $this->conexionDb = new conexion();
+                $this->objConexion = $this->conexionDb->conectar();
+                $sqlQuery = "select id, nombre from asignatura";
+                $sqlResults = $this->objConexion->query($sqlQuery);
+                $this->conexionDb->desconectar();
+    
+                $arrayResult = array();                
+                while($fila = $sqlResults->fetch_assoc()){
+                    $arrayTmp= array();
+                    $arrayTmp['id'] = $fila['id'];
+                    $arrayTmp['nombre'] = $fila['nombre'];                    
+                    $arrayResult[]= $arrayTmp;
+                }
+                return $arrayResult;
+            }catch(Exception $error){
+                echo "Error in obtenerArregloAsignaturaSimple. Error".$error->getMessage();
+                return array();
+            }
+        }
+
+
+
         /**
          * Descripción: solamente regresa el id del alumno, nombre y apellido
          */

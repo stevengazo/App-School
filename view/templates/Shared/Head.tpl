@@ -9,6 +9,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text"></script>
 
         <script src="js/templates/utilsFaltaAsistencia.js" ></script>
+        <script src="js/templates/utilsNotas.js" ></script>
     <!-- Title-->
-    <title>{$titulo}}</title>
+    <title>{$titulo}</title>
 </head>

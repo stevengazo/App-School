@@ -33,7 +33,11 @@
                     <input type="text" id="asignatura_id" name="asignatura_id" list="lista-asignatura"
                         class="form-control">
                     <datalist id="lista-asignatura">
-                        <option>Asignatura</option>
+                        {assign var='counter' value={0}}
+                        {section name=item loop=$listaAsignatura}
+                        <option value="{$listaAsignatura[$counter].id}">{$listaAsignatura[$counter].nombre}</option>
+                        {assign var='counter' value=$counter+1}
+                        {/section}
                     </datalist>
                     <label id="asignaturaMessage" class="text-danger"></label>
                 </div>

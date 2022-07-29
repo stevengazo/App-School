@@ -28,9 +28,9 @@
         /* 
             Instancia de la clase para uso de singleton
         */
-     /*  public static $instance = null;
-        /*
-            Funcion estatica para implementacion Singleton
+       public static $instance = null;
+      
+           // Funcion estatica para implementacion Singleton
         
         public static function getInstance(){
             if(self::$instance == null){
@@ -38,7 +38,7 @@
             }
             return self::$instance;
         }
-        */
+        
         /**
          * Funcion para conectar con la DB
          */
