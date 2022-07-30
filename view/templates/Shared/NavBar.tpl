@@ -36,6 +36,19 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Asignaturas
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Agregar Asignatura</a>                        
+                        <!--  <li><hr class="dropdown-divider"></li> -->
+                        <li><hr class="dropdown-divider"></li>
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Matricula Estudiantes - Asignaturas</a>                        
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Lista Estudiantes - Asignaturas</a>                        
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Busqueda Estudiantes - Asignaturas</a>                        
+                    </ul>
+                </li>                
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Profesores</a>
                 </li>
@@ -44,9 +57,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Administracion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Asignaturas</a>
                 </li>
             </ul>
         </div>

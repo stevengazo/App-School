@@ -29,12 +29,128 @@
         {
            // $this->conexionDB= conexion::getInstance();
         }
-        
+
+    
+        /**
+         * Descripción: insertar un nuevo elemento en la base de datps
+         */
+        function Insertar(){   
+            throw new Exception("Not Implement", 1);            
+            try{
+                $this->conexionDB = new conexion();
+                $this->objConexion = $this->conexionDB->conectar();
+                // COMANDOS SQL A SER EJECUTADOS
+                $sqlQuery = "";
+                $sqlResult = $this->objConexion->query($sqlQuery);
+                $this->conexionDB->desconectar();
+                return true;
+            }catch(Exception $error){
+                // DISPARA ERROR
+                echo "Error in class Asignatura_has_alumno, function Insertar - Error" + $error->getMessage();
+                return false;
+            }   
+        }
+        /**
+         * Descripción: elimina un elemneto de la base de datos
+         */
+        function Eliminar(){  
+            throw new Exception("Not Implement", 1);             
+            try{
+                $this->conexionDB = new conexion();
+                $this->objConexion = $this->conexionDB->conectar();
+                // COMANDOS SQL A SER EJECUTADOS
+                $sqlQuery = "";
+                $sqlResult = $this->objConexion->query($sqlQuery);
+                $this->conexionDB->desconectar();
+                return true;
+            }catch(Exception $error){
+                // DISPARA ERROR
+                echo "Error in class Asignatura_has_alumno, function Insertar - Error" + $error->getMessage();
+                return false;
+            }   
+        }
+        /**
+         * Descripción: Modifica un elemento de la base de datos
+         */
+        function Editar(){   
+            try{
+                $this->conexionDB = new conexion();
+                $this->objConexion = $this->conexionDB->conectar();
+                // COMANDOS SQL A SER EJECUTADOS
+                $sqlQuery = "";
+                $sqlResult = $this->objConexion->query($sqlQuery);
+                $this->conexionDB->desconectar();
+                return true;
+            }catch(Exception $error){
+                // DISPARA ERROR
+                echo "Error in class Asignatura_has_alumno, function Insertar - Error" + $error->getMessage();
+                return false;
+            }   
+        }
+        /**
+         * Descripción: Busca un elemento dentro de la base de datos
+         */
+        function Buscar(){  
+            throw new Exception("Not Implement", 1);             
+            try{
+                $this->conexionDB = new conexion();
+                $this->objConexion = $this->conexionDB->conectar();
+                // COMANDOS SQL A SER EJECUTADOS
+                $sqlQuery = "";
+                $sqlResult = $this->objConexion->query($sqlQuery);
+                $this->conexionDB->desconectar();
+                
+                // RECORRIDO DEL RESULTADO Y GENERACIÓN DE ARREGLO 2 DIMENSIONES
+                $arrayResult = array();                
+                while($fila = $sqlResult->fetch_assoc()){
+                    $arrayTmp= array();
+                    $arrayTmp['id'] = $fila['id'];
+                    $arrayTmp['asignatura_id'] = $fila['asignatura_id'];
+                    $arrayTmp['alumno_id'] = $fila['alumno_id'];
+                    $arrayResult[]= $arrayTmp;
+                }
+                return $arrayResult;
+            }catch(Exception $error){
+                // DISPARA ERROR
+                echo "Error in class Asignatura_has_alumno, function Busqueda - Error" + $error->getMessage();
+                return array();
+            }   
+        }
+        /**
+         * Descripción: Busca un registro existente y si este existe en la base de datos, 
+         * retorna un true
+         */
+        function ExisteRegistro(){ 
+            throw new Exception("Not Implement", 1);              
+            try{
+                $this->conexionDB = new conexion();
+                $this->objConexion = $this->conexionDB->conectar();
+                // COMANDOS SQL A SER EJECUTADOS
+                $sqlQuery = "";
+                $sqlResult = $this->objConexion->query($sqlQuery);
+                $this->conexionDB->desconectar();
+                
+                // RECORRIDO DEL RESULTADO Y GENERACIÓN DE ARREGLO 2 DIMENSIONES
+                $arrayResult = array();                
+                while($fila = $sqlResult->fetch_assoc()){
+                    $arrayTmp= array();
+                    $arrayTmp['id'] = $fila['id'];
+                    $arrayTmp['asignatura_id'] = $fila['asignatura_id'];
+                    $arrayTmp['alumno_id'] = $fila['alumno_id'];
+                    $arrayResult[]= $arrayTmp;
+                }
+                return $arrayResult;
+            }catch(Exception $error){
+                // DISPARA ERROR
+                echo "Error in class Asignatura_has_alumno, function Busqueda - Error" + $error->getMessage();
+                return array();
+            }   
+        }
 
         /**
          * Descripción: Devuelve un arreglo de las asignaturas y los alumnos inscritos en ellas
          */
-        function getArregloAsigAlum(){
+        function getArregloAsigAlum(){            
             try{
                 $this->conexionDB = new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
