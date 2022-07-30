@@ -60,9 +60,50 @@
                 case "frmEditarNota":
                         $id = $_REQUEST['id'];
                         $this->EditarNota($id, "post");                    
-                default:
+                        break;        
+                case "EliminarNota":
+                    $id = $_REQUEST['idNota'];
+                    $this->EliminarNota($id, "get");                    
+                    break;
+                case "EliminarNotaPost":
+                        $id = $_REQUEST['idNota'];
+                        $this->EliminarNota($id, "post");                    
+                        break;                    
+            default:
                     break;
             }
+        }
+
+
+        function  EliminarNota($id,$metodo){
+            if($metodo=="get"){
+                $Result = $this->NotaModel->obtenerNotaPorId($id);
+                $this->Smarty->setAssign("NotaObjecto", $Result[0]);            
+                $this->Smarty->setAssign("titulo", "Información Nota");            
+                $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+                $this->Smarty->setDisplay("Shared/Head.tpl");       
+                $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+                $this->Smarty->setDisplay("Notas/Eliminar_nota.tpl");     
+                $this->Smarty->setDisplay("Shared/LayoutClose.tpl");
+            }else if($metodo== "post"){
+                echo "post delete note";
+                $flagResult = $this->NotaModel->borrarNota($id);
+                if($flagResult){
+                    $results = $this->NotaModel->obtenerListaNotas();
+
+                    $this->Smarty->setAssign("ListaNotas",$results);
+                    $this->Smarty->setAssign("titulo", "Lista de Notas");
+        
+                    $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+                    $this->Smarty->setDisplay("Shared/Head.tpl");       
+                    $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+                    $this->Smarty->setDisplay("Notas/ListaNotas.tpl");     
+                    $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+                }else{
+                    echo "post delete note";
+                }
+            }
+            
         }
 
         /**
@@ -111,6 +152,8 @@
                     $this->Smarty->setDisplay("Shared/LayoutClose.tpl");                   
                 }   else{
                     echo "error.. no se modifico la nota";
+
+                    
                 }             
 
                 

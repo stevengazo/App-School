@@ -71,7 +71,7 @@
                 </button>
                 <button class="btn btn-danger">
                     <a class="text-light nav-link active"
-                    href="#">
+                    href="index.php?action=EliminarNota&Controller=Notas&idNota={$ListaNotas[$counter].id}">                    
                         Eliminar
                     </a>
                 </button>
