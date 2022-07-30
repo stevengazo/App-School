@@ -58,7 +58,7 @@
             try{
                 $this->conexionDB= new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
-                $sqlQuery = "select N.id, trimestre, nota, A.id as alumnoId , A.nombre, A.apellidos, ASG.id as asignaturaId, ASG.nombre as asignaturaNombre from nota as N ";
+                $sqlQuery = "select N.id, trimestre, nota,AA.id as asignatura_has_alumno_id  , A.id as alumnoId , A.nombre, A.apellidos, ASG.id as asignaturaId, ASG.nombre as asignaturaNombre from nota as N ";
                 $sqlQuery = $sqlQuery." inner join asignatura_has_alumno as AA on N.asignatura_has_alumno_id = AA.id ";
                 $sqlQuery = $sqlQuery." inner join alumno as A on AA.alumno_id = A.id ";
                 $sqlQuery = $sqlQuery." inner join asignatura as ASG on AA.asignatura_id = ASG.id ";                                
@@ -72,6 +72,7 @@
                     $arrayTemp['trimestre'] = $file['trimestre'];
                     $arrayTemp['nota'] = $file['nota'];
                     $arrayTemp['alumnoId'] = $file['alumnoId'];
+                    $arrayTemp['asignatura_has_alumno_id']= $file['asignatura_has_alumno_id'];
                     $arrayTemp['nombre'] = $file['nombre'];
                     $arrayTemp['apellidos'] = $file['apellidos'];
                     $arrayTemp['asignaturaId'] = $file['asignaturaId'];
@@ -120,6 +121,22 @@
             }
         }
 
+        public function UpdateNota($id,$asigAlumTmp,$notaTmp,$trimestreTmp){
+            try{
+                $this->conexionDB= new conexion();
+                $this->objConexion = $this->conexionDB->conectar();
+                $sqlQuery = " UPDATE nota ";
+                $sqlQuery = $sqlQuery." SET asignatura_has_alumno_id = $asigAlumTmp , trimestre = $trimestreTmp , nota = $notaTmp ";
+                $sqlQuery = $sqlQuery." where id = $id ";
+                $sqlResult = $this->objConexion->query($sqlQuery);
+                $this->conexionDB->desconectar();                
+                return true;
+            }catch(Exception $error){
+                echo "Error in class Nota, function getUltimoId - Error" + $error->getMessage();
+                return false;
+            }
+        }
+
         /*
          * Descripción: Trae el ultimo id registrado en la base de datos 
          */
@@ -135,7 +152,7 @@
                 }
                 //return $arrayResult;;
             }catch(Exception $error){
-                echo "Error in class Nota, function obtenerListaNotas - Error" + $error->getMessage();
+                echo "Error in class Nota, function getUltimoId - Error" + $error->getMessage();
                 return null;
             }
         }

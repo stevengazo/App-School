@@ -5,8 +5,7 @@
             </h4>
             <p>
                 A continuación se muestran las faltas realizadas por los estudiantes
-            </p>
-            <a href="index.php?action=InsertarAusencia&Controller=FaltaAsistencia">Agregar Nueva Ausencia</a>
+            </p>            
         </div>
     </div>
     <table class="table">

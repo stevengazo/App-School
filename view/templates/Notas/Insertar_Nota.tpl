@@ -1,6 +1,6 @@
 <div>
     <h4>
-        Insertar Falta de Asistencia
+        Insertar Nota
     </h4>
     <p>
         Por Favor seleccione la información e introduzca lo necesario.
@@ -33,7 +33,11 @@
             </div>           
             <div class="form-group">
                 <label>Trimestre</label>
-                <input type="number" class="form-control" name="trimestre"  id="trimestre" placeholder="Numero de Trimestre" />
+                <select type="number" class="form-control" name="trimestre"  id="trimestre" placeholder="Numero de Trimestre" > 
+                 <option value="1">Primer Trimestre</option>
+                    <option value="2">Segundo Trimestre</option>
+                    <option value="2">Tercer Trimestre</option>
+                </select>
                 <label id="trimestreMessage" class="text-danger"></label>
             </div>
             <div class="form-group">

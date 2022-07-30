@@ -52,12 +52,22 @@
                 case "VerNota":
                     $id = $_REQUEST['idNota'];
                     $this->VerNota($id);
-                    break;                    
+                    break;                         
+                case "EditarNotaGet":
+                    $id = $_REQUEST['idNota'];
+                    $this->EditarNota($id, "get");
+                    break;
+                case "frmEditarNota":
+                        $id = $_REQUEST['id'];
+                        $this->EditarNota($id, "post");                    
                 default:
                     break;
             }
         }
 
+        /**
+         * Permite ver una nota en especifico
+         */
         function VerNota($id){
             $Result = $this->NotaModel->obtenerNotaPorId($id);
             $this->Smarty->setAssign("NotaObjecto", $Result[0]);
@@ -69,6 +79,49 @@
             $this->Smarty->setDisplay("Shared/LayoutClose.tpl");                   
         }
 
+        function EditarNota($id, $metodo){
+            if($metodo == "get"){
+                $listAsigAlum = $this->Asignatura_has_AlumnoModel->getArregloAsigAlum();                              
+                $this->Smarty->setAssign("ListAsigAlum",  $listAsigAlum);
+                $tmpObjet = $this->NotaModel->obtenerNotaPorId($id);
+                $this->Smarty->setAssign("titulo", "Editar Nota");
+                $this->Smarty->setAssign("ObjetoNota", $tmpObjet[0]);
+                $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+                $this->Smarty->setDisplay("Shared/Head.tpl");       
+                $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+                $this->Smarty->setDisplay("Notas/Editar_Nota.tpl");     
+                $this->Smarty->setDisplay("Shared/LayoutClose.tpl");                       
+            }else if($metodo=="post"){
+                echo "metodo".$metodo;
+                $tmpObjet = $this->NotaModel->obtenerNotaPorId($id);
+                $tmpObjet = $tmpObjet[0];                
+                $trimestreTmp = $_REQUEST['trimestre'];                
+                $notaTmp = $_REQUEST['nota'];                
+                $notaTmp = $_REQUEST['nota'];
+                $asigAlumTmp = $_REQUEST['asignatura_has_alumno_id'];
+                $flagResult = $this->NotaModel->UpdateNota($id,$asigAlumTmp,$notaTmp,$trimestreTmp);
+                if($flagResult){
+                    $Result = $this->NotaModel->obtenerNotaPorId($id);
+                    $this->Smarty->setAssign("NotaObjecto", $Result[0]);
+                    $this->Smarty->setAssign("titulo", "Información Nota");            
+                    $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+                    $this->Smarty->setDisplay("Shared/Head.tpl");       
+                    $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+                    $this->Smarty->setDisplay("Notas/Ver_Nota.tpl");     
+                    $this->Smarty->setDisplay("Shared/LayoutClose.tpl");                   
+                }   else{
+                    echo "error.. no se modifico la nota";
+                }             
+
+                
+          
+          }
+        }
+
+        /**
+         * Gestiona la inserción de una nueva nota 
+         * Usa un get y post para mostrar y obtener información
+         */
         function getInsertarNota($method){
             if($method == "post"){
                 // Post
@@ -93,6 +146,7 @@
                 $this->Smarty->setAssign("ListAsigAlum",  $listAsigAlum);
                 $this->Smarty->setAssign("listaAlumnos", $listaAlumnos);
                 $this->Smarty->setAssign("listaAsignatura", $listaAsignaturas);
+                
                 $this->Smarty->setAssign("titulo", "Crear Nota");
                 $this->Smarty->setAssign("NuevoId", $id);
                 $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       

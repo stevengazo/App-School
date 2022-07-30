@@ -10,10 +10,31 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php?action=ListaFaltaAsistencia&Controller=FaltaAsistencia">Ausencias</a>
+                    
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.php?action=listaNotas&Controller=Notas">Notas</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ausencias
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">                        
+                        <li>
+                            <a class="dropdown-item" href="index.php?action=ListaFaltaAsistencia&Controller=FaltaAsistencia">Lista Ausencias</a>
+                        <li>
+                            <a class="dropdown-item" href="index.php?action=InsertarAusencia&Controller=FaltaAsistencia">Agregar Ausencia</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Notas
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Agregar nuevo registo de nota</a>                        
+                        <!--  <li><hr class="dropdown-divider"></li> -->
+                        <li>
+                            <a class="dropdown-item" href="index.php?action=listaNotas&Controller=Notas">Listar Notas</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Profesores</a>

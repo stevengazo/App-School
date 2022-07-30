@@ -5,8 +5,7 @@
         </h4>
         <p>
             A continuación se muestra las notas registradas
-        </p>
-        <a href="index.php?Controller=Notas&action=CrearNota">Agregar nuevo registo de nota</a>
+        </p>        
     </div>
 </div>
 <table class="table">
@@ -66,7 +65,7 @@
                 </button>
                 <button class="btn btn-success">
                     <a class="text-light nav-link active"
-                    href="#">
+                    href="index.php?action=EditarNotaGet&Controller=Notas&idNota={$ListaNotas[$counter].id}">
                         Editar
                     </a>
                 </button>
