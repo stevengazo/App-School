@@ -181,5 +181,24 @@
                 return array();
             }   
         }
+        /**
+         * Descripción: Devuelve un arreglo de las asignaturas y los alumnos inscritos en ellas
+         */
+        function getUltimoId(){            
+            try{
+                $this->conexionDB = new conexion();
+                $this->objConexion = $this->conexionDB->conectar();
+                $sqlQuery = " select  id from Asignatura_has_alumno order by id desc limit 1 ";                
+                $sqlResult = $this->objConexion->query($sqlQuery);
+                $this->conexionDB->desconectar();               
+                while($fila = $sqlResult->fetch_assoc()){
+                  return  $fila['id'];
+
+                }
+            }catch(Exception $error){
+                echo "Error in class Asignatura_has_alumno, function getUltimoId - Error" + $error->getMessage();
+                return null;
+            }   
+        }
 
     }

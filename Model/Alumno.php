@@ -41,7 +41,7 @@
                 $sqlQuery = "SELECT id, nombre, apellidos from  alumno";
                 $sqlResults = $this->objConexion->query($sqlQuery);
                 $this->conexionDb->desconectar();
-    
+                
                 $arrayResult = array();                
                 while($fila = $sqlResults->fetch_assoc()){
                     $arrayTmp= array();

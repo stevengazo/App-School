@@ -7,6 +7,7 @@
     require_once "connections/conexion.php";
     require_once "Model/Nota.php";
     require_once "controller/NotasController.php";
+    require_once "controller/AsignaturaHasAlumnoController.php";
     /**
      * Controladores
      */
@@ -20,6 +21,7 @@
         private $Nota;
         private $FaltaAsistenciaController;
         private $NotasController;
+        private $AsignaturaHasAlumnoController;
 
         /**
          * Funcion constructora
@@ -30,6 +32,8 @@
             $this->Nota = Nota::getInstancia();    
             $this->NotasController = NotasController::getInstancia(); 
             $this->FaltaAsistenciaController = FaltaAsistenciaController::getInstancia();       
+            $this->AsignaturaHasAlumnoController = AsignaturaHasAlumnoController::getInstancia();
+
         }
 
         /**
@@ -77,6 +81,9 @@
                 case 'FaltaAsistencia':
                         $this->FaltaAsistenciaController->Gestor($action);
                         break;                                    
+                case 'AsignaturaHasAlumno':
+                    $this->AsignaturaHasAlumnoController->Gestor($action);
+                    break;                                                            
                 default:     
                     $this->index();
                     break;

@@ -72,8 +72,9 @@
                         <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Agregar Asignatura</a>                        
                         <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Ver Asignatura</a>                        
                         <li><hr class="dropdown-divider"></li>
-                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Matricula Estudiante - Asignatura</a>                        
+                        <a class="dropdown-item" href="index.php?Controller=AsignaturaHasAlumno&action=PostInsertar">Matricula Estudiante - Asignatura</a>                        
                         <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Buscar Estudiante - Asignatura</a>   
+                        <a class="dropdown-item" href="index.php?Controller=AsignaturaHasAlumno&action=Listar">Ver Estudiante - Asignatura</a>   
                     </ul>
                 </li>  
             </ul>

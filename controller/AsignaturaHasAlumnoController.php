@@ -42,7 +42,7 @@
         function Gestor($accion){
             switch ($accion) {
                 case 'Listar':
-                    # code...
+                   $this->Listar();
                     break;                
                 case 'GetBusqueda':
                     # code...
@@ -54,7 +54,7 @@
                     # code...
                     break;                                    
                 case 'PostInsertar':
-                    # code...
+                    $this->GetInsertar();
                     break;                            
                 case 'GetEditar':
                     # code...
@@ -75,6 +75,35 @@
             }
         }
 
+
+    function GetInsertar(){
+       $ArregloAlumnos = $this->AlumnoModel->obtenerArregloAlumnosSimple();
+       $ArregloAsignaturas =  $this->AsignaturaModel->obtenerArregloAsignaturaSimple();
+       $Id =  $this->Asignatura_has_AlumnoModel->getUltimoId()+1;
+
+       $this->Smarty->setAssign("id",$Id);
+       $this->Smarty->setAssign("arregloAlumnos", $ArregloAlumnos);
+       $this->Smarty->setAssign("ArregloAsignaturas", $ArregloAsignaturas);
+       $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+       $this->Smarty->setDisplay("Shared/Head.tpl");       
+       $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+       $this->Smarty->setDisplay("Asignatura_has_alumno/Insertar_Asig_has_Alum.tpl");     
+       $this->Smarty->setDisplay("Shared/LayoutClose.tpl");              
+
+
+    }
+
+
+    function Listar(){
+        $ArrayAsigHasAlumn = $this->Asignatura_has_AlumnoModel->getArregloAsigAlum();
+
+        $this->Smarty->setAssign("ArreglosObjetos", $ArrayAsigHasAlumn);
+        $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+        $this->Smarty->setDisplay("Shared/Head.tpl");       
+        $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+        $this->Smarty->setDisplay("Asignatura_has_alumno/Listar_Asig_has_alumno.tpl");     
+        $this->Smarty->setDisplay("Shared/LayoutClose.tpl");       
+    }
 
 
     }
