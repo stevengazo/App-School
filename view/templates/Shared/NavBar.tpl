@@ -41,10 +41,9 @@
                         Asignaturas
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Agregar Asignatura</a>                        
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Ver Asignaturas</a>                        
                         <!--  <li><hr class="dropdown-divider"></li> -->
-                        <li><hr class="dropdown-divider"></li>
-                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Matricula Estudiantes - Asignaturas</a>                        
+                        <li><hr class="dropdown-divider"></li>                        
                         <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Lista Estudiantes - Asignaturas</a>                        
                         <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Busqueda Estudiantes - Asignaturas</a>                        
                     </ul>
@@ -53,11 +52,30 @@
                     <a class="nav-link active" href="#">Profesores</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Asistencia</a>
+                    <a class="nav-link active" href="#">Estudiantes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Administracion</a>
-                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Administración
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Matricula Estudiante</a>                        
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Busqueda Estudiante</a>                        
+                        <li><hr class="dropdown-divider"></li>                        
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Inscripción Profesor</a>                        
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Busqueda Profesor</a>                                            
+                        <li><hr class="dropdown-divider"></li>
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Creación Horarios</a>                        
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Consulta Horarios</a>                        
+                        <!--  <li><hr class="dropdown-divider"></li> -->
+                        <li><hr class="dropdown-divider"></li>
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Agregar Asignatura</a>                        
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Ver Asignatura</a>                        
+                        <li><hr class="dropdown-divider"></li>
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Matricula Estudiante - Asignatura</a>                        
+                        <a class="dropdown-item" href="index.php?Controller=Notas&action=CrearNota">Buscar Estudiante - Asignatura</a>   
+                    </ul>
+                </li>  
             </ul>
         </div>
     </div>
