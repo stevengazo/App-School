@@ -141,7 +141,6 @@ class Falta_Asistencia
             echo "Error in insertarFaltaAsistencia- Class Falta_Asistencia.php;<hr>Error ".$error->getMessage();
             return null;
         }  
-
     }
     /**
      * 
@@ -152,7 +151,7 @@ class Falta_Asistencia
             $this->conexionDb = new conexion();
             $this->objConexion = $this->conexionDb->conectar();
             // QUERY PARA INGRESAR A LA DB
-            $sqlQuery = "UPDATE falta_asistencia  ";
+           $sqlQuery = "UPDATE falta_asistencia  ";
             $sqlQuery = $sqlQuery." set  alumno_id = $alumno_id, asignatura_id = $asignatura_id, fecha = '$fecha', justificada = '$justificada'";
             $sqlQuery = $sqlQuery." WHERE id = $id;";
             $sqlResults = $this->objConexion->query($sqlQuery);
