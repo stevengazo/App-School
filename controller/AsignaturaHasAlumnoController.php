@@ -51,10 +51,10 @@
                     # code...
                     break;                                        
                 case 'GetInsertar':
-                    # code...
+                    $this->Insertar("get");
                     break;                                    
                 case 'PostInsertar':
-                    $this->GetInsertar();
+                    $this->Insertar("post");
                     break;                            
                 case 'GetEditar':
                     # code...
@@ -76,21 +76,34 @@
         }
 
 
-    function GetInsertar(){
-       $ArregloAlumnos = $this->AlumnoModel->obtenerArregloAlumnosSimple();
-       $ArregloAsignaturas =  $this->AsignaturaModel->obtenerArregloAsignaturaSimple();
-       $Id =  $this->Asignatura_has_AlumnoModel->getUltimoId()+1;
-
-       $this->Smarty->setAssign("id",$Id);
-       $this->Smarty->setAssign("arregloAlumnos", $ArregloAlumnos);
-       $this->Smarty->setAssign("ArregloAsignaturas", $ArregloAsignaturas);
-       $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
-       $this->Smarty->setDisplay("Shared/Head.tpl");       
-       $this->Smarty->setDisplay("Shared/NavBar.tpl");       
-       $this->Smarty->setDisplay("Asignatura_has_alumno/Insertar_Asig_has_Alum.tpl");     
-       $this->Smarty->setDisplay("Shared/LayoutClose.tpl");              
-
-
+    function Insertar($metodo){
+        $id =0;
+        $id_alumno=0;
+        $id_asignatuara=0;
+        if($metodo == "post"){
+            if(isset($_REQUEST['asignatura_id'])){                 
+                $id_asignatuara = $_REQUEST['asignatura_id']; 
+            }
+            if(isset($_REQUEST['alumno_id'])){ 
+                $id_alumno = $_REQUEST['alumno_id']; 
+            }
+            if(isset($_REQUEST['id'])){ 
+                $id_alumno = $_REQUEST['id']; 
+            }
+            //$BanderaEncontrado = $this->Asignatura_has_AlumnoModel->();
+        }else{
+            $ArregloAlumnos = $this->AlumnoModel->obtenerArregloAlumnosSimple();
+            $ArregloAsignaturas =  $this->AsignaturaModel->obtenerArregloAsignaturaSimple();
+            $Id =  $this->Asignatura_has_AlumnoModel->getUltimoId()+1;     
+            $this->Smarty->setAssign("id",$Id);
+            $this->Smarty->setAssign("arregloAlumnos", $ArregloAlumnos);
+            $this->Smarty->setAssign("ArregloAsignaturas", $ArregloAsignaturas);
+            $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
+            $this->Smarty->setDisplay("Shared/Head.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+            $this->Smarty->setDisplay("Asignatura_has_alumno/Insertar_Asig_has_Alum.tpl");     
+            $this->Smarty->setDisplay("Shared/LayoutClose.tpl");              
+        }
     }
 
 

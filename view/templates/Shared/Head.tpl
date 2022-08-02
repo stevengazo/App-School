@@ -10,6 +10,7 @@
 
         <script src="js/templates/utilsFaltaAsistencia.js" ></script>
         <script src="js/templates/utilsNotas.js" ></script>
+        <script src="js/templates/utilsAsignaturaHasAlumno.js" ></script>
     <!-- Title-->
     <title>{$titulo}</title>
 </head>

@@ -94,13 +94,16 @@
         /**
          * Descripción: Busca un elemento dentro de la base de datos
          */
-        function Buscar(){  
+        function Buscar($id_asignatura, $id_alumno){  
             throw new Exception("Not Implement", 1);             
             try{
                 $this->conexionDB = new conexion();
                 $this->objConexion = $this->conexionDB->conectar();
                 // COMANDOS SQL A SER EJECUTADOS
-                $sqlQuery = "";
+                $sqlQuery = " SELECT * FROM ASIGNATURA_HAS_ALUMNO AS AHA ";
+                $sqlQuery = $sqlQuery." WHERE AHA.ASIGNATURA_ID = $id_asignatura AND AHA.ALUMNO_ID =$id_alumno  ";
+
+                
                 $sqlResult = $this->objConexion->query($sqlQuery);
                 $this->conexionDB->desconectar();
                 

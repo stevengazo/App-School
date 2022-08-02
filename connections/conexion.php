@@ -43,6 +43,8 @@
          * Funcion para conectar con la DB
          */
          function conectar(){
+            
+
             $this->conn = mysqli_connect($this->host,$this->usuario,$this->contrasena,$this->dbName);
             if(!$this->conn){
                 echo "Error, no se conecto a la DB"  +  $this->host + $this->dbName;            
