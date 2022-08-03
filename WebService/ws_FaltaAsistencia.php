@@ -34,7 +34,8 @@
     function UpdateNota(){
         # CADENA DE CONEXIÓN
         $flag= true;
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");            
+        $linkConnection =  mysqli_connect("localhost","root","","testingdb");   
+        # VALIDACIONES          
         if(isset($_REQUEST['faltaAsistenciaId'])){
             $id = $_REQUEST['faltaAsistenciaId'];
         }else{
@@ -42,22 +43,25 @@
             http_response_code(500);
             print json_encode($rtn);
             $flag = false;
+            exit;                   
         }
         if(isset($_REQUEST['alumno_id'])){
             $alumno_id = $_REQUEST['alumno_id'];
         }else{
-            $rtn = array("id", "3", "error", "faltaAsistenciaId no especificado");
+            $rtn = array("id", "3", "error", "alumno_id no especificado");
             http_response_code(500);
             print json_encode($rtn);
-            $flag = false;            
+            $flag = false;      
+            exit;                         
         }
         if(isset($_REQUEST['asignatura_id'])){
             $asignatura_id = $_REQUEST['asignatura_id'];
         }else{
-            $rtn = array("id", "3", "error", "faltaAsistenciaId no especificado");
+            $rtn = array("id", "3", "error", "asignatura_id no especificado");
             http_response_code(500);
             print json_encode($rtn);
-            $flag = false;            
+            $flag = false;     
+            exit;       
         }
         if(isset($_REQUEST['fecha'])){
             $fecha = $_REQUEST['fecha'];
@@ -65,7 +69,8 @@
             $rtn = array("id", "3", "error", "fecha no especificado");
             http_response_code(500);
             print json_encode($rtn);
-            $flag = false;            
+            $flag = false;          
+            exit;       
         }
         if(isset($_REQUEST['justificada'])){
             $justificada = $_REQUEST['justificada'];
@@ -74,6 +79,7 @@
             http_response_code(500);
             print json_encode($rtn);
             $flag = false;
+            exit;       
         }
         if($flag){
             # CODIGO SQL
@@ -92,7 +98,8 @@
     function BorrarNota(){
         # CADENA DE CONEXIÓN
         $flag = TRUE;
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");            
+        $linkConnection =  mysqli_connect("localhost","root","","testingdb");    
+        # VALIDACIONES          
         if(isset($_REQUEST['faltaAsistenciaId'])){
             $id = $_REQUEST['faltaAsistenciaId'];
         }else{
@@ -100,8 +107,10 @@
             http_response_code(500);
             print json_encode($rtn);
             $flag = false;
+            exit;
         }
         if($flag){
+            # CODIGO SQL
             $sqlQuery = "DELETE FROM falta_asistencia WHERE id = $id";
             $sqlResults = $linkConnection->query($sqlQuery);
             /* RETORNA JSON */             
@@ -120,12 +129,14 @@
         # CADENA DE CONEXIÓN
         $linkConnection =  mysqli_connect("localhost","root","","testingdb");            
 
+        # Validaciones        
         if(isset($_REQUEST['faltaAsistenciaId'])){
             $id = $_REQUEST['faltaAsistenciaId'];
         }else{
             $rtn = array("id", "3", "error", "faltaAsistenciaId no especificado");
             http_response_code(500);
             print json_encode($rtn);
+            exit;
         }
         if(isset($_REQUEST['alumno_id'])){
             $alumno_id = $_REQUEST['alumno_id'];
@@ -133,6 +144,7 @@
             $rtn = array("id", "3", "error", "faltaAsistenciaId no especificado");
             http_response_code(500);
             print json_encode($rtn);
+            exit;
         }
         if(isset($_REQUEST['asignatura_id'])){
             $asignatura_id = $_REQUEST['asignatura_id'];
@@ -140,6 +152,7 @@
             $rtn = array("id", "3", "error", "faltaAsistenciaId no especificado");
             http_response_code(500);
             print json_encode($rtn);
+            exit;
         }
         if(isset($_REQUEST['fecha'])){
             $fecha = $_REQUEST['fecha'];
@@ -147,6 +160,7 @@
             $rtn = array("id", "3", "error", "fecha no especificado");
             http_response_code(500);
             print json_encode($rtn);
+            exit;
         }
         if(isset($_REQUEST['justificada'])){
             $justificada = $_REQUEST['justificada'];
@@ -154,6 +168,7 @@
             $rtn = array("id", "3", "error", "justificada no especificado");
             http_response_code(500);
             print json_encode($rtn);
+            exit;
         }
         # CODIGO SQL
         $sqlQuery = "INSERT INTO falta_asistencia( id, alumno_id,asignatura_id, fecha, justificada) ";
@@ -176,6 +191,7 @@
             $sqlQuery = $sqlQuery." inner join alumno on alumno.id = falta_asistencia.alumno_id ";
             $sqlQuery = $sqlQuery." inner join asignatura on falta_asistencia.asignatura_id = asignatura.id";
         $sqlResults = $linkConnection->query($sqlQuery);
+        # Procesado de la respuesta
         $arrayResult = array();
         while($fila = $sqlResults->fetch_assoc()){
             $arrayTmp= array();
@@ -207,6 +223,7 @@
             $sqlQuery = $sqlQuery." inner join asignatura on falta_asistencia.asignatura_id = asignatura.id ";
             $sqlQuery = $sqlQuery." where falta_asistencia.id = $id ";
             $sqlResults = $linkConnection->query($sqlQuery);
+            # Procesado de la respuesta
             $arrayResult = array();
             while($fila = $sqlResults->fetch_assoc()){
                 $arrayTmp= array();
