@@ -198,12 +198,8 @@
          /**
          * Descripción: Trae la lista de ausencias existentes
          */
-        function getListaFaltaAsistencia(){
-            $results = $this->FaltaAsistencia->obtenerListaFaltaAsistencia();
-        
-            $this->Smarty->setAssign('ListaFaltasAsistencia', $results);
+        function getListaFaltaAsistencia(){          
             $this->Smarty->setAssign('titulo', "Lista Ausencias");
-
             $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
             $this->Smarty->setDisplay("Shared/Head.tpl");       
             $this->Smarty->setDisplay("Shared/NavBar.tpl");       

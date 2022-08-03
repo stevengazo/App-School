@@ -8,6 +8,12 @@ function onclickClean() {
   document.getElementById("justificada").value = "";
 }
 
+
+function Prueba(){
+  alert("sample");
+  console.log("sample");
+}
+
 /*
   Descripciòn: Valida la informaciòn en los inputs 
   y envia el formulario al servidor.
