@@ -48,13 +48,9 @@
              */
             for (let i = 0; i < data.length; i++) {
                 console.log(data[i]);                
-                /*
-                    atributos
-                */
-
+                /*atributos*/
                 // CREACIÒN DE FILA
-                const row = document.createElement("tr");
-                
+                const row = document.createElement("tr");                
                 // CREACIÒN DE CELDA
                 const celdaId = document.createElement("td");
                 celdaId.innerText = data[i].id;
