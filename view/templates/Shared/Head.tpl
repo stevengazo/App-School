@@ -16,6 +16,20 @@
         <script src="js/templates/utilsFaltaAsistencia.js" ></script>
         <script src="js/templates/utilsNotas.js" ></script>
         <script src="js/templates/utilsAsignaturaHasAlumno.js" ></script>
+
+
+            <!--- Scripts para las acciones -->
+        <script src="js/templates/Administradores.js"  ></script>
+        <script src="js/templates/Alumno.js"  ></script>
+        <script src="js/templates/AsignaturaHasAlumno.js"  ></script>
+        <script src="js/templates/Asignatura.js"  ></script>
+        <script src="js/templates/FaltaAsistencia.js"  ></script>
+        <script src="js/templates/Horarios.js"  ></script>
+        <script src="js/templates/Nivel.js"  ></script>
+        <script src="js/templates/Profesor.js"  ></script>
+
+
+
     <!-- Title-->
     <title>{$titulo}</title>
 </head>

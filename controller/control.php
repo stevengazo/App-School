@@ -6,8 +6,23 @@
     require_once "Model/Falta_Asistencia.php";
     require_once "connections/conexion.php";
     require_once "Model/Nota.php";
-    require_once "controller/NotasController.php";
+
+    /**
+     * Controladores
+     * Cuando "control" es invocado, este recibe un controlador y le 
+     * envia la acción a este.
+     */
+    
+    require_once "controller/AdministradorController.php";
+    require_once "controller/AlumnoController.php";
+    require_once "controller/AsignaturaController.php";    
     require_once "controller/AsignaturaHasAlumnoController.php";
+    require_once "controller/FaltaAsistenciaController.php";
+    require_once "controller/HorariosController.php";    
+    require_once "controller/NivelController.php";
+    require_once "controller/NotasController.php";
+    require_once "controller/ProfesorController.php";
+
     /**
      * Controladores
      */
@@ -17,11 +32,23 @@
          * vARIABLES INTERNAS DE LA CLASE
          */
         private $Smarty;
+
+        private $AdministradorController;
+        private $AlumnoController;
+        private $AsignaturaController;
+        private $AsignaturaHasAlumnoController;
+        private $FaltaAsistenciaController;
+        private $HorariosController;
+        private $NivelController;
+        private $NotasController;
+        private $ProfesorController;
+
         private $FaltaAsistencia;
         private $Nota;
-        private $FaltaAsistenciaController;
-        private $NotasController;
-        private $AsignaturaHasAlumnoController;
+        
+        
+    
+
 
         /**
          * Funcion constructora
@@ -58,7 +85,8 @@
             // llamada a la interfaz    
             $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
             $this->Smarty->setDisplay("Shared/Head.tpl");       
-            $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+            $this->Smarty->setDisplay("Shared/NavBar.tpl");   
+            $this->Smarty->setDisplay("Shared/body.tpl");   
             $this->Smarty->setDisplay("Shared/LayoutClose.tpl");                      
         }
 
@@ -78,6 +106,9 @@
                 case 'Notas':
                     $this->NotasController->Gestor($action);
                     break;   
+                    case 'Profesor':
+                        $this->ProfesorController->Gestor($action);
+                        break;                       
                 case 'FaltaAsistencia':
                         $this->FaltaAsistenciaController->Gestor($action);
                         break;                                    

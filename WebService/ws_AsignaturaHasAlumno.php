@@ -113,7 +113,8 @@
     function UPdate(){
         try {
             // Conexión 
-            $linkConnection =  mysqli_connect("localhost","root","","testingdb");         if(ISSET($_REQUEST['asigAlum_id'])){
+            $linkConnection =  mysqli_connect("localhost","root","","testingdb");         
+            if(ISSET($_REQUEST['asigAlum_id'])){
                 $id = $_REQUEST['asigAlum_id'];
                 }
                 if(ISSET($_REQUEST['asignatura_id'])){
@@ -142,7 +143,8 @@
     function InsertAHA(){
         try {
         // Conexión 
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");         if(ISSET($_REQUEST['asigAlum_id'])){
+        $linkConnection =  mysqli_connect("localhost","root","","testingdb");         
+        if(ISSET($_REQUEST['asigAlum_id'])){
             $id = $_REQUEST['asigAlum_id'];
             }
             if(ISSET($_REQUEST['asignatura_id'])){

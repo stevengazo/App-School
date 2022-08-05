@@ -175,7 +175,7 @@
         # EJECUCIÓN CODIGO
         $sqlResult = $linkConnection->query($sqlQuery);              
         # PROCESADO DE RESULTADOS
-        $arrayResult = array();
+        $arrayResult = array();        
         while($file = $sqlResult->fetch_assoc()){
             $arrayTemp = array();
             $arrayTemp['id'] = $file['id'];                        
