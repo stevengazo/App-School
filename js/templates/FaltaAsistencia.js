@@ -148,22 +148,77 @@ function PostInsertFaltaAsistencia(
 /**
  * Trae vista para modificar
  */
-function GetUpdateFaltaAsistencia() {
-  alert("View");
+function GetUpdateFaltaAsistencia(id) {  
   $.ajax({
     type: "GET",
-    url: "http://localhost/app_School/WebService/ws_FaltaAsistencia.php",
+    url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?type=elementById&id=${id}`,
     data: {},
     success: (data) => {
+      const objectElement = JSON.parse(data);
+      const htmlElements = `
+        <div>
+          <div>
+              <h4>
+                  Actualizar Falta de Asistencia
+              </h4>
+              <div class="d-flex flex-row justify-content-between">
+                <p>
+                    Por Favor seleccione la información e introduzca lo necesario.
+                </p>
+                <a href="http://localhost/app_school/" class="btn btn-sm btn-info text-dark">Regresar a la lista</a>
+              </div>
+
+              <div>
+                  <form action="index.php" method="post" id="frmInsercionAusencia" name="frmInsercionAusencia">
+                      <div class="from-group">
+                          <label>Id </label>
+                          <input id="id" type="number" name="id" class="form-control" readonly value="${objectElement.id}"}>
+                          <label id="idMessage" class="text-danger"></label>
+                      </div>
+                      <div class="from-group">
+                          <label>Id de Alumno</label>
+                          <input id="alumno_id" type="text" name="alumno_id" list="lista-Estudiantes" class="form-control" value="${objectElement.alumno_id}"></input>
+                          <datalist id="lista-Estudiantes">
+                          <option value="0">Seleccione</option>
+                              <option value=""></option>
+                          </datalist>
+                          <label id="alumnoMessage" class="text-danger"></label>
+                      </div>
+                      <div class="from-group">
+                          <label>Id de Asignatura </label>
+                          <input type="text" id="asignatura_id" name="asignatura_id" list="lista-asignatura" value="${objectElement.asignatura_id}"
+                              class="form-control">
+                          <datalist id="lista-asignatura">
+                              <option value=""></option>                              
+                          </datalist>
+                          <label id="asignaturaMessage" class="text-danger"></label>
+                      </div>
+                      <div class="from-group">
+                          <label>Fecha </label>
+                          <input type="date" id="fecha" name="fecha" class="form-control" value="${objectElement.fecha}" >
+                          <label id="FechaMessage" class="text-danger"></label>
+                      </div>
+                      <div class="from-group">
+                          <label>Justificacion </label>
+                          <textarea id="justificada" name="justificada" class="form-control" >${objectElement.justificada}</textarea>
+                          <label id="JustificadaMessage" class="text-danger"></label>
+                      </div>
+                      <div class="from-group row">
+                          <button type="button" onclick="onvalid()" class="col-sm-5 col-md-6 btn-outline-info btn">
+                              Agregar</button>
+                          <button type="button" onclick="onclickClean()" class="col-sm-5 col-md-6 btn-outline-success btn">
+                              Limpiar</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+        `;
       $("#renderbody").empty();
-      $("#renderbody").html(data);
+      $("#renderbody").html(htmlElements);
     },
-    error: (error) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(error);
-      console.error(error);
-    },
-  });
+    error: (error) => {},
+  }); 
 }
 
 /**

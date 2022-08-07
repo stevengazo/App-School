@@ -240,7 +240,24 @@ function ListarElementos()
                 }                
                 http_response_code(200);
                 print json_encode($result);
-                break;            
+                break;  
+            case 'elementById':
+                if(isset($_REQUEST['id'])){
+                    $id = $_REQUEST['id'];
+                    $sqlQuery = "select * from falta_asistencia where id= $id";
+                    $sqlResults = $linkConnection->query($sqlQuery);
+                    $arraResult = array();
+                    while ($fila = $sqlResults->fetch_assoc()) {
+                        $arraResult['id']= $fila['id'];
+                        $arraResult['alumno_id']= $fila['alumno_id'];
+                        $arraResult['asignatura_id']= $fila['asignatura_id'];
+                        $arraResult['fecha']= $fila['fecha'];
+                        $arraResult['justificada']= $fila['justificada'];
+                    }
+                    http_response_code(200);
+                    print json_encode($arraResult);
+                }
+                break;          
             default:
                 $rtn = array("id", "3", "error", "type no especificado");
                 http_response_code(500);
