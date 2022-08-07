@@ -25,7 +25,7 @@ function ViewListaAusencia() {
  */
 function ViewFaltaAsistencia(idFaltaAsistencia) {
   $.ajax({
-    type: "",
+    type: "VIEW",
     url:
       "http://localhost/app_School/WebService/ws_FaltaAsistencia.php?faltaAsistenciaId=" +
       idFaltaAsistencia,
@@ -323,6 +323,7 @@ function PostDeleteFaltaAsistencia(id) {
     url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?faltaAsistenciaId=${id}`,
     data: {},
     success: (data) => {
+      // RETORNA LISTA DE AUSENCIAS EXISTENTES
       ViewListaAusencia();
     },
     error: (error) => {
