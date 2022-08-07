@@ -14,14 +14,10 @@
     <div>
         <table class="table">
             <tbody>
-                <tr>
-                    <th>
-                        id Falta de Asistencia
-                    </th>
+                <tr> 
+                <th>  id Falta de Asistencia </th>
                     <!--id-->
-                    <td>
-                        {$ObjetoFaltaAsistencia.id}
-                    </td>
+                    <td> {$ObjetoFaltaAsistencia.id} </td>
                 </tr>
                 <tr>
                     <th>

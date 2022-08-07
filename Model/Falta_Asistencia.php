@@ -109,9 +109,9 @@ class Falta_Asistencia
             $sqlQuery = "select id from falta_asistencia order by id desc limit 1";
             $sqlResults = $this->objConexion->query($sqlQuery);
             $this->conexionDb->desconectar();
-            $result = null;
+            $result = array();
             while($fila = $sqlResults->fetch_assoc()){
-                $result= $fila['id'];                
+                $result['id']= $fila['id'];                
             }
             
             return $result;
