@@ -165,11 +165,11 @@ function GetUpdateFaltaAsistencia(id) {
                 <p>
                     Por Favor seleccione la información e introduzca lo necesario.
                 </p>
-                <a href="http://localhost/app_school/" class="btn btn-sm btn-info text-dark">Regresar a la lista</a>
+                <button type="text" onclick="ViewListaAusencia()" class="btn btn-sm btn-info text-dark">Regresar a la lista</button>
               </div>
 
               <div>
-                  <form action="index.php" method="post" id="frmInsercionAusencia" name="frmInsercionAusencia">
+                  <form action="index.php"  id="frmInsercionAusencia" name="frmInsercionAusencia">
                       <div class="from-group">
                           <label>Id </label>
                           <input id="id" type="number" name="id" class="form-control" readonly value="${objectElement.id}"}>
@@ -203,13 +203,11 @@ function GetUpdateFaltaAsistencia(id) {
                           <textarea id="justificada" name="justificada" class="form-control" >${objectElement.justificada}</textarea>
                           <label id="JustificadaMessage" class="text-danger"></label>
                       </div>
-                      <div class="from-group row">
-                          <button type="button" onclick="onvalid()" class="col-sm-5 col-md-6 btn-outline-info btn">
-                              Agregar</button>
-                          <button type="button" onclick="onclickClean()" class="col-sm-5 col-md-6 btn-outline-success btn">
-                              Limpiar</button>
-                      </div>
                   </form>
+                  <div class="form-group row">
+                    <button type="text" onclick="editData()" class="col-sm-5 col-md-6 btn-outline-info btn">Editar</button>
+                    <button type="text onclick="" class="col-sm-5 col-md-6 btn-outline-success btn"> Limpiar</button>
+                  </div>                  
               </div>
           </div>
       </div>
@@ -224,14 +222,13 @@ function GetUpdateFaltaAsistencia(id) {
 /**
  * Envia vista modifiada
  */
-function PostUpdateFaltaAsistencia() {
+function PostUpdateFaltaAsistencia(id,alumno,asignatura,fecha,justificada) {
   $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_FaltaAsistencia.php",
+    type: "PUT",
+    url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?faltaAsistenciaId=${id}&alumno_id=${alumno}&asignatura_id=${asignatura}&fecha=${fecha}&justificada=${justificada}`,
     data: {},
     success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
+      ViewFaltaAsistencia(id);      
     },
     error: (error) => {
       $("#renderbody").empty();
@@ -382,11 +379,6 @@ function editData() {
   const justificada = document.getElementById("justificada");
 
   let flag = false;
-
-  console.log(
-    ` - ${alumno.value} -${asignatura.value} -${fecha.value} - ${justificada.value}`
-  );
-
   /* valudaciones de nulos */
   if (alumno.value == "" || alumno.value == null) {
     document.getElementById("alumnoMessage").innerText =
@@ -412,17 +404,9 @@ function editData() {
       "El valor no puede ser nulo";
     flag = true;
   }
-  /* llama al servidor */
+  /* ENVIO INFORMACIÒN */
   if (!flag) {
-    const frm = document.getElementById("frmEdicionAusencia");
-
-    const valueController = document.createElement("input");
-    valueController.name = "Controller";
-    valueController.type = "hidden";
-    valueController.value = "FaltaAsistencia";
-
-    frm.appendChild(valueController);
-
-    frm.submit();
+    
+     PostUpdateFaltaAsistencia(id.value,alumno.value,asignatura.value,fecha.value,justificada.value);         
   }
 }
