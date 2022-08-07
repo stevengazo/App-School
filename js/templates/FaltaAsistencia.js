@@ -25,7 +25,7 @@ function ViewListaAusencia() {
  */
 function ViewFaltaAsistencia(idFaltaAsistencia) {
   $.ajax({
-    type: "VIEW",
+    type: "",
     url:
       "http://localhost/app_School/WebService/ws_FaltaAsistencia.php?faltaAsistenciaId=" +
       idFaltaAsistencia,
@@ -52,7 +52,7 @@ function GetInsertFaltaAsistencia() {
     data: {},
     success: (data) => {
       const jsonObject = JSON.parse(data);
-      const id = parseInt(jsonObject["id"])   +1;      
+      const id = parseInt(jsonObject["id"]) + 1;
       const htmlElements = `
         <div>
           <div>
@@ -113,7 +113,7 @@ function GetInsertFaltaAsistencia() {
       $("#renderbody").html(htmlElements);
     },
     error: (error) => {},
-  }); 
+  });
 }
 
 /**
@@ -134,7 +134,7 @@ function PostInsertFaltaAsistencia(
     success: (data) => {
       console.log("sucesss");
       debugger;
-      ViewFaltaAsistencia(id); 
+      ViewFaltaAsistencia(id);
     },
     error: (error) => {
       console.error(error + "No se inserto el elemento");
@@ -148,7 +148,7 @@ function PostInsertFaltaAsistencia(
 /**
  * Trae vista para modificar
  */
-function GetUpdateFaltaAsistencia(id) {  
+function GetUpdateFaltaAsistencia(id) {
   $.ajax({
     type: "GET",
     url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?type=elementById&id=${id}`,
@@ -216,19 +216,19 @@ function GetUpdateFaltaAsistencia(id) {
       $("#renderbody").html(htmlElements);
     },
     error: (error) => {},
-  }); 
+  });
 }
 
 /**
  * Envia vista modifiada
  */
-function PostUpdateFaltaAsistencia(id,alumno,asignatura,fecha,justificada) {
+function PostUpdateFaltaAsistencia(id, alumno, asignatura, fecha, justificada) {
   $.ajax({
     type: "PUT",
     url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?faltaAsistenciaId=${id}&alumno_id=${alumno}&asignatura_id=${asignatura}&fecha=${fecha}&justificada=${justificada}`,
     data: {},
     success: (data) => {
-      ViewFaltaAsistencia(id);      
+      ViewFaltaAsistencia(id);
     },
     error: (error) => {
       $("#renderbody").empty();
@@ -245,13 +245,66 @@ function GetDeleteFaltaAsistencia(idFaltaAsistencia) {
   const faltaAsistenciaId = idFaltaAsistencia;
   $.ajax({
     type: "GET",
-    url: "http://localhost/app_School/WebService/ws_FaltaAsistencia.php",
-    data: {
-      faltaAsistenciaId,
-    },
+    url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?type=elementById&id=${idFaltaAsistencia}`,
+    data: {},
     success: (data) => {
+      const jsonObject = JSON.parse(data);
+      const htmlRender = `
+          <div>
+          <div>
+            <h4>Borrar la información de la Falta en la Asistencia</h4>
+            <p>
+              A continuación se muestran la información de la falta Seleccionada
+            </p>
+          </div>
+        </div>
+        <div>
+          <table class="table">
+            <tbody>
+            
+              <tr>
+                <th>id Falta de Asistencia</th>
+                <!--id-->
+                <td id="objId"> ${jsonObject['id']}</td>
+              </tr>
+              <tr>
+                <th>id Estudiante</th>
+                <!--id Estudiante-->
+                <td>  ${jsonObject['nombre']} ${jsonObject['apellidos']} </td>            
+              </tr>
+              <tr>
+                <th>Asignatura</th>
+                <!--Id Materia-->
+                <td>${jsonObject['asignatura']}</td>
+              </tr>
+              <tr>
+                <th>Fecha</th>
+                <!--Dia-->
+                <td>${jsonObject['fecha']}</td>
+              </tr>
+              <tr>
+                <th>Justificación</th>
+                <!--Motivo-->
+                <td>${jsonObject['justificada']}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <button
+              class="btn btn-outline-danger"
+              type="text"
+              onclick="PostDeleteFaltaAsistencia(${jsonObject['id']})"
+            >
+              Eliminar Archivo
+            </button>
+              <button onclick="ViewListaAusencia()" type="text" class="btn btn-info " >Volver Atras</button>
+          </div>
+        </div>
+      </body>
+    
+      `;
       $("#renderbody").empty();
-      $("#renderbody").html(data);
+      $("#renderbody").html(htmlRender);
     },
     error: (error) => {
       $("#renderbody").empty();
@@ -264,14 +317,13 @@ function GetDeleteFaltaAsistencia(idFaltaAsistencia) {
 /**
  * confirma la eliminación
  */
-function PostDeleteFaltaAsistencia() {
+function PostDeleteFaltaAsistencia(id) {
   $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_FaltaAsistencia.php",
+    type: "DELETE",
+    url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?faltaAsistenciaId=${id}`,
     data: {},
     success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
+      ViewListaAusencia();
     },
     error: (error) => {
       $("#renderbody").empty();
@@ -338,38 +390,17 @@ function onvalid() {
   if (!flag) {
     // envia el formulario al servidor
     debugger;
-    PostInsertFaltaAsistencia(id.value,alumno.value,asignatura.value,fecha.value,justificada.value);
+    PostInsertFaltaAsistencia(
+      id.value,
+      alumno.value,
+      asignatura.value,
+      fecha.value,
+      justificada.value
+    );
   }
 }
 
-function onDeleteElement(event) {
-  // creación de formulario
-  const frm = document.createElement("form");
-  frm.action = "index.php";
 
-  const intPutmp1 = document.createElement("input");
-  intPutmp1.name = "action";
-  intPutmp1.value = "setBorrarFaltas";
-
-  const inputId = document.createElement("input");
-  inputId.name = "id";
-
-  const valueId = document.getElementById("objId").innerText;
-  console.log(`id ausencia: ${valueId}`);
-  inputId.value = valueId;
-
-  const valueController = document.createElement("input");
-  valueController.name = "Controller";
-  valueController.type = "hidden";
-  valueController.value = "FaltaAsistencia";
-
-  frm.appendChild(valueController);
-  frm.appendChild(intPutmp1);
-  frm.appendChild(inputId);
-  frm.style.display = "none";
-  document.body.appendChild(frm);
-  frm.submit();
-}
 
 function editData() {
   const id = document.getElementById("id");
@@ -406,7 +437,12 @@ function editData() {
   }
   /* ENVIO INFORMACIÒN */
   if (!flag) {
-    
-     PostUpdateFaltaAsistencia(id.value,alumno.value,asignatura.value,fecha.value,justificada.value);         
+    PostUpdateFaltaAsistencia(
+      id.value,
+      alumno.value,
+      asignatura.value,
+      fecha.value,
+      justificada.value
+    );
   }
 }

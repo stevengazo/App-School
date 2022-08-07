@@ -244,15 +244,21 @@ function ListarElementos()
             case 'elementById':
                 if(isset($_REQUEST['id'])){
                     $id = $_REQUEST['id'];
-                    $sqlQuery = "select * from falta_asistencia where id= $id";
+                    $sqlQuery = "select falta_asistencia.id, alumno.id as alumnoId, asignatura.id as asignaturaId, alumno.nombre, alumno.apellidos, asignatura.nombre as nombreAsignatura , fecha, justificada from falta_asistencia";                    
+                    $sqlQuery = $sqlQuery." inner join alumno on alumno.id = falta_asistencia.alumno_id  ";
+                    $sqlQuery = $sqlQuery." inner join asignatura on falta_asistencia.asignatura_id = asignatura.id ";
+                    $sqlQuery = $sqlQuery." where falta_asistencia.id = $id ";
                     $sqlResults = $linkConnection->query($sqlQuery);
                     $arraResult = array();
                     while ($fila = $sqlResults->fetch_assoc()) {
-                        $arraResult['id']= $fila['id'];
-                        $arraResult['alumno_id']= $fila['alumno_id'];
-                        $arraResult['asignatura_id']= $fila['asignatura_id'];
-                        $arraResult['fecha']= $fila['fecha'];
-                        $arraResult['justificada']= $fila['justificada'];
+                        $arraResult['id'] = $fila['id'];
+                        $arraResult['alumno_id'] = $fila['alumnoId'];
+                        $arraResult['asignatura_id'] = $fila['asignaturaId'];
+                        $arraResult['nombre'] = $fila['nombre'];
+                        $arraResult['apellidos'] = $fila['apellidos'];
+                        $arraResult['asignatura'] = $fila['nombreAsignatura'];
+                        $arraResult['fecha'] = $fila['fecha'];
+                        $arraResult['justificada'] = $fila['justificada'];
                     }
                     http_response_code(200);
                     print json_encode($arraResult);
