@@ -48,11 +48,16 @@
                 $arrayTmp['alumno_id'] = $fila['alumno_id'];
                 $arrayTmp['alumnoNombre'] = $fila['nombreAlumno'];
                 $arrayTmp['alumnoApellidos'] = $fila['apellidosAlumno'];
-                $arrayResult[]= $arrayTmp;
+                /* RETORNA JSON */             
+                http_response_code(200);
+                //header("Content-Type: application/json");
+                echo json_encode($arrayTmp);
             }   
-            /* RETORNA JSON */             
-            header("Content-Type: application/json");
-            echo json_encode($arrayResult);                  
+                 
+        }else{
+            $rtn = array("id", "3", "error", "asigAlum_id no definido");
+            http_response_code(500);
+            print json_encode($rtn);            
         }
     }
     /**
@@ -67,20 +72,64 @@
         $sqlQuery = $sqlQuery." inner join alumno as AL  on AsigAlumn.alumno_id = AL.id ";  
         $sqlQuery = $sqlQuery." group by AsigAlumn.id ";                    
         $sqlResult = $linkConnection->query($sqlQuery);
-        $arrayResult = array();                
-        while($fila = $sqlResult->fetch_assoc()){
-            $arrayTmp= array();
-            $arrayTmp['id'] = $fila['id'];
-            $arrayTmp['asignatura_id'] = $fila['asignatura_id'];
-            $arrayTmp['asignaturaNombre'] = $fila['asignaturaNombre'];
-            $arrayTmp['alumno_id'] = $fila['alumno_id'];
-            $arrayTmp['alumnoNombre'] = $fila['alumnoNombre'];
-            $arrayTmp['alumnoApellidos'] = $fila['alumnoApellidos'];
-            $arrayResult[]= $arrayTmp;
-        }   
-        /* RETORNA JSON */             
-        header("Content-Type: application/json");
-        echo json_encode($arrayResult);                  
+        $arrayResult = array();   
+        
+        
+        $htmlElements = '
+                    <div>
+                        <div>
+                            <h4>
+                                Lista de Alumnos y Asignaturas
+                            </h4>
+                            <p>
+                                A continuación se muestran los alumnos matriculados en las asignaturas existentes.
+                            </p>        
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    N° Registro
+                                </th>
+                                <th>
+                                    Asignatura
+                                </th>
+                                <th>
+                                    Estudiante
+                                </th>
+                                <th>
+                                    Accion
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+        while($fila = $sqlResult->fetch_assoc()){                    
+        $htmlElements .= '  <tr>';    
+        $htmlElements .= '  <td>'.$fila['id'].'</td>';                
+        $htmlElements .= '  <td>'.$fila['asignaturaNombre'].'</td>';                    
+        $htmlElements .= '  <td>'.$fila['alumnoNombre'].$fila['alumnoApellidos'].'</td>';                    
+        $htmlElements .= '
+            <td>
+                <button class="btn btn-sm btn-info" onclick="ViewAsignaturaHasAlumno('.$fila['id'].')">
+                    Ver
+                </button >
+                <button class="btn btn-sm btn-success" onclick="">
+                    Editar
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="">
+                    Eliminar
+                </button>                
+            </td>
+        ';
+          
+        $htmlElements .= '  </tr>';        
+        }
+        $htmlElements .= '
+                    </tbody> 
+                </table> ';
+                http_response_code(200);                
+        echo $htmlElements;
 
     }
     /**

@@ -13,9 +13,7 @@
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"></script>
 
-        <script src="js/templates/utilsFaltaAsistencia.js" ></script>
-        <script src="js/templates/utilsNotas.js" ></script>
-        <script src="js/templates/utilsAsignaturaHasAlumno.js" ></script>
+
 
 
             <!--- Scripts para las acciones -->

@@ -1,13 +1,12 @@
 /**
  * Trae elementos html a mostrar
  */
- function ViewLista() {
-    alert("ViewLista");
+ function ViewListaAsigHasAlum() {
     $.ajax({
       type: "GET",
       url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php",
       data: {},
-      success: (data) => {
+      success: (data) => {        
         $("#renderbody").empty();
         $("#renderbody").html(data);
       },
@@ -23,16 +22,69 @@
    * Muestra un AsignaturaHasAlumno en especifico
    */
   function ViewAsignaturaHasAlumno(idAsignaturaHasAlumno) {
-    alert("View");
+    debugger;
     $.ajax({
-      type: "GET",
-      url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php",
+      type: "VIEW",
+      url: `http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?asigAlum_id=${idAsignaturaHasAlumno}`,
       data: {},
       success: (data) => {
+        debugger;
+        const objectJson = JSON.parse(data);
+        const htmlRender = `
+            <div>
+                <div>
+                    <h4>
+                        Información Alumno - Asignatura
+                    </h4>
+                    <div class="d-flex flex-row justify-content-between">
+                        <p>
+                            A continuación se muestra la información de la nota a borrar
+                        </p>
+                        <button class="btn btn-sm btn-info text-light" onclick="ViewListaAsigHasAlum()">
+                            Lista 
+                        </button>
+                    </div>        
+                </div>
+            </div>
+            <hr />
+            
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>
+                            N° de Registro
+                        </th>
+                        <!--id-->
+                        <td>            
+                        ${objectJson.id}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Estudiante
+                        </th>
+                        <!--Estudiante-->
+                        <td>
+                        ${objectJson.alumnoNombre} ${objectJson.alumnoApellidos}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Asignatura
+                        </th>
+                        <!--Asignatura-->
+                        <td>
+                        ${objectJson.asignaturaNombre}
+                        </td>
+                    </tr>  
+                </tbody>
+            </table>        
+        `;
         $("#renderbody").empty();
-        $("#renderbody").html(data);
+        $("#renderbody").html(htmlRender);
       },
       error: (error) => {
+          debugger;
           $("#renderbody").empty();        
           $("#renderbody").html(error);
           console.error(error);

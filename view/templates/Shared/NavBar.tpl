@@ -101,7 +101,7 @@
                             <li class="dropdown-item">
                                 Agregar Asignatura
                             </li>
-                            <li class="dropdown-item">
+                            <li class="dropdown-item" onclick="ViewListaAsigHasAlum()">
                                 Matricular Estudiante - Asignatura
                             </li>                        
                         </ul>
