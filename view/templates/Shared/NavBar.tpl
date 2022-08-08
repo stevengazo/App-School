@@ -32,7 +32,7 @@
                             Notas
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li class="dropdown-item">
+                            <li class="dropdown-item" onclick="GetInsertNota()">
                                 Registrar Nota
                             </li>
                             <!--  <li><hr class="dropdown-divider"></li> -->
