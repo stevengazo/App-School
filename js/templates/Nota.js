@@ -35,9 +35,15 @@ function ViewNota(idNota) {
                     <h4>
                         Información de la Nota
                     </h4>
+                    <div class="d-flex flex-row justify-content-between">
                     <p>
                         A continuación se muestra la información de la nota
-                    </p>
+                    </p>                    
+                    <button onclick="ViewListaNotas()" class="btn btn-sm btn-info">
+                      Lista de Notas
+                    </button>
+                    </div>
+
                 </div>
             </div>
             <hr />
@@ -203,15 +209,80 @@ function PostInsertNota(id,asignatura_has_alumno,trimestre,nota) {
 /**
  * Trae vista para modificar
  */
-function GetUpdateNota() {
-  alert("View");
+function GetUpdateNota(id) {
   $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Nota.php",
+    type: "View",
+    url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${id}`,
     data: {},
     success: (data) => {
+      const Objectjson = JSON.parse(data);
+      const htmlRender = `
+          <div>
+          <h4>
+              Editar Nota
+          </h4>
+          <div class="d-flex flex-row justify-content-between">
+          <p>
+            Por Favor seleccione la información e introduzca lo necesario.
+          </p>
+          <button class="btn btn-sm btn-info" onclick="ViewListaNotas()">
+            Lista Notas
+          </button>
+          </div>        
+
+          <form action="index.php" id="frmEditarNota" name="frmEditarNota">              
+              <div class="form">
+                  <div class="form-group">
+                      <label>Id Nota</label>
+                      <input type="text" class="form-control" name="id" id="id" value="${Objectjson.id}" readonly />
+                  </div>
+                  <div class="form-group">
+                      <label>Asignatura</label>
+                      <p>
+                          <i>La asignatura actual es: ${Objectjson.asignaturaNombre}</i><br/>
+                          <i>El alumno actual es: ${Objectjson.nombre} ${Objectjson.apellidos}</i>
+                      </p>
+                      <input type="text" list="listAsigAlum" name="asignatura_has_alumno_id" class="form-control"
+                          value="${Objectjson.asignatura_has_alumno_id}" id="asignatura_has_alumno_id" placeholder="Alumno - Asignatura" />
+                      <datalist id="listAsigAlum">
+                          {assign var='counter' value={0}}
+                          {section name=item loop=$ListAsigAlum}
+                          <option value="{$ListAsigAlum[$counter].id}">
+                              {$ListAsigAlum[$counter].alumnoNombre}
+                              {$ListAsigAlum[$counter].alumnoApellidos}
+                              -
+                              {$ListAsigAlum[$counter].asignaturaNombre}
+                          </option>
+                          {assign var='counter' value=$counter+1}
+                          {/section}
+                      </datalist>
+                      <label id="AsignaturaMessage" class="text-danger"></label>
+                  </div>
+                  <div class="form-group">
+                      <label>Trimestre</label>
+                      <select type="number" class="form-control" value="${Objectjson.trimestre}"  name="trimestre" id="trimestre"
+                          placeholder="Numero de Trimestre">
+                          <option value="1">Primer Trimestre</option>
+                          <option value="2">Segundo Trimestre</option>
+                          <option value="2">Tercer Trimestre</option>
+                      </select>
+                      <label id="trimestreMessage" class="text-danger"></label>
+                  </div>
+                  <div class="form-group">
+                      <label>Nota</label>
+                      <input type="number" class="form-control" name="nota" value="${Objectjson.nota}" id="nota" placeholder="Nota" />
+                      <label id="NotaMessage" class="text-danger"></label>
+                  </div>
+              </div>
+          </form>
+          <div class="d-flex flex-row justify-content-space-around">
+              <button type="text" class="btn btn-outline-success" onclick="onEdit()">Actualizar</button>
+              <button class="btn btn-outline-info" onclick="">Limpiar</button>
+          </div>
+        </div>      
+      `;
       $("#renderbody").empty();
-      $("#renderbody").html(data);
+      $("#renderbody").html(htmlRender);
     },
     error: (error) => {
       $("#renderbody").empty();
@@ -224,15 +295,14 @@ function GetUpdateNota() {
 /**
  * Envia vista modifiada
  */
-function PostUpdateNota() {
+function PostUpdateNota(id,asignatura_has_alumno,trimestre,nota) {
   alert("View");
   $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Nota.php",
+    type: "PUT",
+    url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${id}&asignaturaHasAlumnoId=${asignatura_has_alumno}&trimestre=${trimestre}&nota=${nota}`,
     data: {},
     success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
+      ViewNota(id)
     },
     error: (error) => {
       $("#renderbody").empty();
@@ -370,6 +440,7 @@ function onEdit() {
   }
   // send the data to the controller
   if (flagValid) {
-    
+    debugger;
+    PostUpdateNota(idInput,asignatura_has_alumnoInput,trimestreInput,notaInput);
   }
 }

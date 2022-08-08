@@ -29,16 +29,36 @@
     function UpdateNota(){
         if(ISSET($_REQUEST['idNota'])){
             $id = $_REQUEST['idNota'];
+        }else{
+            $rtn = array("id", "3", "error", "idNota no definido");
+            http_response_code(500);
+            print json_encode($rtn);
+            exit;
         }
         if(ISSET($_REQUEST['asignaturaHasAlumnoId'])){
             $asignaturaHasAlumnoId = $_REQUEST['asignaturaHasAlumnoId'];
+        }else{
+            $rtn = array("id", "3", "error", "asignaturaHasAlumnoId no definida");
+            http_response_code(500);
+            print json_encode($rtn);
+            exit;            
         }
         if(ISSET($_REQUEST['trimestre'])){
             $trimestre = $_REQUEST['trimestre'];
+        }else{
+            $rtn = array("id", "3", "error", "trimestre no definido");
+            http_response_code(500);
+            print json_encode($rtn);
+            exit;            
         }
         if(ISSET($_REQUEST['nota'])){
             $nota = $_REQUEST['nota'];
-        }      
+        }   else{
+            $rtn = array("id", "3", "error", "nota no definida");
+            http_response_code(500);
+            print json_encode($rtn);
+            exit;            
+        }   
         $sqlQuery = " UPDATE Nota ";
         $sqlQuery .= " SET   asignatura_has_alumno_id = $asignaturaHasAlumnoId , trimestre = $trimestre, nota = $nota"; 
         $sqlQuery .= " WHERE  id= $id ";
@@ -99,7 +119,8 @@
         $sqlQuery = " INSERT INTO nota(id, asignatura_has_alumno_id,trimestre, nota) ";
         $sqlQuery = $sqlQuery." values ($id,$asignaturaHasAlumnoId,$trimestre,$nota) ";                                   
         $sqlResult = $linkConnection->query($sqlQuery);    
-        http_response_code(200);  
+        http_response_code(200); 
+                
     }
 
     /**
@@ -166,7 +187,7 @@
                         $HtmlResults .=" <td>".$file['asignaturaNombre']." </td>";   
                         $HtmlResults .=" <td>";
                         $HtmlResults .='<button class="btn btn-primary" onclick="ViewNota('.$file['id'].')" >Ver</button>';
-                        $HtmlResults .='<button class="btn btn-success" onclick="'.$file['id'].'" >Editar</button>';
+                        $HtmlResults .='<button class="btn btn-success" onclick="GetUpdateNota('.$file['id'].')" >Editar</button>';
                         $HtmlResults .='<button class="btn btn-danger" onclick="'.$file['id'].'" >Eliminar</button>';                        
                         $HtmlResults .=" </td>";            
                         $HtmlResults .=" </tr>";
