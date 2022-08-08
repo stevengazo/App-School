@@ -31,7 +31,6 @@ function ViewFaltaAsistencia(idFaltaAsistencia) {
       idFaltaAsistencia,
     success: (data) => {
       console.log(data);
-
       $("#renderbody").empty();
       $("#renderbody").html(data);
     },

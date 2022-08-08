@@ -1,13 +1,13 @@
 /**
  * Trae elementos html a mostrar
  */
- function ViewLista() {
-    alert("ViewLista");
+ function ViewListaNotas() {
     $.ajax({
       type: "GET",
       url: "http://localhost/app_School/WebService/ws_Nota.php",
       data: {},
       success: (data) => {
+        debugger;
         $("#renderbody").empty();
         $("#renderbody").html(data);
       },
@@ -22,19 +22,84 @@
   /**
    * Muestra un Nota en especifico
    */
-  function ViewNota(idNota) {
-    alert("View");
+  function ViewNota(idNota) {    
     $.ajax({
-      type: "GET",
-      url: "http://localhost/app_School/WebService/ws_Nota.php",
+      type: "VIEW",
+      url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${idNota}`,
       data: {},
       success: (data) => {
+        debugger;
+        const jsonNota = JSON.parse(data);
+        const htmlRender = `
+                <div>
+                <div>
+                    <h4>
+                        Información de la Nota
+                    </h4>
+                    <p>
+                        A continuación se muestra la información de la nota
+                    </p>
+                </div>
+            </div>
+            <hr />
+            
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>
+                            N° de Registro
+                        </th>
+                        <!--id-->
+                        <td>
+                        ${jsonNota['id']}                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Estudiante
+                        </th>
+                        <!--Estudiante-->
+                        <td>
+                          ${jsonNota.nombre} ${jsonNota.apellidos}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Asignatura
+                        </th>
+                        <!--Asignatura-->
+                        <td>
+                        ${jsonNota.asignaturaNombre}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Trimestre
+                        </th>
+                        <!--Trimestre-->
+                        <td>                        
+                        ${jsonNota.trimestre}                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Nota
+                        </th>
+                        <!--Nota-->
+                        <td>
+                        ${jsonNota.nota}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>            
+        `;
         $("#renderbody").empty();
-        $("#renderbody").html(data);
+        $("#renderbody").html(htmlRender);
       },
       error: (error) => {
+          debugger;
           $("#renderbody").empty();        
-          $("#renderbody").html(error);
+          $("#renderbody").html("Error del servidor... Estatus: "+ error.status + "<br/> "  +error.statusText);
           console.error(error);
       },
     });
@@ -50,6 +115,9 @@
       url: "http://localhost/app_School/WebService/ws_Nota.php",
       data: {},
       success: (data) => {
+        const htmlRender = `
+
+        `;
         $("#renderbody").empty();
         $("#renderbody").html(data);
       },

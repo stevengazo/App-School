@@ -36,7 +36,7 @@
                                 Registrar Nota
                             </li>
                             <!--  <li><hr class="dropdown-divider"></li> -->
-                            <li class="dropdown-item">
+                            <li class="dropdown-item" onclick="ViewListaNotas()" >
                                 Ver Notas
                             </li>
                         </ul>

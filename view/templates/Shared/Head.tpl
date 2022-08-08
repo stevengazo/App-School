@@ -26,6 +26,7 @@
         <script src="js/templates/FaltaAsistencia.js"  ></script>
         <script src="js/templates/Horarios.js"  ></script>
         <script src="js/templates/Nivel.js"  ></script>
+        <script src="js/templates/Nota.js"  ></script>
         <script src="js/templates/Profesor.js"  ></script>
 
 
