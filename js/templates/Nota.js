@@ -315,15 +315,86 @@ function PostUpdateNota(id,asignatura_has_alumno,trimestre,nota) {
 /**
  * modificar
  */
-function GetDeleteNota() {
-  alert("View");
+function GetDeleteNota(id) {
   $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Nota.php",
+    type: "VIEW",
+    url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${id}`,
     data: {},
     success: (data) => {
+      const Objectjson = JSON.parse(data);
+      const htmlRender =`
+      <div>
+      <div>
+          <h4>
+              Eliminar Nota Registrada
+          </h4>
+          <p>
+              A continuación se muestra la información de la nota a borrar
+          </p>
+      </div>
+      </div>
+      <hr />
+      
+      <table class="table">
+          <tbody>
+              <tr>
+                  <th>
+                      N° de Registro
+                  </th>
+                  <!--id-->
+                  <td>
+                  ${Objectjson.id}
+                  </td>
+              </tr>
+              <tr>
+                  <th>
+                      Estudiante
+                  </th>
+                  <!--Estudiante-->
+                  <td>
+                  ${Objectjson.nombre} ${Objectjson.apellidos}
+                  </td>
+              </tr>
+              <tr>
+                  <th>
+                      Asignatura
+                  </th>
+                  <!--Asignatura-->
+                  <td>
+                  ${Objectjson.asignaturaNombre}                          
+                  </td>
+              </tr>
+              <tr>
+                  <th>
+                      Trimestre
+                  </th>
+                  <!--Trimestre-->
+                  <td>
+                  ${Objectjson.trimestre} 
+                  </td>
+              </tr>
+              <tr>
+                  <th>
+                      Nota
+                  </th>
+                  <!--Nota-->
+                  <td>
+                  ${Objectjson.nota}                       
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      <div class="d-flex flex-row">
+        <button class="btn btn-danger" onclick= "PostDeleteNota(${Objectjson.id})">
+          Eliminar Usuario
+        </button>
+        <button class="btn btn-info" onclick="ViewListaNotas()">
+          Lista de elementos
+        </button>   
+      </div>      
+      `;
       $("#renderbody").empty();
-      $("#renderbody").html(data);
+      $("#renderbody").html(htmlRender);
     },
     error: (error) => {
       $("#renderbody").empty();
@@ -336,15 +407,14 @@ function GetDeleteNota() {
 /**
  * confirma la eliminación
  */
-function PostDeleteNota() {
+function PostDeleteNota(id) {
   alert("View");
   $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Nota.php",
+    type: "DELETE",
+    url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${id}`,
     data: {},
     success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
+      ViewListaNotas();
     },
     error: (error) => {
       $("#renderbody").empty();

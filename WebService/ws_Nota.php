@@ -188,7 +188,7 @@
                         $HtmlResults .=" <td>";
                         $HtmlResults .='<button class="btn btn-primary" onclick="ViewNota('.$file['id'].')" >Ver</button>';
                         $HtmlResults .='<button class="btn btn-success" onclick="GetUpdateNota('.$file['id'].')" >Editar</button>';
-                        $HtmlResults .='<button class="btn btn-danger" onclick="'.$file['id'].'" >Eliminar</button>';                        
+                        $HtmlResults .='<button class="btn btn-danger" onclick="GetDeleteNota('.$file['id'].')" >Eliminar</button>';                        
                         $HtmlResults .=" </td>";            
                         $HtmlResults .=" </tr>";
                     } 
