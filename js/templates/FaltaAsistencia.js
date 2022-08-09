@@ -8,10 +8,12 @@ function ViewListaAusencia() {
     url: "http://localhost/app_School/WebService/ws_FaltaAsistencia.php?type=Elements",
     data: {},
     success: (data) => {
+      debugger;
       $("#renderbody").empty();
       $("#renderbody").html(data);
     },
     error: (error) => {
+      debugger;
       console.log("erroor");
       $("#renderbody").empty();
       $("#renderbody").html(error);
@@ -31,10 +33,12 @@ function ViewFaltaAsistencia(idFaltaAsistencia) {
       idFaltaAsistencia,
     success: (data) => {
       console.log(data);
+      debugger;      
       $("#renderbody").empty();
       $("#renderbody").html(data);
     },
     error: (error) => {
+      debugger;
       $("#renderbody").html(error);
       console.error(error);
     },
