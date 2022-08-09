@@ -1,225 +1,176 @@
 <?php
 
-    # RestFull
-    $metodo = $_SERVER['REQUEST_METHOD'];
+$metodo = $_SERVER['REQUEST_METHOD'];
+//$accion = $_REQUEST['accion'];
 
-    switch ($metodo) {
-        case 'GET':        
-            ListarElementos();
-            break;
-        case 'POST':
-            InsertarElemento();
-            break;
-        case 'VIEW':
-            GetElement();
-            break;
-        case 'DELETE':
-            BorrarNota();
-            break;            
-        case 'PUT':
-            UpdateNota();
-            break;                   
-        default:
-            /**
-             * SI EL METODO ES DIFERENTE, DEVUELVE ESTA RESPUESTA
-             */
-            $rtn = array("id", "3", "error", "Algo paso mal...");
-            http_response_code(500);
-            print json_encode($rtn);
-            break;
-    }
 
-    /**
-     *  Actualiza un elemento
-     */
-    function UpdateNota(){
-        # validación de existencia Id
-        if(ISSET($_REQUEST['idNivel'])){
-            $id = $_REQUEST['idNivel'];
-        }else{
-            # No se especifico el id
-            $rtn = array("id", "3", "error", "idNivel no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }        
-        # validación de existencia Nivel
-        if(ISSET($_REQUEST['nivel'])){
-            $nivel = $_REQUEST['nivel'];
-        }else{
-            # No se especifico el nivel
-            $rtn = array("id", "3", "error", "nivel no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }                
-        # validación de existencia aula
-        if(ISSET($_REQUEST['aula'])){
-            $aula = $_REQUEST['aula'];
-        }else{
-            # No se especifico el aula
-            $rtn = array("id", "3", "error", "aula no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }                        
-        # validación de existencia curso
-        if(ISSET($_REQUEST['curso'])){
-            $curso = $_REQUEST['curso'];
-        }else{
-            # No se especifico el curso
-            $rtn = array("id", "3", "error", "curso no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }                        
-        # CADENA DE CONEXIÓN   
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");            
-        # CODIGO SQL
-        $sqlQuery = " UPDATE Nivel  ";                
-        $sqlQuery .= " Set nivel = '$nivel', curso = '$curso', aula = '$aula' ";
-        $sqlQuery .= " where id = $id ";
-        $sqlResult = $linkConnection->query($sqlQuery);
-        /* RETORNA JSON */             
-        header("Content-Type: application/json");
-        echo json_encode($sqlResult);                
+switch ($metodo) {
+  case 'GET':
+    header("HTTP/1.1 200 SUCCESSFUL");
+    fn_listar_nivel();
+    break;
+    case 'DELETE':
+      header("HTTP/1.1 200 SUCCESSFUL");
+      fn_borrar_nivel();
+      break;
+      case 'POST':
+        header("HTTP/1.1 200 SUCCESSFUL");
+        fn_mortrar_frm_nivel_edicion();
+        break;
+  default:
+    // code...
+    break;
+}
 
+
+
+function fn_mortrar_frm_nivel_edicion(){
+  $idNivel = $_REQUEST['idNivel'];
+  $linkConect = mysqli_connect("localhost","root","","testingdb");
+
+  $sql = "select nivel,id,curso,AULA from nivel where id=".$idNivel;
+  $rs = $linkConect->query($sql);
+
+
+  $idNivel = "";
+  $nivel = "";
+  $curso = "";
+  $AULA = "";
+    while($fila = $rs->fetch_assoc()){
+
+      $idNivel = $fila['id'];
+      $nivel = $fila['nivel'];
+      $curso = $fila['curso'];
+      $AULA = $fila['AULA'];
 
     }
 
-    function BorrarNota(){
-        # Comprueba que existe el id
-        if(ISSET($_REQUEST['idNivel'])){
-            $id = $_REQUEST['idNivel'];
-            # CODIGO SQL
-            $sqlQuery = " DELETE FROM NIVEL WHERE ID= $id";                 
-            # CADENA DE CONEXIÓN   
-            $linkConnection =  mysqli_connect("localhost","root","","testingdb");                        
-            $sqlResult = $linkConnection->query($sqlQuery);
-            /* RETORNA JSON */             
-            header("Content-Type: application/json");
-            echo json_encode($sqlResult);                            
+    $salida = '<div class="container mt-3">';
+      $salida .= '<h2>Edicion de Niveles</h2>';
+        $salida .= '<form  method="post"  >';
+       $salida .= '<input type="hidden" id="txtIdNivel" value="'.$idNivel.'">';
+          $salida .= '<div class="mb-3 mt-3">';
+            $salida .= '<label for="text">Nivel:</label>';
+            $salida .= '<input type="text" class="form-control" id="txtnivel" name="txtnivel" value="'.$nivel.'" placeholder="Ingrese un nivel" required>';
+          $salida .= '</div>';
+          $salida .= '<div class="mb-3 mt-3">';
+            $salida .= '<label for="text">Curso:</label>';
+            $salida .= '<input type="text" class="form-control" id="txtcurso" name="txtcurso" value="'.$curso.'" placeholder="Ingrese un curso" required>';
+          $salida .= '</div>';
+          $salida .= '<div class="mb-3">';
+          $salida .= '<label for="text">Aula:</label>';
+          $salida .= '<input type="text" class="form-control" id="txtaula" name="txtaula" value="'.$AULA.'" placeholder="Ingrese un aula" required>';
+        $salida .= '</div>';
+        $salida .= '<div class="mb-3 mt-3">';
 
-        }else{
-            # No se especifico el idNivel
-            $rtn = array("id", "3", "error", "idNivel no especificado");
-            http_response_code(500);
-            print json_encode($rtn);            
-        }
+
+
+          $salida .= '<button type="button" class="btn btn-primary" onclick="fn_editar_nivel();">Actualizar Nivel</button>';
+        $salida .= '</form>';
+      $salida .= '</div>';
+
+  echo $salida;
+}
+
+
+/*
+
+function agregar_nivel()
+{
+  $salida = '<div class="container mt-3">';
+    $salida .= '<h2>Edicion de Niveles</h2>';
+      $salida .= '<form  method="post"  >';
+        $salida .= '<label for="text">Id:</label>';
+        $salida .= '<input type="text" id="txtIdNivel">';
+        $salida .= '<div class="mb-3 mt-3">';
+          $salida .= '<label for="text">Nivel:</label>';
+          $salida .= '<input type="text" class="form-control" id="txtnivel" name="txtnivel" placeholder="Ingrese un nivel" required>';
+        $salida .= '</div>';
+        $salida .= '<div class="mb-3 mt-3">';
+          $salida .= '<label for="text">Curso:</label>';
+          $salida .= '<input type="text" class="form-control" id="txtcurso" name="txtcurso" placeholder="Ingrese un curso" required>';
+        $salida .= '</div>';
+        $salida .= '<div class="mb-3">';
+        $salida .= '<label for="text">Aula:</label>';
+        $salida .= '<input type="text" class="form-control" id="txtaula" name="txtaula" placeholder="Ingrese un aula" required>';
+      $salida .= '</div>';
+      $salida .= '<div class="mb-3 mt-3">';
+
+        $salida .= '<button type="button" class="btn btn-primary" onclick="fn_agregar_nivel();">Agregar Nivel</button>';
+      $salida .= '</form>';
+    $salida .= '</div>';
+
+echo $salida;
+
+$idNivel = $_REQUEST['txtIdNivel'];
+$nivel = $fila['txtnivel'];
+$curso = $fila['txtcurso'];
+$AULA = $fila['txtaula'];
+
+$linkConnection =  mysqli_connect("localhost","root","","testingdb");
+# CODIGO SQL
+$sqlQuery = " INSERT INTO nivel (id,nivel,curso,AULA)";
+$sqlQuery .= " VALUES ('$idNivel','$nivel','$curso','$AULA') ";
+#EJECUCIÓN CONSULTA
+$sqlResult = $linkConnection->query($sqlQuery);
+
+}
+
+*/
+function fn_borrar_nivel(){
+  $idNivel = $_REQUEST['idNivel'];
+  $linkConect = mysqli_connect("localhost","root","","testingdb");
+  $sql = "delete from nivel where id =".$idNivel;
+  $rs = $linkConect->query($sql);
+  echo "Nivel Borrado!";
+}
+function fn_listar_nivel(){
+  $linkConect = mysqli_connect("localhost","root","","testingdb");
+  $sql = "select count(*) canti_reg from nivel";
+  $rs = $linkConect->query($sql);
+  $cantidad_nivel = 0;
+  $salida = "";
+    while($fila = $rs->fetch_assoc()){
+      $cantidad_nivel = $fila['canti_reg'];
+    }
+    if($cantidad_nivel>0){
+
+        $sql = "select id,nivel,curso,AULA from nivel";
+        $rs = $linkConect->query($sql);
+
+        $salida = "<table class='table'>";
+          $salida .= "<tr>";
+          $salida .= "<th>Id Nivel</th>";
+          $salida .= "<th>Nivel</th>";
+          $salida .= "<th>Curso</th>";
+          $salida .= "<th>Aula</th>";
+          $salida .= "<th>Acciones</th>";
+          $salida .= "</tr>";
+          while($fila = $rs->fetch_assoc()){
+            $salida .= "<tr>";
+            $salida .= "<td>".$fila['id']."</td>";
+            $salida .= "<td>".$fila['nivel']."</td>";
+            $salida .= "<td>".$fila['curso']."</td>";
+            $salida .= "<td>".$fila['AULA']."</td>";
+            $salida .= "<td><img src='images/lapiz.png' title='Editar Nivel'
+             onclick='fn_editar_nivel(".$fila['id'].");'>
+                            <img src='images/delete.png' title='Borrar Nivel'
+                            onclick='fn_borrar_nivel(".$fila['id'].");'></td>";
+
+            $salida .= "</tr>";
+          }
+        $salida .= "</table>";
+    }else{
+        $salida .= "No existen datos para mostrar";
     }
 
+echo $salida;
+}
 
-    /**
-     * Inserta un nuevo elemento 
-     */
-    function InsertarElemento(){
-        # validación de existencia Id
-        if(ISSET($_REQUEST['idNivel'])){
-            $id = $_REQUEST['idNivel'];
-        }else{
-            # No se especifico el id
-            $rtn = array("id", "3", "error", "idNivel no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }        
-        # validación de existencia Nivel
-        if(ISSET($_REQUEST['nivel'])){
-            $nivel = $_REQUEST['nivel'];
-        }else{
-            # No se especifico el nivel
-            $rtn = array("id", "3", "error", "nivel no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }                
-        # validación de existencia aula
-        if(ISSET($_REQUEST['aula'])){
-            $aula = $_REQUEST['aula'];
-        }else{
-            # No se especifico el aula
-            $rtn = array("id", "3", "error", "aula no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }                        
-        # validación de existencia curso
-        if(ISSET($_REQUEST['curso'])){
-            $curso = $_REQUEST['curso'];
-        }else{
-            # No se especifico el curso
-            $rtn = array("id", "3", "error", "curso no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }                        
-        # CADENA DE CONEXIÓN        
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");            
-        # CODIGO SQL
-        $sqlQuery = " insert into nivel ( id, nivel, curso, aula ) ";    
-        $sqlQuery .= " values( $id, ' $nivel ', '$curso', '$aula' ) ";
-        $sqlResult = $linkConnection->query($sqlQuery);
-        /* RETORNA JSON */             
-        header("Content-Type: application/json");
-        echo json_encode($sqlResult);    
-    }
 
-    /**
-     * Descripción: lista todos los elementos existentes
-     */
-    function ListarElementos(){
-        # CADENA DE CONEXIÓN
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");            
-        # CODIGO SQL
-        $sqlQuery = " SELECT id, nivel, curso, aula from nivel ";                 
-        $sqlResult= $linkConnection->query($sqlQuery);
-        # Procesado de datos
-        $arrayResult = array();
-        while($file = $sqlResult->fetch_assoc()){
-            $arrayTemp = array();
-            $arrayTemp['id'] = $file['id'];
-            $arrayTemp['nivel'] = $file['nivel'];            
-            $arrayTemp['curso'] = $file['curso'];            
-            $arrayTemp['aula'] = $file['aula'];            
-            $arrayResult[] =$arrayTemp;
-        }     
-        /* RETORNA JSON */             
-        header("Content-Type: application/json");
-        echo json_encode($arrayResult);                
-    }
 
-    /**
-     * Retorna un elemento especifico por el id
-     */
-    function GetElement(){
-        #Comprueba que se haya enviado el idNivel
-        if(ISSET($_REQUEST['idNivel'])){
-            $id = $_REQUEST['idNivel'];
-            # CADENA DE CONEXIÓN
-            $linkConnection =  mysqli_connect("localhost","root","","testingdb");            
-            # CODIGO SQL
-            $sqlQuery = " SELECT id, nivel, curso, aula from nivel where id= $id";                 
-            $sqlResult = $linkConnection->query($sqlQuery);
-            # Procesado de datos
-            $arrayResult = array();
-            while($file = $sqlResult->fetch_assoc()){
-                $arrayTemp = array();
-                $arrayTemp['id'] = $file['id'];
-                $arrayTemp['nivel'] = $file['nivel'];            
-                $arrayTemp['curso'] = $file['curso'];            
-                $arrayTemp['aula'] = $file['aula'];            
-                $arrayResult[] =$arrayTemp;
-            }     
-            /* RETORNA JSON */             
-            header("Content-Type: application/json");
-            echo json_encode($arrayResult);                
 
-        }else{
-            # No se especifico el id
-            $rtn = array("id", "3", "error", "idNivel no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-        }
-    }
-    
+
+
+
 ?>
