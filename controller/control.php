@@ -53,19 +53,59 @@
         * Descripción: Gestiona las peticiones del navegador, recibe un parametro controller y redirecciona al controlador especificado
         */
         function gestor(){       
+            if(!isset($_REQUEST['action'])){
 
-            $action = "";        
-            if(isset($_REQUEST['action'])){ // Compruea que la variable "action" no sea nula
-                $action = $_REQUEST['action']; // si no es nula setea la variable acciòn con el valor recibido
+                if(isset($_SESSION['USUARIO'])){
+                  $this->index();
+                       //$this->validarInactividad();
+               }else {
+                   $this->Smarty->setAssign("titulo","Login");
+                 //  $this->smarty->setAssign("msg","");
+                  $this->Smarty->setDisplay("login.tpl");
+                  }
+                }else{
+                  $action = $_REQUEST['action'];   
+                 //  $this->validarInactividad();
+                 switch ($action) {
+                   case "login":
+                         $this->procesar_login();
+                         break;
+                    case "index":
+                       $this->index();
+                       break;
+                    //default:
+                        //$this->index();
+                        //break;
+                   }
+                 }
+        }  
+        
+
+        /**
+         * Procesa el login del usuario
+         * Verifica que la contraseña este en la DB de administrador
+         */
+        function procesar_login(){
+            $usu  = $_REQUEST['txtUsuario'];
+            $pass = $_REQUEST['txtpass'];
+            $rs = $this->Profesor->val_login($usu,$pass);
+            $flag = 0;
+            $rol = 0;
+            while($fila = $rs->fetch_assoc()){
+              //echo "Nombre: ".$fila['nombre'];
+              $id = $fila['id'];
+              $flag = 1;
             }
-            switch ($action) {      
-                case 'index':
-                    $this->index();
-                    break;                                                            
-                default:     
-                    $this->index();
-                    break;
+            if($flag == 1){
+    
+              $_SESSION['USUARIO'] = $usu;
+              $_SESSION['ID']     = $id;
+    
+              $this->index();
+            }else{
+                //$this->smarty->setAssign("msg","Error usuario o password errores");
+                $this->smarty->setDisplay("login.tpl");
             }
-        }   
+        }        
     }
 ?>
