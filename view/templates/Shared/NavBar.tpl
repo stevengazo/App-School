@@ -21,9 +21,59 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li class="dropdown-item" onclick="GetInsertFaltaAsistencia()">
                                 Agregar Ausencia
-                            <li class="dropdown-item" onclick="ViewListaAusencia()" >
-                                Lista Ausencias 
+                            <li class="dropdown-item" onclick="ViewListaAusencia()">
+                                Lista Ausencias
                             </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Estudiantes
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="index.php?Controller=Profesor&action=CrearProfe">Agregar
+                                Estudiante</a>
+                            <!--  <li><hr class="dropdown-divider"></li> -->
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li class="dropdown-item" onclick="fn_listar_alumnos()">
+                                Ver Estudiantes
+                            <li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Niveles
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" onclick="fn_mostrar_form_reg()" >Agregar Nivel</a>
+                            <!--  <li><hr class="dropdown-divider"></li> -->
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li class="dropdown-item" onclick="fn_listar_nivel()">
+                                Ver Niveles
+                            <li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Profesores
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="index.php?action=CrearProfe">Agregar Profesor</a>
+                            <!--  <li><hr class="dropdown-divider"></li> -->
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li class="dropdown-item" onclick="fn_listar_profesor()">
+                                Ver Profesores
+                            <li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -36,7 +86,7 @@
                                 Registrar Nota
                             </li>
                             <!--  <li><hr class="dropdown-divider"></li> -->
-                            <li class="dropdown-item" onclick="ViewListaNotas()" >
+                            <li class="dropdown-item" onclick="ViewListaNotas()">
                                 Ver Notas
                             </li>
                         </ul>
@@ -52,8 +102,8 @@
                             <!--  <li><hr class="dropdown-divider"></li> -->
                             <li>
                                 <hr class="dropdown-divider">
-                            </li>                            
-                            <li class="dropdown-item">
+                            </li>
+                            <li class="dropdown-item" onclick="fn_listar_asig()">
                                 Ver Asignaturas
                             </li>
                         </ul>
@@ -103,7 +153,7 @@
                             </li>
                             <li class="dropdown-item" onclick="ViewListaAsigHasAlum()">
                                 Matricular Estudiante - Asignatura
-                            </li>                        
+                            </li>
                         </ul>
                     </li>
                 </ul>
