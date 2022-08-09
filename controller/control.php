@@ -6,6 +6,7 @@
     require_once "Model/Falta_Asistencia.php";
     require_once "connections/conexion.php";
     require_once "Model/Nota.php";
+    require_once "Model/Profesor.php";    
 
 
     class control{
@@ -13,6 +14,7 @@
          * vARIABLES INTERNAS DE LA CLASE
          */
         private $Smarty;
+        private $Profesor;
 
         
         /**
@@ -20,6 +22,7 @@
          */
         function __construct(){
             $this->Smarty= new config_smarty();
+            $this->Profesor = Profesor::getInstance();
         }
 
         /**
