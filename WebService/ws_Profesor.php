@@ -11,6 +11,7 @@
         case 'POST':
           header("HTTP/1.1 200 SUCCESSFUL");
           editar_p();
+          break;
             //InsertarElemento();
         case 'VIEW':
             GetElement();
@@ -96,52 +97,36 @@
     $sql = "select id,login,clave,nombre,apellidos,email,especialista from profesor where id=".$idProfesor;
     $rs = $linkConect->query($sql);
 
-    $idProfesor = "";
-    $usuario = "";
-    $clave = "";
-    $nombre = "";
-    $apellidos = "";
-    $email = "";
-    $especialista = "";
 
+    #   RETORNO JSON
       while($fila = $rs->fetch_assoc()){
-
-        $idProfesor = $fila['id'];
-        $usuario = $fila['login'];
-        $clave = $fila['clave'];
-        $nombre  = $fila['nombre'];
-        $apellidos = $fila['apellidos'];
-        $email = $fila['email'];
-        $especialista = $fila['especialista'];
-
-      }
-      $salida = '<div class="container mt-3">';
+        $salida = '<div class="container mt-3">';
         $salida .= '<h2>Edición de Profesor</h2>';
           $salida .= '<form  method="post"  >';
-         $salida .= '<input type="hidden" id="txtIdProfesor" value="'.$idProfesor.'">';
+         $salida .= '<input type="hidden" id="txtIdProfesor" value="'.$fila['id'].'">';
             $salida .= '<div class="mb-3 mt-3">';
               $salida .= '<label for="text">Usuario:</label>';
-              $salida .= '<input type="text" class="form-control" id="txtusuario" name="txtusuario" value="'.$usuario.'" placeholder="Ingrese su nombre de usuario" required>';
+              $salida .= '<input type="text" class="form-control" id="txtusuario" name="txtusuario" value="'.$fila['login'].'" placeholder="Ingrese su nombre de usuario" required>';
             $salida .= '</div>';
 
             $salida .= '<div class="mb-3 mt-3">';
               $salida .= '<label for="text">Contraseña:</label>';
-              $salida .= '<input type="password" class="form-control" id="txtpass" name="txtpass" value="'.$clave.'" placeholder="Ingrese su nueva contraseña" required>';
+              $salida .= '<input type="password" class="form-control" id="txtpass" name="txtpass" value="'.$fila['clave'].'" placeholder="Ingrese su nueva contraseña" required>';
             $salida .= '</div>';
 
             $salida .= '<div class="mb-3 mt-3">';
               $salida .= '<label for="text">Nombre:</label>';
-              $salida .= '<input type="text" class="form-control" id="txtnombre" name="txtnombre" value="'.$nombre.'" placeholder="Ingrese su nombre" required>';
+              $salida .= '<input type="text" class="form-control" id="txtnombre" name="txtnombre" value="'.$fila['nombre'].'" placeholder="Ingrese su nombre" required>';
             $salida .= '</div>';
 
             $salida .= '<div class="mb-3 mt-3">';
               $salida .= '<label for="text">Apellidos:</label>';
-              $salida .= '<input type="text" class="form-control" id="txtap" name="txtap" value="'.$apellidos.'" placeholder="Ingrese sus apellidos" required>';
+              $salida .= '<input type="text" class="form-control" id="txtap" name="txtap" value="'.$fila['apellidos'].'" placeholder="Ingrese sus apellidos" required>';
             $salida .= '</div>';
 
             $salida .= '<div class="mb-3 mt-3">';
               $salida .= '<label for="text">Email:</label>';
-              $salida .= '<input type="text" class="form-control" id="txtemail" name="txtemail" value="'.$email.'" placeholder="Ingrese su email" required>';
+              $salida .= '<input type="text" class="form-control" id="txtemail" name="txtemail" value="'.$email = $fila['email'].'" placeholder="Ingrese su email" required>';
             $salida .= '</div>';
 
             $salida .= '<div class="mb-3">';
@@ -155,6 +140,9 @@
             $salida .= '<button type="button" class="btn btn-primary" onclick="fn_editar_usuario();">Actualizar Profesor</button>';
           $salida .= '</form>';
         $salida .= '</div>';
+
+      }
+    
 
     echo $salida;
   }

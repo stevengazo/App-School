@@ -64,7 +64,8 @@
         $sqlQuery .= " WHERE  id= $id ";
         $linkConnection =  mysqli_connect("localhost","root","","testingdb");   
         $sqlResult = $linkConnection->query($sqlQuery);
-
+        http_response_code(200);
+        echo true;
     }
 
     function BorrarNota(){

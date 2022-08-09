@@ -24,14 +24,15 @@ function fn_borrar_profesor(id){
       });
 }
 
-function fn_editar_profesor(id){ debugger;
+function fn_editar_profesor(id){ 
   $.ajax({
         type: "POST",
         url: 'http://localhost/app_School/WebService/ws_Profesor.php?idProfesor='+id,
         success: function(data) {
-        $("#renderbody").html(data);
+          $("#renderbody").empty();
+          $("#renderbody").html(data);
         },
-        error: function(error) { debugger;
+        error: function(error) { 
             $("#renderbody").html('<div class="alert alert-warning" role="alert">Error Borrando datos</div>');
         }
       });

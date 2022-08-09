@@ -27,7 +27,6 @@ function fn_borrar_alumno(id){
 }
 
 function fn_editar_alumno(id){
-
   $.ajax({
         type: "POST",
         url: 'http://localhost/app_School/WebService/ws_Alumno.php?idAlumno='+id,
