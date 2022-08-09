@@ -1,167 +1,38 @@
-/**
- * Trae elementos html a mostrar
- */
- function ViewLista() {
-    alert("ViewLista");
-    $.ajax({
-      type: "GET",
-      url: "http://localhost/app_School/WebService/ws_Profesor.php",
-      data: {},
-      success: (data) => {
-        $("#renderbody").empty();
+function fn_listar_profesor(){
+  $.ajax({
+        type: "GET",
+        url: 'http://localhost/app_School/WebService/ws_Profesor.php?accion=listar',
+        success: function(data) {
+            $("#renderbody").html(data);
+        },
+        error: function(error) {
+            $("#renderbody").html('<div class="alert alert-warning" role="alert">Error Borrando datos</div>');
+        }
+      });
+}
+
+function fn_borrar_profesor(id){
+  $.ajax({
+        type: "DELETE",
+        url: 'http://localhost/app_School/WebService/ws_Profesor.php?idProfesor='+id,
+        success: function(data) {
+        fn_listar_profesor();
+        },
+        error: function(error) {
+            $("#renderbody").html('<div class="alert alert-warning" role="alert">Error Borrando datos</div>');
+        }
+      });
+}
+
+function fn_editar_profesor(id){ debugger;
+  $.ajax({
+        type: "POST",
+        url: 'http://localhost/app_School/WebService/ws_Profesor.php?idProfesor='+id,
+        success: function(data) {
         $("#renderbody").html(data);
-      },
-      error: (error) => {
-          $("#renderbody").empty();        
-          $("#renderbody").html(error);
-          console.error(error);
-      },
-    });
-  }
-  
-  /**
-   * Muestra un Profesor en especifico
-   */
-  function ViewProfesor(idProfesor) {
-    alert("View");
-    $.ajax({
-      type: "GET",
-      url: "http://localhost/app_School/WebService/ws_Profesor.php",
-      data: {},
-      success: (data) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(data);
-      },
-      error: (error) => {
-          $("#renderbody").empty();        
-          $("#renderbody").html(error);
-          console.error(error);
-      },
-    });
-  }
-  
-  /**
-   * Trae vista para insertar Profesor
-   */
-  function GetInsertProfesor() {
-    alert("View");
-    $.ajax({
-      type: "GET",
-      url: "http://localhost/app_School/WebService/ws_Profesor.php",
-      data: {},
-      success: (data) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(data);
-      },
-      error: (error) => {
-          $("#renderbody").empty();        
-          $("#renderbody").html(error);
-          console.error(error);
-      },
-    });  
-  }
-  /**
-   * Envia un Profesor a la DB y trae la vista ViewProfesor si lo agrega
-   */
-  function PostInsertProfesor() {
-    alert("View");
-    $.ajax({
-      type: "GET",
-      url: "http://localhost/app_School/WebService/ws_Profesor.php",
-      data: {},
-      success: (data) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(data);
-      },
-      error: (error) => {
-          $("#renderbody").empty();        
-          $("#renderbody").html(error);
-          console.error(error);
-      },
-    });  
-  }
-  
-  /**
-   * Trae vista para modificar
-   */
-  function GetUpdateProfesor() {
-    alert("View");
-    $.ajax({
-      type: "GET",
-      url: "http://localhost/app_School/WebService/ws_Profesor.php",
-      data: {},
-      success: (data) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(data);
-      },
-      error: (error) => {
-          $("#renderbody").empty();        
-          $("#renderbody").html(error);
-          console.error(error);
-      },
-    });  
-  }
-  
-  /**
-   * Envia vista modifiada
-   */
-  function PostUpdateProfesor() {
-    alert("View");
-    $.ajax({
-      type: "GET",
-      url: "http://localhost/app_School/WebService/ws_Profesor.php",
-      data: {},
-      success: (data) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(data);
-      },
-      error: (error) => {
-          $("#renderbody").empty();        
-          $("#renderbody").html(error);
-          console.error(error);
-      },
-    });  
-  }
-  
-  /**
-   * modificar
-   */
-  function GetDeleteProfesor() {
-    alert("View");
-    $.ajax({
-      type: "GET",
-      url: "http://localhost/app_School/WebService/ws_Profesor.php",
-      data: {},
-      success: (data) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(data);
-      },
-      error: (error) => {
-          $("#renderbody").empty();        
-          $("#renderbody").html(error);
-          console.error(error);
-      },
-    });  
-  }
-  
-  /**
-   * confirma la eliminación
-   */
-  function PostDeleteProfesor() {
-    alert("View");
-    $.ajax({
-      type: "GET",
-      url: "http://localhost/app_School/WebService/ws_Profesor.php",
-      data: {},
-      success: (data) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(data);
-      },
-      error: (error) => {
-          $("#renderbody").empty();        
-          $("#renderbody").html(error);
-          console.error(error);
-      },
-    });  
-  }
-  
+        },
+        error: function(error) { debugger;
+            $("#renderbody").html('<div class="alert alert-warning" role="alert">Error Borrando datos</div>');
+        }
+      });
+}
