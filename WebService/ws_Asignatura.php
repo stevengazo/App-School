@@ -9,7 +9,8 @@
           fn_listar_asig();
           break;
         case 'POST':
-            InsertarElemento();
+            fn_mostrar_frm_asig_edicion();
+            break;
         case 'VIEW':
             GetElement();
             break;
@@ -178,8 +179,8 @@
     }
 
     function BorrarNota(){
-        if(ISSET($_REQUEST['idAsignatura'])){ // COMPRUEBA EXISTENCIA
-            $id = $_REQUEST['idAsignatura'];
+        if(ISSET($_REQUEST['id'])){ // COMPRUEBA EXISTENCIA
+            $id = $_REQUEST['id'];
             # CADENA DE CONEXIÓN
             $linkConnection =  mysqli_connect("localhost","root","","testingdb");
             # CODIGO SQL
@@ -192,7 +193,7 @@
             echo json_encode($sqlResult);
         }else{
             // id no definido
-            $rtn = array("id", "3", "error", "idHorario no especificado");
+            $rtn = array("id", "3", "error", "id no especificado");
             http_response_code(500);
             print json_encode($rtn);
             exit;

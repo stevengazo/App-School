@@ -9,6 +9,7 @@
             break;
         case 'POST':
             InsertarElemento();
+            break;
         case 'VIEW':
             GetElement();
             break;
