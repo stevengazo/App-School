@@ -141,7 +141,11 @@
                         http_response_code(200);
                         print json_encode($tmpElement);
                         exit;
-                    }
+                    }                
+                    break;
+                case 'listbyAlumnoId':
+
+                    
                     break;
                 case 'elements':
                     $sqlQuery = "select N.id, trimestre, nota, A.id as alumnoId , A.nombre, A.apellidos, ASG.id as asignaturaId, ASG.nombre as asignaturaNombre from nota as N ";

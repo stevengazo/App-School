@@ -1,4 +1,5 @@
 <?php
+ session_start();
     /**
      * DEPENDENCIAS
      */
@@ -7,6 +8,7 @@
     require_once "connections/conexion.php";
     require_once "Model/Nota.php";
     require_once "Model/Profesor.php";    
+
 
 
     class control{
@@ -55,59 +57,100 @@
         /* 
         * Descripción: Gestiona las peticiones del navegador, recibe un parametro controller y redirecciona al controlador especificado
         */
-        function gestor(){       
+        function gestor(){
             if(!isset($_REQUEST['action'])){
-
-                if(isset($_SESSION['USUARIO'])){
-                  $this->index();
-                       //$this->validarInactividad();
-               }else {
-                   $this->Smarty->setAssign("titulo","Login");
-                 //  $this->smarty->setAssign("msg","");
-                  $this->Smarty->setDisplay("login.tpl");
-                  }
-                }else{
-                  $action = $_REQUEST['action'];   
-                 //  $this->validarInactividad();
-                 switch ($action) {
-                   case "login":
-                         $this->procesar_login();
-                         break;
-                    case "index":
-                       $this->index();
+              if(isset($_SESSION['USUARIO'])){
+                $this->index();
+                $this->validarInactividad();
+             }else {
+                 $this->Smarty->setAssign("titulo","Login");
+                 $this->Smarty->setAssign("msg","");
+                $this->Smarty->setDisplay("login.tpl");
+                }
+              }else{
+                $action = $_REQUEST['action'];   
+                $this->validarInactividad();
+               switch ($action) {
+                 case "login":
+                       $this->procesar_login(0);
                        break;
-                    //default:
-                        //$this->index();
-                        //break;
-                   }
+                  case "index":
+                     $this->index();
+                     break;
+                  case "cerrar_sesion":
+                    $this->cerrar_sesion();
+                    break;                              
+                  //default:
+                      //$this->index();
+                      //break;
                  }
+               }              
         }  
         
+
+        function cerrar_sesion(){
+          //Removemos sesión.
+          session_unset();
+          //Destruimos sesión.
+          session_destroy();
+           //Redirigimos pagina.
+          header("Location: index.php");    
+        }        
 
         /**
          * Procesa el login del usuario
          * Verifica que la contraseña este en la DB de administrador
          */
-        function procesar_login(){
+        function procesar_login($status=0){
             $usu  = $_REQUEST['txtUsuario'];
             $pass = $_REQUEST['txtpass'];
             $rs = $this->Profesor->val_login($usu,$pass);
             $flag = 0;
             $rol = 0;
-            while($fila = $rs->fetch_assoc()){
-              //echo "Nombre: ".$fila['nombre'];
+            while($fila = $rs->fetch_assoc()){              
               $id = $fila['id'];
               $flag = 1;
+              $status = 1;
             }
-            if($flag == 1){
-    
+            if($flag == 1){              
               $_SESSION['USUARIO'] = $usu;
-              $_SESSION['ID']     = $id;
-    
+              $_SESSION['ID']     = $id;    
               $this->index();
-            }else{
-                //$this->smarty->setAssign("msg","Error usuario o password errores");
-                $this->smarty->setDisplay("login.tpl");
+            }else{                
+                $this->Smarty->setAssign("msg","Credenciales Incorrectas");               
+                $this->Smarty->setDisplay("login.tpl");
             }
-        }        
+        } 
+            
+        function validarInactividad(){
+          //Comprobamos si esta definida la sesión 'tiempo'.
+          if(isset($_SESSION['tiempo']) ) {
+        
+              //Tiempo en segundos para dar vida a la sesión.
+              $inactivo = 1800;//30min en este caso.
+        
+              //Calculamos tiempo de vida inactivo.
+              $vida_session = time() - $_SESSION['tiempo'];
+        
+                  //Compraración para redirigir página, si la vida de sesión sea mayor a el tiempo insertado en inactivo.
+                  if($vida_session > $inactivo)
+                  {
+                      //Removemos sesión.
+                      session_unset();
+                      //Destruimos sesión.
+                      session_destroy();
+                      //Redirigimos pagina.
+                      header("Location: index.php");
+        
+                      exit();
+                  } else {  // si no ha caducado la sesion, actualizamos
+                      $_SESSION['tiempo'] = time();
+                  }
+        
+        
+          } else {
+              //Activamos sesion tiempo.
+              $_SESSION['tiempo'] = time();
+          }        
     }
+  }

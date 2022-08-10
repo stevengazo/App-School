@@ -1,20 +1,17 @@
-<div id="renderbody" class="border border-white rounded mt-3 p-3 border-secondary d-flex flex-column">
+
+
+function Home(){
+    const htmlRender = `
     <!--temporal-->
     <div class="d-flex flex-column justify-content-around">
         <div class="d-flex flex-row justify-content-around">
             <h4>
                 Bienvenido a Escuelita Hispanoamericana
             </h4>
-            <div>
             <h6>
                 Sistema de Administraciòn
                 <br />
-                Modo Profesor
             </h6>
-            <p>
-                Sistema en modo de prueba. Puede presentar fallos
-            </p>
-            </div>
         </div>
         <p>
             Sistema administración academico, para el uso de la comunidad estudiantil, docentes y padres.
@@ -29,6 +26,7 @@
         </ul>
         <p>
     </div>
-
-</div>
-</body>
+    `;
+    $("#renderbody").empty();
+    $("#renderbody").html(htmlRender);
+}

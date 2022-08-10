@@ -202,7 +202,7 @@ function ListarElementos()
                 # Procesado de la respuesta
                 $htmlResult  = " <div class='d-flex flex-column'> ";
                 $htmlResult .= "    <h3>Lista de Ausencias</h3> ";
-                $htmlResult .= "    <table class='table table-light'>";
+                $htmlResult .= "    <table class='table table-light table-striped'>";
                 $htmlResult .= "        <thead> ";
                 $htmlResult .= "            <tr>";
                 $htmlResult .= "               <th>n°</th> ";

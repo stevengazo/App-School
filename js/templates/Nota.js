@@ -18,6 +18,24 @@ function ViewListaNotas() {
   });
 }
 
+
+function GetNotasByAlumno(alumnoid= null){
+  if(alumnoid === null){
+    $.ajax({
+      type: "VIEW",
+      url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${idNota}`,
+      data: {},
+      success: (data) => {
+        console.log("");
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }else{
+    return null;
+  }
+}
 /**
  * Muestra un Nota en especifico
  */
