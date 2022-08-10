@@ -170,7 +170,7 @@ function PostDeleteAsignatura() {
 function fn_listar_asig(){
   $.ajax({
       type: "GET",
-      url: 'http://localhost/app_School/WebService/ws_Asignatura.php?accion=listar',
+      url: 'http://localhost/app_School/WebService/ws_Asignatura.php?tipo=listaHtml',
       success: function(data) {
           $("#renderbody").html(data);
       },

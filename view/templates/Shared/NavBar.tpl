@@ -146,11 +146,11 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li class="dropdown-item">
-                                Agregar Asignatura
+                            <li class="dropdown-item" onclick="GetInsertAsignaturaHasAlumno()">
+                                Matricular Estudiantes - Asignatura
                             </li>
                             <li class="dropdown-item" onclick="ViewListaAsigHasAlum()">
-                                Matricular Estudiante - Asignatura
+                                Estudiantes - Asignatura
                             </li>
                         </ul>
                     </li>

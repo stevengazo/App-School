@@ -28,7 +28,16 @@
 				<div class="form-floating mb-3">
 					<input type="password" name="txtpass" class="form-control" id="floatingPassword" placeholder="Password" required>
 					<label for="floatingPassword">Password</label>
-				  </div>					
+				</div>					
+				<div class="form-floating mb-3">					
+					<select id="floatingPassword" class="form-control">
+						<option >Estudiante</option>
+						<option >Padre</option>
+						<option >Profesor</option>
+						<option >Administrador</option>						
+					</select>
+					<label for="floatingPassword">Modulo</label>
+				</div>					
 
 				<div class="row mb-3 d-flex justify-content-center p-3">		
 					<button class="btn btn-sm btn-outline-info">Entrar</button>

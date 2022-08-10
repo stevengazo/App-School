@@ -45,7 +45,7 @@
         function index(){            
             // Seteo y envio de datos a la interfaz
             $this->Smarty->setAssign("saludo","Inicio del proyecto");
-            $this->Smarty->setAssign("titulo", "Home");
+            $this->Smarty->setAssign("titulo", "Sistema Academico");
             // llamada a la interfaz    
             $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
             $this->Smarty->setDisplay("Shared/Head.tpl");       

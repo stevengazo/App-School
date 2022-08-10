@@ -5,7 +5,7 @@
 
     switch ($metodo) {
         case 'GET':
-          header("HTTP/1.1 200 SUCCESSFUL");
+
           fn_listar_asig();
           break;
         case 'POST':
@@ -31,45 +31,85 @@
     }
 
     function fn_listar_asig(){
-      $linkConect = mysqli_connect("localhost","root","","testingdb");
-      $sql = "select count(*) canti_reg from asignatura";
-      $rs = $linkConect->query($sql);
-      $cantidad_asig = 0;
-      $salida = "";
-        while($fila = $rs->fetch_assoc()){
-          $cantidad_asig = $fila['canti_reg'];
-        }
-        if($cantidad_asig>0){
+        if(ISSET($_REQUEST['tipo'])){ // COMPRUEBA EXISTENCIA
+            $typo = $_REQUEST['tipo'];
+            $linkConect = mysqli_connect("localhost","root","","testingdb");
+            switch ($typo) {
+                case 'listaHtml':
+                        $sql = "select count(*) canti_reg from asignatura";
+                        $rs = $linkConect->query($sql);
+                        $cantidad_asig = 0;
+                        $salida = "";
+                        while($fila = $rs->fetch_assoc()){
+                            $cantidad_asig = $fila['canti_reg'];
+                        }
+                        if($cantidad_asig>0){
+                
+                            $sql = "select id,nivel_id,profesor_id,nombre from asignatura";
+                            $rs = $linkConect->query($sql);
+                
+                            $salida = "<table class='table'>";
+                                $salida .= "<tr>";
+                                $salida .= "<th>Id</th>";
+                                $salida .= "<th>Nivel Id</th>";
+                                $salida .= "<th>Profesor Id</th>";
+                                $salida .= "<th>Nombre</th>";
+                                $salida .= "<th>Acciones</th>";
+                                $salida .= "</tr>";
+                                while($fila = $rs->fetch_assoc()){
+                                $salida .= "<tr>";
+                                $salida .= "<td>".$fila['id']."</td>";
+                                $salida .= "<td>".$fila['nivel_id']."</td>";
+                                $salida .= "<td>".$fila['profesor_id']."</td>";
+                                $salida .= "<td>".$fila['nombre']."</td>";
+                                $salida .= "<td><img src='images/lapiz.png' title='Editar Asignatura'
+                                onclick='fn_editar_asignatura(".$fila['id'].");'>
+                                                <img src='images/delete.png' title='Borrar Asignatura'
+                                                onclick='fn_borrar_asig(".$fila['id'].");'></td>";
+                                $salida .= "</tr>";
+                                }
+                            $salida .= "</table>";
+                        }else{
+                            $salida .= "No existen datos para mostrar";
+                        }
+                    header("HTTP/1.1 200 SUCCESSFUL");
+                    echo $salida;
+                    break;
+                case 'Json':
+                    $sql = '
+                    SELECT A.*, P.nombre as nombreProfesor, P.Apellidos as ApellidosProfesor  FROM ASIGNATURA AS A
+                    INNER join Profesor as P on P.id = A.profesor_id                    
+                    ';
+                    $rs = $linkConect->query($sql);
+                    $arrayResult = array();
+                    while($fila = $rs->fetch_assoc()){
+                        $tmpArray = array();
+                        $tmpArray['id'] = $fila['id'];
+                        $tmpArray['nivel_id'] = $fila['nivel_id'];
+                        $tmpArray['nombre'] = $fila['nombre'];
+                        $tmpArray['profesor_id'] = $fila['profesor_id'];
+                        $tmpArray['nombreProfesor'] = $fila['nombreProfesor']." ".$fila['ApellidosProfesor'];
+                        array_push($arrayResult,$tmpArray);
+                    }                    
+                    http_response_code(200);
+                    header("HTTP/1.1 200 SUCCESSFUL");
+                    print json_encode($arrayResult);                      
+                    break;                
+                default:
+                    $rtn = array("id", "3", "error", "tipo especificado no valido");
+                    http_response_code(500);
+                    print json_encode($rtn);
+                    break;
+            }
 
-            $sql = "select id,nivel_id,profesor_id,nombre from asignatura";
-            $rs = $linkConect->query($sql);
-
-            $salida = "<table class='table'>";
-              $salida .= "<tr>";
-              $salida .= "<th>Id</th>";
-              $salida .= "<th>Nivel Id</th>";
-              $salida .= "<th>Profesor Id</th>";
-              $salida .= "<th>Nombre</th>";
-              $salida .= "<th>Acciones</th>";
-              $salida .= "</tr>";
-              while($fila = $rs->fetch_assoc()){
-                $salida .= "<tr>";
-                $salida .= "<td>".$fila['id']."</td>";
-                $salida .= "<td>".$fila['nivel_id']."</td>";
-                $salida .= "<td>".$fila['profesor_id']."</td>";
-                $salida .= "<td>".$fila['nombre']."</td>";
-                $salida .= "<td><img src='images/lapiz.png' title='Editar Asignatura'
-                 onclick='fn_editar_asignatura(".$fila['id'].");'>
-                                <img src='images/delete.png' title='Borrar Asignatura'
-                                onclick='fn_borrar_asig(".$fila['id'].");'></td>";
-                $salida .= "</tr>";
-              }
-            $salida .= "</table>";
         }else{
-            $salida .= "No existen datos para mostrar";
+            $rtn = array("id", "3", "error", "tipo no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            exit;          
         }
 
-    echo $salida;
+
     }
 
     function fn_borrar_asig(){
