@@ -94,3 +94,14 @@ insert into nota(id,asignatura_has_alumno_id,trimestre,nota)
 values(1,1,1,50),
 	(2,1,2,70),
     (3,3,1,100)
+
+/*
+	inserción de padres
+*/
+INSERT INTO PADRE( ID, LOGING,CLAVE,EMAIL,NOMBRE,APELLIDOS)	
+			VALUES (1,'Sgazo','Sgazo', 'steven.gazo','steven','gazo') ;
+/*
+	insert padre has alumno
+*/
+INSERT INTO PADRE_HAS_ALUMNO(ID,PADRE_ID,ALUMNO_ID)
+VALUES( 1,1,1);

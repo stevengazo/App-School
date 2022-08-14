@@ -76,6 +76,16 @@ CREATE TABLE  asignatura_has_alumno(
 );
 
 
+CREATE TABLE Padre(
+	id INTEGER primary KEY,
+	loging TEXT,
+	clave TEXT,
+	EMAIL TEXT,
+    nombre TEXT,
+    apellidos TEXT
+);
+
+
 /*
 	CREACIÓN DE RELACIONES 
     SAMPLE
@@ -108,3 +118,7 @@ ALTER TABLE NOTA ADD FOREIGN KEY Nota_FKIndex1 (asignatura_has_alumno_alumno_id)
 ALTER TABLE NOTA ADD FOREIGN KEY Nota_FKIndex2 (asignatura_has_asignatura_id) 		REFERENCES asignatura_has_alumno (alumno_id);*/
 
 ALTER TABLE NOTA ADD FOREIGN KEY Nota_FKIndex1 (asignatura_has_alumno_id) 	REFERENCES asignatura_has_alumno(id);
+
+/* padre-has-alumno */
+ALTER TABLE Padre_Has_Alumno ADD FOREIGN KEY (padre_id) REFERENCES padre(id);
+ALTER TABLE Padre_Has_Alumno ADD FOREIGN KEY (alumno_id) REFERENCES alumno(id);

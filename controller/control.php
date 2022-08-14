@@ -11,6 +11,7 @@ require_once "Model/Profesor.php";
 require_once "Model/Alumno.php";
 require_once "Model/Administrador.php";
 require_once "Model/Asignatura.php";
+require_once "Model/Padre.php";
 require_once "Model/Nivel.php";
 
 class control
@@ -18,6 +19,7 @@ class control
   /**
    * vARIABLES INTERNAS DE LA CLASE
    */
+  private $Padre;
   private $Smarty;
   private $Profesor;
   private $Alumno;
@@ -36,6 +38,7 @@ class control
     $this->Asignatura = new Asignatura();
     $this->Nivel = new Nivel();
     $this->AdministradorModel = Administrador::getInstancia();
+    $this->Padre= Padre::getInstance();
   }
 
   /**
@@ -180,7 +183,16 @@ class control
         }
         break;
       case 'Padre':
-        # code...
+        #valida el inicio de sesión de padre
+        $rs = $this->Padre->val_login($usu, $pass);
+        $flag = 0;
+        $rol = 0;
+        # Recorre los resultados del Model
+        while ($fila = $rs->fetch_assoc()) {
+          $id = $fila['id'];
+          $flag = 1;
+          $status = 1;
+        }
         break;
       case 'Profesor':
         #valida el inicio de sesión de profesor
