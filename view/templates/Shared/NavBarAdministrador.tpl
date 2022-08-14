@@ -1,5 +1,4 @@
 <!--SIMPLE NAV VAR-->
- {$SessionStorage}
 <body class="container " style="background-color:#E9E6F7;">
     <h6 class="h6 text-primary mb-0">Modo Administrador</h6>
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded mt-3 ">

@@ -202,7 +202,7 @@ function ListarElementos()
                 # Procesado de la respuesta
                 $htmlResult  = " <div class='d-flex flex-column'> ";
                 $htmlResult .= "    <h3>Lista de Ausencias</h3> ";
-                $htmlResult .= "    <table class='table table-light table-striped'>";
+                $htmlResult .= "    <table class='table table-striped'>";
                 $htmlResult .= "        <thead> ";
                 $htmlResult .= "            <tr>";
                 $htmlResult .= "               <th>n°</th> ";
@@ -221,9 +221,9 @@ function ListarElementos()
                     $htmlResult .= " <td>" . $fila['fecha'] . "</td>";
                     $htmlResult .= " <td>" . $fila['nombreAsignatura'] . "</td>";
                     $htmlResult .= " <td>" . $fila['justificada'] . "</td>";
-                    $htmlResult .= " <td onclick='ViewFaltaAsistencia(" . $fila['id'] . ")' class='btn btn-sm text-dark btn-info' > Detalles </td>";
-                    $htmlResult .= " <td onclick='GetUpdateFaltaAsistencia(" . $fila['id'] . ")' class='btn btn-sm text-dark btn-primary' > Modificar </td>";
-                    $htmlResult .= " <td onclick='GetDeleteFaltaAsistencia(" . $fila['id'] . ")' class='btn btn-sm text-dark btn-danger' > Eliminar </td>";
+                    $htmlResult .= " <td onclick='ViewFaltaAsistencia(" . $fila['id'] . ")' class='btn bg-white btn-sm text-dark btn-info' > Detalles </td>";
+                    $htmlResult .= " <td onclick='GetUpdateFaltaAsistencia(" . $fila['id'] . ")' class='btn bg-white btn-sm text-dark btn-primary' > Modificar </td>";
+                    $htmlResult .= " <td onclick='GetDeleteFaltaAsistencia(" . $fila['id'] . ")' class='btn bg-white btn-sm text-dark btn-danger' > Eliminar </td>";
                     $htmlResult .= " </tr>";
                 }
                 $htmlResult .= "        </tbody>";
@@ -292,7 +292,7 @@ function GetElement()
         # Procesado de la respuesta
         $htmlResult  = " <div class='d-flex flex-column'> ";
         $htmlResult .= "    <h3>Lista de Ausencias</h3> ";
-        $htmlResult .= "    <table class='table table-light'>";
+        $htmlResult .= "    <table class='table '>";
         $htmlResult .= "        <tbody>";
         while ($fila = $sqlResults->fetch_assoc()) {
             $htmlResult .=               "<tr>";

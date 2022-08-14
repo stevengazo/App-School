@@ -84,10 +84,10 @@ use LDAP\Result;
         if($loginValid){            
             $Object = new stdClass();
             $Object->idToken = $Random;
-            $Object->Userid= $UserId;
             $Object->Usuario= $Usuario;
             $Object->editable = $isEditable;            
             $Object->idUser = $UserId;            
+            $Object->tipoUsuario = $tipoUsuario;            
             http_response_code(200);
             print json_encode($Object);        
         }else{
