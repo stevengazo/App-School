@@ -21,16 +21,16 @@ class Profesor{
     {
         try{
 
-          $this->ins_conexion = conexion::getInstance();
+          $this->ins_conexion = new conexion();
           $this->obj_conexion = $this->ins_conexion->conectar();
             // QUERY PARA INGRESAR A LA DB
             $sql = "INSERT INTO profesor (id, login, clave, nombre, apellidos, email, especialista)";
             $sql .= "values ('$id','$usuario','$pass','$nombre','$apellidos','$email','$esp')";
-            $sqlResults = $this->objConexion->query($sql);
-            $this->conexionDb->desconectar();
+            $sqlResults = $this->obj_conexion->query($sql);
+            $this->ins_conexion->desconectar();
             return true;
         }catch(Exception $error){
-            echo "Error in insertarFaltaAsistencia- Class Falta_Asistencia.php;<hr>Error ".$error->getMessage();
+            echo "Error in insertarProfesor".$error->getMessage();
             return null;
         }
 
@@ -41,9 +41,8 @@ class Profesor{
     $this->ins_conexion = new conexion();
     $this->obj_conexion = $this->ins_conexion->conectar();
 
-    $sql  = "SELECT id,loging,clave FROM administrador";
-    $sql .= " WHERE  loging='$usu' AND clave= '$pass'";
-
+    $sql  = "SELECT id,login,clave FROM profesor";
+    $sql .= " WHERE  login='$usu' AND clave= '$pass'";
      $rs = $this->obj_conexion->query($sql);
      $this->ins_conexion->desconectar();
      return $rs;

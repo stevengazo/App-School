@@ -33,7 +33,7 @@ function ViewFaltaAsistencia(idFaltaAsistencia) {
       idFaltaAsistencia,
     success: (data) => {
       console.log(data);
-      debugger;      
+      debugger;
       $("#renderbody").empty();
       $("#renderbody").html(data);
     },
@@ -192,7 +192,7 @@ function GetUpdateFaltaAsistencia(id) {
                           <input type="text" id="asignatura_id" name="asignatura_id" list="lista-asignatura" value="${objectElement.asignatura_id}"
                               class="form-control">
                           <datalist id="lista-asignatura">
-                              <option value=""></option>                              
+                              <option value=""></option>
                           </datalist>
                           <label id="asignaturaMessage" class="text-danger"></label>
                       </div>
@@ -210,7 +210,7 @@ function GetUpdateFaltaAsistencia(id) {
                   <div class="form-group row">
                     <button type="text" onclick="editData()" class="col-sm-5 col-md-6 btn-outline-info btn">Editar</button>
                     <button type="text onclick="" class="col-sm-5 col-md-6 btn-outline-success btn"> Limpiar</button>
-                  </div>                  
+                  </div>
               </div>
           </div>
       </div>
@@ -264,7 +264,7 @@ function GetDeleteFaltaAsistencia(idFaltaAsistencia) {
         <div>
           <table class="table">
             <tbody>
-            
+
               <tr>
                 <th>id Falta de Asistencia</th>
                 <!--id-->
@@ -273,7 +273,7 @@ function GetDeleteFaltaAsistencia(idFaltaAsistencia) {
               <tr>
                 <th>id Estudiante</th>
                 <!--id Estudiante-->
-                <td>  ${jsonObject['nombre']} ${jsonObject['apellidos']} </td>            
+                <td>  ${jsonObject['nombre']} ${jsonObject['apellidos']} </td>
               </tr>
               <tr>
                 <th>Asignatura</th>
@@ -304,7 +304,7 @@ function GetDeleteFaltaAsistencia(idFaltaAsistencia) {
           </div>
         </div>
       </body>
-    
+
       `;
       $("#renderbody").empty();
       $("#renderbody").html(htmlRender);
@@ -353,7 +353,7 @@ function Prueba() {
 }
 
 /*
-    Descripciòn: Valida la informaciòn en los inputs 
+    Descripciòn: Valida la informaciòn en los inputs
     y envia el formulario al servidor.
   */
 function onvalid() {

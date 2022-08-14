@@ -1,172 +1,3 @@
-
-
-/**
- * Trae elementos html a mostrar
- */
- function ViewLista() {
-  alert("ViewLista");
-  $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php",
-    data: {},
-    success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
-    },
-    error: (error) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(error);
-        console.error(error);
-    },
-  });
-}
-
-/**
- * Muestra un Asignatura en especifico
- */
-function ViewAsignatura(idAsignatura) {
-  alert("View");
-  $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php",
-    data: {},
-    success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
-    },
-    error: (error) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(error);
-        console.error(error);
-    },
-  });
-}
-
-/**
- * Trae vista para insertar Asignatura
- */
-function GetInsertAsignatura() {
-  alert("View");
-  $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php",
-    data: {},
-    success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
-    },
-    error: (error) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(error);
-        console.error(error);
-    },
-  });
-}
-/**
- * Envia un Asignatura a la DB y trae la vista ViewAsignatura si lo agrega
- */
-function PostInsertAsignatura() {
-  alert("View");
-  $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php",
-    data: {},
-    success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
-    },
-    error: (error) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(error);
-        console.error(error);
-    },
-  });
-}
-
-/**
- * Trae vista para modificar
- */
-function GetUpdateAsignatura() {
-  alert("View");
-  $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php",
-    data: {},
-    success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
-    },
-    error: (error) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(error);
-        console.error(error);
-    },
-  });
-}
-
-/**
- * Envia vista modifiada
- */
-function PostUpdateAsignatura() {
-  alert("View");
-  $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php",
-    data: {},
-    success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
-    },
-    error: (error) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(error);
-        console.error(error);
-    },
-  });
-}
-
-/**
- * modificar
- */
-function GetDeleteAsignatura() {
-  alert("View");
-  $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php",
-    data: {},
-    success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
-    },
-    error: (error) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(error);
-        console.error(error);
-    },
-  });
-}
-
-/**
- * confirma la eliminación
- */
-function PostDeleteAsignatura() {
-  alert("View");
-  $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php",
-    data: {},
-    success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
-    },
-    error: (error) => {
-        $("#renderbody").empty();
-        $("#renderbody").html(error);
-        console.error(error);
-    },
-  });
-}
-
 function fn_listar_asig(){
   $.ajax({
       type: "GET",
@@ -194,10 +25,9 @@ function fn_borrar_asig(id ){
 }
 
 function fn_editar_asignatura(id){
-
   $.ajax({
         type: "POST",
-        url: `http://localhost/app_School/WebService/ws_Asignatura.php?id=${id}`,
+        url: 'http://localhost/app_School/WebService/ws_Asignatura.php?id='+id,
         success: function(data) {
           $("#renderbody").html(data);
         },
@@ -205,5 +35,26 @@ function fn_editar_asignatura(id){
             $("#renderbody").html('<div class="alert alert-warning" role="alert">Error Borrando datos</div>');
         }
       });
+}
 
+function PostUpdateAsignatura() {
+const input_id= document.getElementById('txtIdAsig').value;
+const input_nivel= document.getElementById('txtnivel').value;
+const input_profesor= document.getElementById('txtprof').value;
+const input_nombre= document.getElementById('txtnombre').value;
+
+
+  $.ajax({
+    type: "PUT",
+    url: `http://localhost/app_School/WebService/ws_Asignatura.php?id=${input_id}&nivel_id=${input_nivel}&profesor_id=${input_profesor}&nombre=${input_nombre}`,
+    data: {},
+    success: (data) => {
+    fn_listar_asig();
+    },
+    error: (error) => {
+      $("#renderbody").empty();
+      $("#renderbody").html(error);
+      console.error(error);
+    },
+  });
 }

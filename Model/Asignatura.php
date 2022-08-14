@@ -8,7 +8,8 @@
         /**
         * Conexión con la Base de Datos
         */
-        private $conexionDb;
+        private $ins_conexion;
+        private $obj_conexion;
 
         /**
         * Implementación con singleton
@@ -24,63 +25,26 @@
                 self::$instance = new Asignatura();
             }
             return self::$instance;
-        }    
+        }
 
         public function __construct()
         {
         }
 
-
-
-
-        /**
-         * Descripción: solamente regresa el id de la asignatura, nombre
-         */
-        function obtenerArregloAsignaturaSimple(){
+        function insert_asignatura($id,$nivel,$profesor,$nombre)
+        {
             try{
-                $this->conexionDb = new conexion();
-                $this->objConexion = $this->conexionDb->conectar();
-                $sqlQuery = "select id, nombre from asignatura";
-                $sqlResults = $this->objConexion->query($sqlQuery);
-                $this->conexionDb->desconectar();
-    
-                $arrayResult = array();                
-                while($fila = $sqlResults->fetch_assoc()){
-                    $arrayTmp= array();
-                    $arrayTmp['id'] = $fila['id'];
-                    $arrayTmp['nombre'] = $fila['nombre'];                    
-                    $arrayResult[]= $arrayTmp;
-                }
-                return $arrayResult;
+
+              $this->ins_conexion = new conexion();
+              $this->obj_conexion = $this->ins_conexion->conectar();
+                // QUERY PARA INGRESAR A LA DB
+                $sql = "INSERT INTO asignatura (id,nivel_id,profesor_id,nombre)";
+                $sql .= "values ('$id','$nivel','$profesor','$nombre')";
+                $sqlResults = $this->obj_conexion->query($sql);
+                $this->ins_conexion->desconectar();
+                return true;
             }catch(Exception $error){
-                echo "Error in obtenerArregloAsignaturaSimple. Error".$error->getMessage();
-                return array();
-            }
-        }
-
-
-
-        /**
-         * Descripción: solamente regresa el id del alumno, nombre y apellido
-         */
-        function obtenerArregloAlumnosSimple(){
-            try{
-                $this->conexionDb = new conexion();
-                $this->objConexion = $this->conexionDb->conectar();
-                $sqlQuery = "SELECT id, nombre, apellidos from  alumno";
-                $sqlResults = $this->objConexion->query($sqlQuery);
-                $this->conexionDb->desconectar();
-    
-                $arrayResult = array();                
-                while($fila = $sqlResults->fetch_assoc()){
-                    $arrayTmp= array();
-                    $arrayTmp['id'] = $fila['id'];
-                    $arrayTmp['nombre'] = $fila['apellidos']." ".$fila['nombre'];                    
-                    $arrayResult[]= $arrayTmp;
-                }
-                return $arrayResult;
-            }catch(Exception $error){
-                echo "Error in obtenerListaFaltaAsistencia. Error".$error->getMessage();
+                echo "Error in insertarAsignatura".$error->getMessage();
                 return null;
             }
         }

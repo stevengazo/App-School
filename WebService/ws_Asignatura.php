@@ -5,20 +5,16 @@
 
     switch ($metodo) {
         case 'GET':
-
           fn_listar_asig();
           break;
         case 'POST':
             fn_mostrar_frm_asig_edicion();
             break;
-        case 'VIEW':
-            GetElement();
-            break;
         case 'DELETE':
-            BorrarNota();
+            BorrarAsig();
             break;
         case 'PUT':
-            UpdateNota();
+            UpdateAsignatura();
             break;
         default:
             /**
@@ -29,6 +25,62 @@
             print json_encode($rtn);
             break;
     }
+
+   function UpdateAsignatura()
+    {
+        # CADENA DE CONEXIÓN
+        $flag = true;
+        $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+        # VALIDACIONES
+        if (isset($_REQUEST['id'])) {
+            $id = $_REQUEST['id'];
+        } else {
+            $rtn = array("id", "3", "error", "Id no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if (isset($_REQUEST['nivel_id'])) {
+            $nivel_id = $_REQUEST['nivel_id'];
+        } else {
+            $rtn = array("id", "3", "error", "nivel_id no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if (isset($_REQUEST['profesor_id'])) {
+            $profesor_id = $_REQUEST['profesor_id'];
+        } else {
+            $rtn = array("id", "3", "error", "profesor_id no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if (isset($_REQUEST['nombre'])) {
+            $nombre = $_REQUEST['nombre'];
+        } else {
+            $rtn = array("id", "3", "error", "nombre no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if ($flag) {
+            # CODIGO SQL
+            $sqlQuery = "UPDATE asignatura ";
+            $sqlQuery = $sqlQuery . "set nivel_id= '$nivel_id', profesor_id = '$profesor_id', nombre ='$nombre'";
+            $sqlQuery = $sqlQuery . " WHERE id = $id;";
+            $sqlResults = $linkConnection->query($sqlQuery);
+            /* RETORNA JSON */
+            header("Content-Type: application/json");
+            http_response_code(200);
+            echo json_encode($sqlResults);
+        }
+    }
+
 
     function fn_listar_asig(){
         if(ISSET($_REQUEST['tipo'])){ // COMPRUEBA EXISTENCIA
@@ -44,10 +96,10 @@
                             $cantidad_asig = $fila['canti_reg'];
                         }
                         if($cantidad_asig>0){
-                
+
                             $sql = "select id,nivel_id,profesor_id,nombre from asignatura";
                             $rs = $linkConect->query($sql);
-                
+
                             $salida = "<table class='table'>";
                                 $salida .= "<tr>";
                                 $salida .= "<th>Id</th>";
@@ -78,7 +130,7 @@
                 case 'Json':
                     $sql = '
                     SELECT A.*, P.nombre as nombreProfesor, P.Apellidos as ApellidosProfesor  FROM ASIGNATURA AS A
-                    INNER join Profesor as P on P.id = A.profesor_id                    
+                    INNER join Profesor as P on P.id = A.profesor_id
                     ';
                     $rs = $linkConect->query($sql);
                     $arrayResult = array();
@@ -90,11 +142,11 @@
                         $tmpArray['profesor_id'] = $fila['profesor_id'];
                         $tmpArray['nombreProfesor'] = $fila['nombreProfesor']." ".$fila['ApellidosProfesor'];
                         array_push($arrayResult,$tmpArray);
-                    }                    
+                    }
                     http_response_code(200);
                     header("HTTP/1.1 200 SUCCESSFUL");
-                    print json_encode($arrayResult);                      
-                    break;                
+                    print json_encode($arrayResult);
+                    break;
                 default:
                     $rtn = array("id", "3", "error", "tipo especificado no valido");
                     http_response_code(500);
@@ -106,7 +158,7 @@
             $rtn = array("id", "3", "error", "tipo no especificado");
             http_response_code(500);
             print json_encode($rtn);
-            exit;          
+            exit;
         }
 
 
@@ -157,68 +209,15 @@
                 $salida .= '<input type="text" class="form-control" id="txtnombre" name="txtnombre" value="'.$nombre.'" placeholder="Ingrese el nombre de la asignatura" required>';
               $salida .= '</div>';
 
-              $salida .= '<button type="button" class="btn btn-primary" onclick="fn_editar_asig();">Actualizar Asignatura</button>';
+              $salida .= '<button type="button" class="btn btn-primary" onclick="PostUpdateAsignatura();">Actualizar Asignatura</button>';
             $salida .= '</form>';
           $salida .= '</div>';
 
       echo $salida;
     }
 
-    /**
-     *  Actualiza un elemento
-     */
-    function UpdateNota(){
-        # COMPROBACIONES DE VALORES
-        if(ISSET($_REQUEST['idAsignatura'])){ // COMPRUEBA EXISTENCIA
-            $id = $_REQUEST['idAsignatura'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "id no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['nivel_id'])){ // COMPRUEBA EXISTENCIA
-            $nivel_id = $_REQUEST['nivel_id'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "nivel_id no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['profesor_id'])){ // COMPRUEBA EXISTENCIA
-            $profesor_id = $_REQUEST['profesor_id'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "profesor_id no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['nombre'])){ // COMPRUEBA EXISTENCIA
-            $nombre = $_REQUEST['nombre'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "nombre no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        # CADENA DE CONEXIÓN
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");
-        # CODIGO SQL
-        $sqlQuery = " UPDATE ASIGNATURA ";
-        $sqlQuery .= " SET nivel_id = $nivel_id, profesor_id = $profesor_id , nombre = '$nombre' ";
-        $sqlQuery .= " where id = $id ";
-        #EJECUCIÓN CONSULTA
-        $sqlResult = $linkConnection->query($sqlQuery);
-        /* RETORNA JSON */
-        header("Content-Type: application/json");
-        echo json_encode($sqlResult);
-    }
 
-    function BorrarNota(){
+    function BorrarAsig(){
         if(ISSET($_REQUEST['id'])){ // COMPRUEBA EXISTENCIA
             $id = $_REQUEST['id'];
             # CADENA DE CONEXIÓN
@@ -241,129 +240,5 @@
     }
 
 
-    /**
-     * Inserta un nuevo elemento
-     */
-    function InsertarElemento(){
-        # COMPROBACIONES DE VALORES
-        if(ISSET($_REQUEST['idAsignatura'])){ // COMPRUEBA EXISTENCIA
-            $id = $_REQUEST['idAsignatura'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "id no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['nivel_id'])){ // COMPRUEBA EXISTENCIA
-            $nivel_id = $_REQUEST['nivel_id'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "nivel_id no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['profesor_id'])){ // COMPRUEBA EXISTENCIA
-            $profesor_id = $_REQUEST['profesor_id'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "profesor_id no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['nombre'])){ // COMPRUEBA EXISTENCIA
-            $nombre = $_REQUEST['nombre'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "nombre no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        # CADENA DE CONEXIÓN
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");
-        # CODIGO SQL
-        $sqlQuery = " INSERT INTO ASIGNATURA (ID, NIVEL_ID, PROFESOR_ID, NOMBRE) ";
-        $sqlQuery .= " values( $id, $nivel_id,$profesor_id, '$nombre')  ";
-        #EJECUCIÓN CONSULTA
-        $sqlResult = $linkConnection->query($sqlQuery);
-        /* RETORNA JSON */
-        header("Content-Type: application/json");
-        echo json_encode($sqlResult);
-
-    }
-
-    /**
-     * Descripción: lista todos los elementos existentes
-     */
-    function ListarElementos(){
-        # CADENA DE CONEXIÓN
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");
-        # CODIGO SQL
-        $sqlQuery = " SELECT AG.id, AG.nivel_id, N.nivel , AG.profesor_id, P.nombre as NombreProfesor, P.apellidos as ApellidosProfesor, AG.nombre FROM ASIGNATURA as AG ";
-            # INNER JOIN PARA  (UNIR TABLAS EN CONSULTA )
-            # TRAER NOMBRES DE PROFESOR Y NIVEL
-        $sqlQuery .= " inner join Nivel as N on N.id = AG.nivel_id ";
-        $sqlQuery .= " inner join Profesor as P on P.id = AG.profesor_id ";
-        $sqlQuery .=  " order by AG.id asc";
-        # EJECUCIÓN CODIGO
-        $sqlResult = $linkConnection->query($sqlQuery);
-        # PROCESADO DE RESULTADOS
-        $arrayResult = array();
-        while($file = $sqlResult->fetch_assoc()){
-            $arrayTemp = array();
-            $arrayTemp['id'] = $file['id'];
-            $arrayTemp['nombre'] = $file['nombre'];
-            $arrayTemp['nivel_id'] = $file['nivel_id'];
-            $arrayTemp['nivel'] = $file['nivel'];
-            $arrayTemp['profesor_id'] = $file['profesor_id'];
-            $arrayTemp['profesor_Nombre'] = $file['NombreProfesor']. " " .$file['ApellidosProfesor'] ;
-            $arrayResult[] =$arrayTemp;
-        }
-        /* RETORNA JSON */
-        header("Content-Type: application/json");
-        echo json_encode($arrayResult);
-    }
-
-    /**
-     * Retorna un elemento especifico por el id
-     */
-    function GetElement(){
-        if(ISSET($_REQUEST['idAsignatura'])){
-            $id = $_REQUEST['idAsignatura'];
-            # CADENA DE CONEXIÓN
-            $linkConnection =  mysqli_connect("localhost","root","","testingdb");
-            # CODIGO SQL
-            $sqlQuery = " SELECT AG.id, AG.nivel_id, N.nivel , AG.profesor_id, P.nombre as NombreProfesor, P.apellidos as ApellidosProfesor, AG.nombre FROM ASIGNATURA as AG ";
-                # INNER JOIN PARA  (UNIR TABLAS EN CONSULTA )
-                # TRAER NOMBRES DE PROFESOR Y NIVEL
-            $sqlQuery .= " inner join Nivel as N on N.id = AG.nivel_id ";
-            $sqlQuery .= " inner join Profesor as P on P.id = AG.profesor_id ";
-            $sqlQuery .= " where AG.id = $id";
-            # EJECUCIÓN CODIGO
-            $sqlResult = $linkConnection->query($sqlQuery);
-            # PROCESADO DE RESULTADOS
-            $arrayResult = array();
-            while($file = $sqlResult->fetch_assoc()){
-                $arrayTemp = array();
-                $arrayTemp['id'] = $file['id'];
-                $arrayTemp['nombre'] = $file['nombre'];
-                $arrayTemp['nivel_id'] = $file['nivel_id'];
-                $arrayTemp['nivel'] = $file['nivel'];
-                $arrayTemp['profesor_id'] = $file['profesor_id'];
-                $arrayTemp['profesor_Nombre'] = $file['NombreProfesor']. " " .$file['ApellidosProfesor'] ;
-                $arrayResult[] =$arrayTemp;
-            }
-            /* RETORNA JSON */
-            header("Content-Type: application/json");
-            echo json_encode($arrayResult);
-        }else{
-            $rtn = array("id", "3", "error", "IdHorario no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-        }
-    }
 
 ?>

@@ -5,24 +5,80 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 
 
 switch ($metodo) {
-  case 'GET':
-    header("HTTP/1.1 200 SUCCESSFUL");
-    fn_listar_nivel();
-    break;
+    case 'GET':
+      header("HTTP/1.1 200 SUCCESSFUL");
+      fn_listar_nivel();
+      break;
     case 'DELETE':
       header("HTTP/1.1 200 SUCCESSFUL");
       fn_borrar_nivel();
       break;
-      case 'POST':
+    case 'POST':
         header("HTTP/1.1 200 SUCCESSFUL");
         fn_mortrar_frm_nivel_edicion();
+        break;
+    case 'PUT':
+        UpdateNivel();
         break;
   default:
     // code...
     break;
 }
 
-
+function UpdateNivel()
+{
+    # CADENA DE CONEXIÓN
+    $flag = true;
+    $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+    # VALIDACIONES
+    if (isset($_REQUEST['id'])) {
+        $id = $_REQUEST['id'];
+    } else {
+        $rtn = array("id", "3", "error", "Id no especificado");
+        http_response_code(500);
+        print json_encode($rtn);
+        $flag = false;
+        exit;
+    }
+    if (isset($_REQUEST['nivel'])) {
+        $nivel = $_REQUEST['nivel'];
+    } else {
+        $rtn = array("id", "3", "error", "nivel no especificado");
+        http_response_code(500);
+        print json_encode($rtn);
+        $flag = false;
+        exit;
+    }
+    if (isset($_REQUEST['curso'])) {
+        $curso = $_REQUEST['curso'];
+    } else {
+        $rtn = array("id", "3", "error", "curso no especificado");
+        http_response_code(500);
+        print json_encode($rtn);
+        $flag = false;
+        exit;
+    }
+    if (isset($_REQUEST['AULA'])) {
+        $AULA = $_REQUEST['AULA'];
+    } else {
+        $rtn = array("id", "3", "error", "aula no especificado");
+        http_response_code(500);
+        print json_encode($rtn);
+        $flag = false;
+        exit;
+    }
+    if ($flag) {
+        # CODIGO SQL
+        $sqlQuery = "UPDATE nivel ";
+        $sqlQuery = $sqlQuery . "set nivel= '$nivel', curso = '$curso', AULA ='$AULA'";
+        $sqlQuery = $sqlQuery . " WHERE id = $id;";
+        $sqlResults = $linkConnection->query($sqlQuery);
+        /* RETORNA JSON */
+        header("Content-Type: application/json");
+        http_response_code(200);
+        echo json_encode($sqlResults);
+    }
+}
 
 function fn_mortrar_frm_nivel_edicion(){
   $idNivel = $_REQUEST['idNivel'];
@@ -46,7 +102,7 @@ function fn_mortrar_frm_nivel_edicion(){
     }
 
     $salida = '<div class="container mt-3">';
-      $salida .= '<h2>Edicion de Niveles</h2>';
+      $salida .= '<h2>Edición de Niveles</h2>';
         $salida .= '<form  method="post"  >';
        $salida .= '<input type="hidden" id="txtIdNivel" value="'.$idNivel.'">';
           $salida .= '<div class="mb-3 mt-3">';
@@ -63,60 +119,13 @@ function fn_mortrar_frm_nivel_edicion(){
         $salida .= '</div>';
         $salida .= '<div class="mb-3 mt-3">';
 
-
-
-          $salida .= '<button type="button" class="btn btn-primary" onclick="fn_editar_nivel();">Actualizar Nivel</button>';
+          $salida .= '<button type="button" class="btn btn-primary" onclick="PostUpdateNivel();">Actualizar Nivel</button>';
         $salida .= '</form>';
       $salida .= '</div>';
 
   echo $salida;
 }
 
-
-/*
-
-function agregar_nivel()
-{
-  $salida = '<div class="container mt-3">';
-    $salida .= '<h2>Edicion de Niveles</h2>';
-      $salida .= '<form  method="post"  >';
-        $salida .= '<label for="text">Id:</label>';
-        $salida .= '<input type="text" id="txtIdNivel">';
-        $salida .= '<div class="mb-3 mt-3">';
-          $salida .= '<label for="text">Nivel:</label>';
-          $salida .= '<input type="text" class="form-control" id="txtnivel" name="txtnivel" placeholder="Ingrese un nivel" required>';
-        $salida .= '</div>';
-        $salida .= '<div class="mb-3 mt-3">';
-          $salida .= '<label for="text">Curso:</label>';
-          $salida .= '<input type="text" class="form-control" id="txtcurso" name="txtcurso" placeholder="Ingrese un curso" required>';
-        $salida .= '</div>';
-        $salida .= '<div class="mb-3">';
-        $salida .= '<label for="text">Aula:</label>';
-        $salida .= '<input type="text" class="form-control" id="txtaula" name="txtaula" placeholder="Ingrese un aula" required>';
-      $salida .= '</div>';
-      $salida .= '<div class="mb-3 mt-3">';
-
-        $salida .= '<button type="button" class="btn btn-primary" onclick="fn_agregar_nivel();">Agregar Nivel</button>';
-      $salida .= '</form>';
-    $salida .= '</div>';
-
-echo $salida;
-
-$idNivel = $_REQUEST['txtIdNivel'];
-$nivel = $fila['txtnivel'];
-$curso = $fila['txtcurso'];
-$AULA = $fila['txtaula'];
-
-$linkConnection =  mysqli_connect("localhost","root","","testingdb");
-# CODIGO SQL
-$sqlQuery = " INSERT INTO nivel (id,nivel,curso,AULA)";
-$sqlQuery .= " VALUES ('$idNivel','$nivel','$curso','$AULA') ";
-#EJECUCIÓN CONSULTA
-$sqlResult = $linkConnection->query($sqlQuery);
-
-}
-
-*/
 function fn_borrar_nivel(){
   $idNivel = $_REQUEST['idNivel'];
   $linkConect = mysqli_connect("localhost","root","","testingdb");

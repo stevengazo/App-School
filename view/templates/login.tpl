@@ -30,8 +30,8 @@
 					<label for="floatingPassword">Password</label>
 				</div>					
 				<div class="form-floating mb-3">					
-					<select id="floatingPassword" class="form-control">
-						<option >Estudiante</option>
+					<select id="floatingPassword" name="tipoUsuario" class="form-control">
+						<option >Alumno</option>
 						<option >Padre</option>
 						<option >Profesor</option>
 						<option >Administrador</option>						

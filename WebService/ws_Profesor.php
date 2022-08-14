@@ -12,16 +12,12 @@
           header("HTTP/1.1 200 SUCCESSFUL");
           editar_p();
           break;
-            //InsertarElemento();
-        case 'VIEW':
-            GetElement();
-            break;
         case 'DELETE':
           header("HTTP/1.1 200 SUCCESSFUL");
           fn_borrar_profesor();
             break;
         case 'PUT':
-            UpdateNota();
+            UpdateProfesor();
             break;
         default:
             /**
@@ -31,6 +27,89 @@
             http_response_code(500);
             print json_encode($rtn);
             break;
+    }
+
+
+    function UpdateProfesor()
+    {
+        # CADENA DE CONEXIÓN
+        $flag = true;
+        $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+        # VALIDACIONES
+        if (isset($_REQUEST['id'])) {
+            $id = $_REQUEST['id'];
+        } else {
+            $rtn = array("id", "3", "error", "Id no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if (isset($_REQUEST['login'])) {
+            $login = $_REQUEST['login'];
+        } else {
+            $rtn = array("id", "3", "error", "login no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if (isset($_REQUEST['clave'])) {
+            $clave = $_REQUEST['clave'];
+        } else {
+            $rtn = array("id", "3", "error", "clave no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if (isset($_REQUEST['nombre'])) {
+            $nombre = $_REQUEST['nombre'];
+        } else {
+            $rtn = array("id", "3", "error", "nombre no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if (isset($_REQUEST['apellidos'])) {
+            $apellidos = $_REQUEST['apellidos'];
+        } else {
+            $rtn = array("id", "3", "error", "apellidos no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if (isset($_REQUEST['email'])) {
+            $email = $_REQUEST['email'];
+        } else {
+            $rtn = array("id", "3", "error", "email no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if (isset($_REQUEST['especialista'])) {
+            $especialista = $_REQUEST['especialista'];
+        } else {
+            $rtn = array("id", "3", "error", "especialista no especificado");
+            http_response_code(500);
+            print json_encode($rtn);
+            $flag = false;
+            exit;
+        }
+        if ($flag) {
+            # CODIGO SQL
+            $sqlQuery = "UPDATE profesor ";
+            $sqlQuery = $sqlQuery . "set login= '$login', clave = '$clave', nombre ='$nombre', apellidos = '$apellidos', email = '$email', especialista = $especialista";
+            $sqlQuery = $sqlQuery . " WHERE id = $id;";
+            $sqlResults = $linkConnection->query($sqlQuery);
+            /* RETORNA JSON */
+            header("Content-Type: application/json");
+            http_response_code(200);
+            echo json_encode($sqlResults);
+        }
     }
 
     /**
@@ -49,6 +128,8 @@
 
             $sql = "select id,login,nombre,apellidos,email,especialista from profesor";
             $rs = $linkConect->query($sql);
+
+            //$tit ="<h1>Lista de Profesores</h1> "
 
             $salida = "<table class='table'>";
               $salida .= "<tr>";
@@ -137,232 +218,12 @@
               $salida .= '</select>';
             $salida .= '</div>';
 
-            $salida .= '<button type="button" class="btn btn-primary" onclick="fn_editar_usuario();">Actualizar Profesor</button>';
+            $salida .= '<button type="button" class="btn btn-primary" onclick="PostUpdateProfesor();">Actualizar Profesor</button>';
           $salida .= '</form>';
         $salida .= '</div>';
 
       }
-    
+
 
     echo $salida;
   }
-
-
-    /**
-     *  Actualiza un elemento
-     */
-    function UpdateNota(){
-        if(ISSET($_REQUEST['idProfesor'])){ // COMPRUEBA EXISTENCIA
-            $id = $_REQUEST['idProfesor'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "idProfesor no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['login'])){ // COMPRUEBA EXISTENCIA
-            $login = $_REQUEST['login'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "Algo paso mal...");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(isset($_REQUEST['clave'])){
-            $clave = $_REQUEST['clave'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "Algo paso mal...");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['apellidos'])){ // COMPRUEBA EXISTENCIA
-            $apellidos = $_REQUEST['apellidos'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "apellidos no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['email'])){ // COMPRUEBA EXISTENCIA
-            $email = $_REQUEST['email'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "email no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['especialista'])){ // COMPRUEBA EXISTENCIA
-            $especialista = $_REQUEST['especialista'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "especialista no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['nombre'])){ // COMPRUEBA EXISTENCIA
-            $nombre = $_REQUEST['nombre'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "nombre no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        # CADENA DE CONEXIÓN
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");
-        # CODIGO SQL
-        $sqlQuery = " UPDATE PROFESOR ";
-        $sqlQuery .= " SET login = '$login', clave = md5('$clave'), nombre = '$nombre', apellidos =  '$apellidos', email = '$email' , especialista = $especialista  ";
-        $sqlQuery .= " where id = $id ";
-        #EJECUCIÓN CONSULTA
-        $sqlResult = $linkConnection->query($sqlQuery);
-        /* RETORNA JSON */
-        header("Content-Type: application/json");
-        echo json_encode($sqlResult);
-    }
-
-    function BorrarNota(){
-        if(ISSET($_REQUEST['idProfesor'])){ // COMPRUEBA EXISTENCIA
-            $id = $_REQUEST['idProfesor'];
-            # CADENA DE CONEXIÓN
-            $linkConnection =  mysqli_connect("localhost","root","","testingdb");
-            # CODIGO SQL
-            $sqlQuery = " DELETE FROM PROFESOR ";
-            $sqlQuery .= " WHERE ID = $id";
-            # EJECUTA EL CODIGO
-            $sqlResult= $linkConnection->query($sqlQuery);
-            /* RETORNA JSON */
-            header("Content-Type: application/json");
-            echo json_encode($sqlResult);
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "idProfesor no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-    }
-
-
-    /**
-     * Inserta un nuevo elemento
-     */
-    function InsertarElemento(){
-        if(ISSET($_REQUEST['idProfesor'])){ // COMPRUEBA EXISTENCIA
-            $id = $_REQUEST['idProfesor'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "idProfesor no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['login'])){ // COMPRUEBA EXISTENCIA
-            $login = $_REQUEST['login'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "Algo paso mal...");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(isset($_REQUEST['clave'])){
-            $clave = $_REQUEST['clave'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "Algo paso mal...");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['apellidos'])){ // COMPRUEBA EXISTENCIA
-            $apellidos = $_REQUEST['apellidos'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "apellidos no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['email'])){ // COMPRUEBA EXISTENCIA
-            $email = $_REQUEST['email'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "email no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['especialista'])){ // COMPRUEBA EXISTENCIA
-            $especialista = $_REQUEST['especialista'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "especialista no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        if(ISSET($_REQUEST['nombre'])){ // COMPRUEBA EXISTENCIA
-            $nombre = $_REQUEST['nombre'];
-        }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "nombre no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-            exit;
-        }
-        # CADENA DE CONEXIÓN
-        $linkConnection =  mysqli_connect("localhost","root","","testingdb");
-        # CODIGO SQL
-        $sqlQuery = " INSERT INTO PROFESOR (ID, LOGIN, CLAVE, NOMBRE, APELLIDOS, EMAIL, ESPECIALISTA) ";
-        $sqlQuery .= " VALUES ( $id , '$clave',md5('$clave'),'$nombre','$apellidos','$email',$especialista) ";
-        #EJECUCIÓN CONSULTA
-        $sqlResult = $linkConnection->query($sqlQuery);
-        /* RETORNA JSON */
-        header("Content-Type: application/json");
-        echo json_encode($sqlResult);
-    }
-
-
-    /**
-     * Retorna un elemento especifico por el id
-     */
-    function GetElement(){
-        if(ISSET($_REQUEST['idProfesor'])){
-            $id = $_REQUEST['idProfesor'];
-            # CADENA DE CONEXIÓN
-            $linkConnection =  mysqli_connect("localhost","root","","testingdb");
-            # codigo SQL
-            $sqlQuery = " SELECT * FROM PROFESOR ";
-            $sqlQuery .= " WHERE id = $id ";
-            # EJECUTA EL CODIGO
-            $sqlResult= $linkConnection->query($sqlQuery);
-            #PROCESADO DE RESULTADOS
-            $arrayResult = null;
-            while($file = $sqlResult->fetch_assoc()){
-                $arrayTemp = array();
-                $arrayTemp['id'] = $file['id'];
-                $arrayTemp['login'] = $file['login'];
-                $arrayTemp['nombre'] = $file['nombre'];
-                $arrayTemp['apellidos'] = $file['apellidos'];
-                $arrayTemp['email'] = $file['email'];
-                $arrayTemp['especialista'] = $file['especialista'];
-                $arrayResult =$arrayTemp;
-            }
-            /* RETORNA JSON */
-            header("Content-Type: application/json");
-            echo json_encode($arrayResult);
-        }else{
-            $rtn = array("id", "3", "error", "IdProfesor no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
-        }
-
-    }

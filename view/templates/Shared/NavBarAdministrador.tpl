@@ -1,12 +1,12 @@
 <!--SIMPLE NAV VAR-->
 
-<body class="container " style="background-color:#D4E6F1;">
-    <h3>Nav bar general</h3>
+<body class="container " style="background-color:#E9E6F7;">
+    <h6 class="h6 text-primary mb-0">Modo Administrador</h6>
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded mt-3 ">
 
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php?action=index">
-                <img src="images/logo.png"  style="width:8rem;height:4rem;" alt="logo">
+                <img src="images/logo.png" style="width:8rem;height:4rem;" alt="logo">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -15,9 +15,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-
-                    </li>
+                    <!-- AUSENCIAS-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -31,6 +29,7 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- ESTUDIANTES-->                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -48,13 +47,14 @@
                             <li>
                         </ul>
                     </li>
+                    <!-- NIVELES-->                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Niveles
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="index.php?action=abrir_nivel" >Agregar Nivel</a>
+                            <a class="dropdown-item" href="index.php?action=abrir_nivel">Agregar Nivel</a>
                             <!--  <li><hr class="dropdown-divider"></li> -->
                             <li>
                                 <hr class="dropdown-divider">
@@ -64,7 +64,7 @@
                             <li>
                         </ul>
                     </li>
-
+                    <!-- PROFESORES-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -81,6 +81,7 @@
                             <li>
                         </ul>
                     </li>
+                    <!-- NOTAS-->                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -96,13 +97,14 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- ASIGNATURA-->                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Asignaturas
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="index.php?action=abrir_asig" >Agregar
+                            <a class="dropdown-item" href="index.php?action=abrir_asig">Agregar
                                 Asignaturas</a>
                             <!--  <li><hr class="dropdown-divider"></li> -->
                             <li>
@@ -113,6 +115,7 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- ADMINISTRACION-->                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -138,6 +141,15 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li class="dropdown-item">
+                                Nuevo Perfil de Padre
+                            </li>
+                            <li class="dropdown-item">
+                                Listar Padres
+                            </li>                            
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li class="dropdown-item">
                                 Creación Horarios
                             </li>
                             <li class="dropdown-item">
@@ -155,7 +167,7 @@
                             </li>
                         </ul>
                     </li>
-   <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Usuario

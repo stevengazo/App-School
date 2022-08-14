@@ -3,14 +3,18 @@
      * DEPENDENCIAS
      */
     require_once "connections/conexion.php";
-    class Alumno
+    class Nivel
     {
         /**
         * Conexión con la Base de Datos
         */
         private $ins_conexion;
         private $obj_conexion;
-        private static $instance=null;
+
+        /**
+        * Implementación con singleton
+        */
+        private static $instance = null;
 
         /**
         * Funcion para inicializar singleton
@@ -18,7 +22,7 @@
         */
         public static function getInstancia(){
             if(self::$instance == null ){
-                self::$instance = new Alumno();
+                self::$instance = new Nivel();
             }
             return self::$instance;
         }
@@ -27,36 +31,23 @@
         {
         }
 
-
-        function insert_alumno($id,$nivel,$usuario,$pass,$nombre,$apellidos)
+        function insert_nivel($id,$nivel,$curso,$aula)
         {
             try{
 
               $this->ins_conexion = new conexion();
               $this->obj_conexion = $this->ins_conexion->conectar();
                 // QUERY PARA INGRESAR A LA DB
-                $sql = "INSERT INTO alumno (id,nivel_id,login,clave,nombre,apellidos)";
-                $sql .= "values ('$id','$nivel','$usuario','$pass','$nombre','$apellidos')";
+                $sql = "INSERT INTO nivel (id,nivel,curso,AULA)";
+                $sql .= "values ('$id','$nivel','$curso','$aula')";
                 $sqlResults = $this->obj_conexion->query($sql);
                 $this->ins_conexion->desconectar();
                 return true;
             }catch(Exception $error){
-                echo "Error in insertarAlumno".$error->getMessage();
+                echo "Error in insertarNivel".$error->getMessage();
                 return null;
             }
 
         }
-        function val_login($usu,$pass){
 
-            $this->ins_conexion = new conexion();
-            $this->obj_conexion = $this->ins_conexion->conectar();
-        
-            $sql  = "SELECT id,login,clave FROM alumno";
-            $sql .= " WHERE  login='$usu' AND clave= '$pass'";
-        
-             $rs = $this->obj_conexion->query($sql);
-             $this->ins_conexion->desconectar();
-             return $rs;
-            }        
-
-}
+    }
