@@ -1,5 +1,6 @@
 <?php
 session_start();
+setcookie("myCookie", false);
 /**
  * DEPENDENCIAS
  */
@@ -59,7 +60,12 @@ class control
    */
   function index($tipoUsuario)
   {
-    // Seteo y envio de datos a la interfaz
+    /**
+     * Define un dato en el cliente que permita identificar si el usuario
+     * puede modificar o solo leer datos
+     */
+    // Seteo y envio de datos a la interfaz    
+    $this->Smarty->setAssign("editable",$_SESSION['isEditable']);
     $this->Smarty->setAssign("saludo", "Inicio del proyecto");
     $this->Smarty->setAssign("titulo", "Sistema Academico");
     // llamada a la interfaz
@@ -91,9 +97,10 @@ class control
   */
   function gestor()
   {
+    
+    $this->validarInactividad();    
     # Comprueba que el "Action" este seteado
-    if (!isset($_REQUEST['action'])) {
-
+    if (!isset($_REQUEST['action'])  ) {
       if (isset($_SESSION['USUARIO'])) {
         $this->index($_SESSION['tipoUsuario']);
         $this->validarInactividad();
@@ -171,6 +178,7 @@ class control
 
     switch ($tipoUsuario) {
       case 'Alumno':
+        $_SESSION['isEditable']="false";
         #valida el inicio de sesión de alumno
         $rs = $this->Alumno->val_login($usu, $pass);
         $flag = 0;
@@ -183,6 +191,7 @@ class control
         }
         break;
       case 'Padre':
+        $_SESSION['isEditable']="false";
         #valida el inicio de sesión de padre
         $rs = $this->Padre->val_login($usu, $pass);
         $flag = 0;
@@ -195,6 +204,7 @@ class control
         }
         break;
       case 'Profesor':
+        $_SESSION['isEditable']="true";
         #valida el inicio de sesión de profesor
         $rs = $this->Profesor->val_login($usu, $pass);
         $flag = 0;
@@ -207,6 +217,7 @@ class control
         }
         break;
       case 'Administrador':
+        $_SESSION['isEditable']="true";
         #valida el inicio de sesión de administrador
         $rs = $this->AdministradorModel->val_login($usu, $pass);
         $flag = 0;
@@ -228,7 +239,7 @@ class control
     if ($flag == 1) {
       $_SESSION['USUARIO'] = $usu;
       $_SESSION['ID']     = $id;
-      $_SESSION['tipoUsuario'] = $tipoUsuario;
+      $_SESSION['tipoUsuario'] = $tipoUsuario;      
       $this->index($tipoUsuario);
     } else {
       # Si es falsa vuelve al login

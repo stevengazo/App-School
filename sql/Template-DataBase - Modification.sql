@@ -122,3 +122,5 @@ ALTER TABLE NOTA ADD FOREIGN KEY Nota_FKIndex1 (asignatura_has_alumno_id) 	REFER
 /* padre-has-alumno */
 ALTER TABLE Padre_Has_Alumno ADD FOREIGN KEY (padre_id) REFERENCES padre(id);
 ALTER TABLE Padre_Has_Alumno ADD FOREIGN KEY (alumno_id) REFERENCES alumno(id);
+
+
