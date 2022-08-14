@@ -1,4 +1,5 @@
 <div id="renderbody" class="border border-white rounded mt-3 p-3 border-secondary d-flex flex-column">
+<i class="bi bi-info-circle"></i>
     <!--temporal-->
     <div class="d-flex flex-column justify-content-around">
         <div class="d-flex flex-row justify-content-around">

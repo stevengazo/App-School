@@ -191,12 +191,8 @@ function fn_listar_alumnos(){
             $salida .= "<td>".$fila['login']."</td>";
             $salida .= "<td>".$fila['nombre']."</td>";
             $salida .= "<td>".$fila['apellidos']."</td>";
-            $salida .= "<td><img src='images/lapiz.png' title='Editar Alumno'
-             onclick='fn_editar_alumno(".$fila['id'].");'>
-                            <img src='images/delete.png' title='Borrar Alumno'
-                            onclick='fn_borrar_alumno(".$fila['id'].");'></td>";
-
-
+            $salida .= " <td class='btn btn-sm text-dark btn-primary'  onclick='fn_editar_alumno(".$fila['id'].")'> <i class='bi bi-pencil-square'></i> </td> ";
+            $salida .= " <td class='btn btn-sm text-dark btn-danger' onclick='fn_borrar_alumno(".$fila['id'].")'> <i class='bi bi-trash3'></i> </td> ";
             $salida .= "</tr>";
 
           }

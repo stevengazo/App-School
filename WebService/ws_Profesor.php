@@ -149,10 +149,8 @@
                 $salida .= "<td>".$fila['apellidos']."</td>";
                 $salida .= "<td>".$fila['email']."</td>";
                 $salida .= "<td>".$fila['especialista']."</td>";
-                $salida .= "<td><img src='images/lapiz.png' title='Editar Usuario'
-                 onclick='fn_editar_profesor(".$fila['id'].");'>
-                                <img src='images/delete.png' title='Borrar Usuario'
-                                onclick='fn_borrar_profesor(".$fila['id'].");'></td>";
+                $salida .= " <td class='btn btn-sm text-dark btn-primary' onclick='fn_editar_profesor(".$fila['id'].");'> <i class='bi bi-pencil-square'></i> </td> ";
+                $salida .= " <td class='btn btn-sm text-dark btn-danger' onclick='fn_borrar_profesor(".$fila['id'].");'> <i class='bi bi-trash3'></i> </td> ";                                
                 $salida .= "</tr>";
               }
             $salida .= "</table>";

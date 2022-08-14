@@ -2,6 +2,7 @@ libs/bootstrap
 
 libs/jquery
 libs/jquery-validation
+libs/open-iconic/
 jquery-validation-unobtrusive
 
 libs/smarty4_1_1/plugins

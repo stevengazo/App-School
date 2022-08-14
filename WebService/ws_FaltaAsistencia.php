@@ -221,9 +221,9 @@ function ListarElementos()
                     $htmlResult .= " <td>" . $fila['fecha'] . "</td>";
                     $htmlResult .= " <td>" . $fila['nombreAsignatura'] . "</td>";
                     $htmlResult .= " <td>" . $fila['justificada'] . "</td>";
-                    $htmlResult .= " <td onclick='ViewFaltaAsistencia(" . $fila['id'] . ")' class='btn bg-white btn-sm text-dark btn-info' > Detalles </td>";
-                    $htmlResult .= " <td onclick='GetUpdateFaltaAsistencia(" . $fila['id'] . ")' class='btn bg-white btn-sm text-dark btn-primary' > Modificar </td>";
-                    $htmlResult .= " <td onclick='GetDeleteFaltaAsistencia(" . $fila['id'] . ")' class='btn bg-white btn-sm text-dark btn-danger' > Eliminar </td>";
+                    $htmlResult .= " <td onclick='ViewFaltaAsistencia(" . $fila['id'] . ")' class='btn btn-sm text-dark btn-info mr-1' > <i class='bi bi-info-circle'></i></td>";
+                    $htmlResult .= " <td onclick='GetUpdateFaltaAsistencia(" . $fila['id'] . ")' class='btn btn-sm text-dark btn-primary' > <i class='bi bi-pencil-square'></i> </td>";
+                    $htmlResult .= " <td onclick='GetDeleteFaltaAsistencia(" . $fila['id'] . ")' class='btn btn-sm text-dark btn-danger' > <i class='bi bi-trash3'></i> </td>";
                     $htmlResult .= " </tr>";
                 }
                 $htmlResult .= "        </tbody>";
