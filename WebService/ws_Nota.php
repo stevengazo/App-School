@@ -190,11 +190,9 @@
                         $HtmlResults .=" <td>".$file['apellidos']." </td>";
                         $HtmlResults .=" <td>".$file['asignaturaId']." </td>";
                         $HtmlResults .=" <td>".$file['asignaturaNombre']." </td>";   
-                        $HtmlResults .=" <td>";
-                        $HtmlResults .='<button class="btn btn-primary" onclick="ViewNota('.$file['id'].')" >Ver</button>';
-                        $HtmlResults .='<button class="btn btn-success" onclick="GetUpdateNota('.$file['id'].')" >Editar</button>';
-                        $HtmlResults .='<button class="btn btn-danger" onclick="GetDeleteNota('.$file['id'].')" >Eliminar</button>';                        
-                        $HtmlResults .=" </td>";            
+                        $HtmlResults .= ' <td onclick="ViewNota('.$file['id'].')" class="btn btn-sm text-dark btn-info mr-1" > <i class="bi bi-info-circle"></i></td>';
+                        $HtmlResults .= ' <td onclick="GetUpdateNota('.$file['id'].')" class="btn btn-sm text-dark btn-primary" > <i class="bi bi-pencil-square"></i> </td>';
+                        $HtmlResults .= ' <td onclick="GetDeleteNota('.$file['id'].')" class="btn btn-sm text-dark btn-danger" > <i class="bi bi-trash3"></i> </td>';        
                         $HtmlResults .=" </tr>";
                     } 
                     $HtmlResults .= '            

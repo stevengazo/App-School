@@ -108,21 +108,10 @@
         $htmlElements .= '  <tr>';    
         $htmlElements .= '  <td>'.$fila['id'].'</td>';                
         $htmlElements .= '  <td>'.$fila['asignaturaNombre'].'</td>';                    
-        $htmlElements .= '  <td>'.$fila['alumnoNombre'].$fila['alumnoApellidos'].'</td>';                    
-        $htmlElements .= '
-            <td>
-                <button class="btn btn-sm btn-info" onclick="ViewAsignaturaHasAlumno('.$fila['id'].')">
-                    Ver
-                </button >
-                <button class="btn btn-sm btn-success" onclick="">
-                    Editar
-                </button>
-                <button class="btn btn-sm btn-danger" onclick="">
-                    Eliminar
-                </button>                
-            </td>
-        ';
-          
+        $htmlElements .= '  <td>'.$fila['alumnoNombre'].$fila['alumnoApellidos'].'</td>';     
+        $htmlElements .= " <td onclick='ViewAsignaturaHasAlumno(".$fila['id'].")' class='btn btn-sm text-dark btn-info mr-1' > <i class='bi bi-info-circle'></i></td>";
+        $htmlElements .= " <td  class='btn btn-sm text-dark btn-primary' > <i class='bi bi-pencil-square'></i> </td>";
+        $htmlElements .= " <td  class='btn btn-sm text-dark btn-danger' > <i class='bi bi-trash3'></i> </td>";                         
         $htmlElements .= '  </tr>';        
         }
         $htmlElements .= '

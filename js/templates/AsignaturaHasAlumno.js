@@ -95,7 +95,7 @@ function ViewAsignaturaHasAlumno(idAsignaturaHasAlumno) {
 /**
  * Trae vista para insertar AsignaturaHasAlumno
  */
-function GetInsertAsignaturaHasAlumno() {
+async function GetInsertAsignaturaHasAlumno() {
   let htmlRender = `
       <div>
         <h2>Matricular Alumno en asistencia</h2>
@@ -104,38 +104,13 @@ function GetInsertAsignaturaHasAlumno() {
           Seleccione el estudiante que desee matricular en la asignatura          
         </p>
       </div>
-
-    `;
-  let arrayObjectsAlumnos = [];
-  let arrayObjectsAsignaturas = null;
-  $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php?tipo=Json",
-    data: {},
-    success: (data) => {
-      debugger;
-      console.table(JSON.parse(data));
-      arrayObjectsAsignaturas = JSON.parse(data);
-      
-      debugger;
-    },
-    error: (error) => {
-      debugger;
-      arrayObjectsAlumnos = null;
-      debugger;
-    },
-  });
-debugger;
-  htmlRender =
-    htmlRender +
-    `
-    <div class="d-flex flex-column">
-      <div class="form-group">
+      <div class="d-flex flex-column">
+        <div class="form-group">
           <label>Alumno</label>
-          <select class="form-control">
+          <select id="select-alumno" class="form-control">
               <option value="">Ejemplo alumno</option>
           </select>
-      </div>
+        </div>
       <div class="form-group">
           <label>Asignatura</label>
           <select class="form-control" id="selectAsignaturas">          
@@ -151,15 +126,34 @@ debugger;
   $("#renderbody").empty();
   $("#renderbody").html(htmlRender);
 
-  debugger;
-  arrayObjectsAsignaturas.map((element) => {
-    var tmpOption = document.createElement("option");
-    tmpOption.value = element.id;
-    tmpOption.innerText = `${element.nombre} - ${element.nombreProfesor} ${element.apellidosProfesor}`;
-    debugger;
-    document.getElementById("selectAsignaturas").appendChild(tmpOption);
-  });
+  let arrayObjectsAlumnos = [];
+  let arrayObjectsAsignaturas = [];
+  await $.ajax({
+    type: "GET",
+    url: "http://localhost/app_School/WebService/ws_Asignatura.php?tipo=Json",
+    data: {},
+    success: (data) => {
+      // parsea los datos
+      arrayObjectsAsignaturas.push(JSON.parse(data));      
+      arrayObjectsAsignaturas = arrayObjectsAsignaturas[0];
+      // Construye elemento Option y los mueve a la vista con los datos resultantes      
+      for (let j = 0; j < arrayObjectsAsignaturas.length; j++) {
+        const element = arrayObjectsAsignaturas[j];
+        let tmpHTMl = document.createElement("option");
+        tmpHTMl.innerText = element.nombre + " - " + element.nombreProfesor;
+        tmpHTMl.value = element.id;
+        document.getElementById("selectAsignaturas").appendChild(tmpHTMl);    
+      }
+    },
+    error: (error) => {
+      console.error("no adquirio los datos");
+      arrayObjectsAlumnos = null;
+    },
+  });  
+
+
 }
+
 /**
  * Envia un AsignaturaHasAlumno a la DB y trae la vista ViewAsignaturaHasAlumno si lo agrega
  */
