@@ -1,7 +1,21 @@
+async function listaAlumnosJSON(){
+  await $.ajax({
+        type: "GET",
+        url: 'http://localhost/app_School/WebService/ws_Alumno.php?accion=listar&tipo=JSON',
+        success: function(data) {
+            var tmp = JSON.parse(data);
+            return tmp[0];
+        },
+        error: function(error) {
+            return null;
+        }
+      });
+}
+
 function fn_listar_alumnos(){
   $.ajax({
         type: "GET",
-        url: 'http://localhost/app_School/WebService/ws_Alumno.php?accion=listar',
+        url: 'http://localhost/app_School/WebService/ws_Alumno.php?accion=listar&tipo=HTML',
         success: function(data) {
             $("#renderbody").html(data);
         },
@@ -9,7 +23,6 @@ function fn_listar_alumnos(){
             $("#renderbody").html('<div class="alert alert-warning" role="alert">Error Borrando datos</div>');
         }
       });
-
 }
 
 function fn_borrar_alumno(id){

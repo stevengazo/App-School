@@ -108,7 +108,6 @@ async function GetInsertAsignaturaHasAlumno() {
         <div class="form-group">
           <label>Alumno</label>
           <select id="select-alumno" class="form-control">
-              <option value="">Ejemplo alumno</option>
           </select>
         </div>
       <div class="form-group">
@@ -127,6 +126,27 @@ async function GetInsertAsignaturaHasAlumno() {
   $("#renderbody").html(htmlRender);
 
   let arrayObjectsAlumnos = [];
+
+  await $.ajax({
+    type: "GET",
+    url: "http://localhost/app_School/WebService/ws_Alumno.php?accion=listar&tipo=JSON",
+    success: function (data) {
+      arrayObjectsAlumnos.push(JSON.parse(data));
+      arrayObjectsAlumnos = arrayObjectsAlumnos[0];
+      // Construye elemento Option y los mueve a la vista con los datos resultantes
+      for (let j = 0; j < arrayObjectsAlumnos.length; j++) {
+        const element = arrayObjectsAlumnos[j];
+        let tmpHTMl = document.createElement("option");
+        tmpHTMl.innerText = `${element.apellidos} ${element.nombre}` ;
+        tmpHTMl.value = element.id;
+        document.getElementById("select-alumno").appendChild(tmpHTMl);
+      }
+    },
+    error: function (error) {
+      arrayObjectsAlumnos = null;
+    },
+  });
+
   let arrayObjectsAsignaturas = [];
   await $.ajax({
     type: "GET",
@@ -134,24 +154,22 @@ async function GetInsertAsignaturaHasAlumno() {
     data: {},
     success: (data) => {
       // parsea los datos
-      arrayObjectsAsignaturas.push(JSON.parse(data));      
+      arrayObjectsAsignaturas.push(JSON.parse(data));
       arrayObjectsAsignaturas = arrayObjectsAsignaturas[0];
-      // Construye elemento Option y los mueve a la vista con los datos resultantes      
+      // Construye elemento Option y los mueve a la vista con los datos resultantes
       for (let j = 0; j < arrayObjectsAsignaturas.length; j++) {
         const element = arrayObjectsAsignaturas[j];
         let tmpHTMl = document.createElement("option");
         tmpHTMl.innerText = element.nombre + " - " + element.nombreProfesor;
         tmpHTMl.value = element.id;
-        document.getElementById("selectAsignaturas").appendChild(tmpHTMl);    
+        document.getElementById("selectAsignaturas").appendChild(tmpHTMl);
       }
     },
     error: (error) => {
       console.error("no adquirio los datos");
       arrayObjectsAlumnos = null;
     },
-  });  
-
-
+  });
 }
 
 /**

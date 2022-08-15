@@ -5,7 +5,6 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 
 switch ($metodo) {
   case 'GET':
-    header("HTTP/1.1 200 SUCCESSFUL");
     fn_listar_alumnos();
     break;
   case 'DELETE':
@@ -162,47 +161,81 @@ function fn_borrar_alumno(){
   echo "Alumno Borrado!";
 }
 function fn_listar_alumnos(){
-  $linkConect = mysqli_connect("localhost","root","","testingdb");
-  $sql = "select count(*) canti_reg from alumno";
-  $rs = $linkConect->query($sql);
-  $cantidad_alumno = 0;
-  $salida = "";
-    while($fila = $rs->fetch_assoc()){
-      $cantidad_alumno = $fila['canti_reg'];
-    }
-    if($cantidad_alumno>0){
-
+  if(!isset($_REQUEST['tipo'])){
+    $rtn = array("id", "3", "error", "tipo  no especificado");
+    http_response_code(500);
+    print json_encode($rtn);
+    exit;
+  }else{
+    $tipoDato = $_REQUEST['tipo'];
+    $linkConect = mysqli_connect("localhost","root","","testingdb");
+    switch ($tipoDato) {
+      case 'JSON':
         $sql = "select id,nivel_id,login,nombre,apellidos from alumno";
+        $sql .= " order by apellidos asc";
         $rs = $linkConect->query($sql);
-
-        $salida = "<table class='table'>";
-          $salida .= "<tr>";
-          $salida .= "<th>Id Alumno</th>";
-          $salida .= "<th>Id Nivel</th>";
-          $salida .= "<th>Login</th>";
-          $salida .= "<th>Nombre</th>";
-          $salida .= "<th>Apellidos</th>";
-          $salida .= "<th>Acciones</th>";
-          $salida .= "</tr>";
+        $tmpArray = array();
+        while($fila = $rs->fetch_assoc()){
+          $tmpObject = new stdClass();
+          $tmpObject->id = $fila['id'];
+          $tmpObject->nombre = $fila['nombre'];
+          $tmpObject->apellidos = $fila['apellidos'];          
+          array_push($tmpArray,$tmpObject);
+        }
+        http_response_code(200);
+        print json_encode($tmpArray);
+        exit;
+        break;
+      case 'HTML':
+        $sql = "select count(*) canti_reg from alumno";
+        $rs = $linkConect->query($sql);
+        $cantidad_alumno = 0;
+        $salida = "";
           while($fila = $rs->fetch_assoc()){
-            $salida .= "<tr>";
-            $salida .= "<td>".$fila['id']."</td>";
-            $salida .= "<td>".$fila['nivel_id']."</td>";
-            $salida .= "<td>".$fila['login']."</td>";
-            $salida .= "<td>".$fila['nombre']."</td>";
-            $salida .= "<td>".$fila['apellidos']."</td>";
-            $salida .= " <td class='btn btn-sm text-dark btn-primary'  onclick='fn_editar_alumno(".$fila['id'].")'> <i class='bi bi-pencil-square'></i> </td> ";
-            $salida .= " <td class='btn btn-sm text-dark btn-danger' onclick='fn_borrar_alumno(".$fila['id'].")'> <i class='bi bi-trash3'></i> </td> ";
-            $salida .= "</tr>";
-
+            $cantidad_alumno = $fila['canti_reg'];
           }
-
-        $salida .= "</table>";
-    }else{
-        $salida .= "No existen datos para mostrar";
+          if($cantidad_alumno>0){
+      
+              $sql = "select id,nivel_id,login,nombre,apellidos from alumno";
+              $rs = $linkConect->query($sql);
+      
+              $salida = "<table class='table'>";
+                $salida .= "<tr>";
+                $salida .= "<th>Id Alumno</th>";
+                $salida .= "<th>Id Nivel</th>";
+                $salida .= "<th>Login</th>";
+                $salida .= "<th>Nombre</th>";
+                $salida .= "<th>Apellidos</th>";
+                $salida .= "<th>Acciones</th>";
+                $salida .= "</tr>";
+                while($fila = $rs->fetch_assoc()){
+                  $salida .= "<tr>";
+                  $salida .= "<td>".$fila['id']."</td>";
+                  $salida .= "<td>".$fila['nivel_id']."</td>";
+                  $salida .= "<td>".$fila['login']."</td>";
+                  $salida .= "<td>".$fila['nombre']."</td>";
+                  $salida .= "<td>".$fila['apellidos']."</td>";
+                  $salida .= " <td class='btn btn-sm text-dark btn-primary'  onclick='fn_editar_alumno(".$fila['id'].")'> <i class='bi bi-pencil-square'></i> </td> ";
+                  $salida .= " <td class='btn btn-sm text-dark btn-danger' onclick='fn_borrar_alumno(".$fila['id'].")'> <i class='bi bi-trash3'></i> </td> ";
+                  $salida .= "</tr>";      
+                }
+              $salida .= "</table>";
+          }else{
+              $salida .= "No existen datos para mostrar";
+          }
+        header("HTTP/1.1 200 SUCCESSFUL");
+        echo $salida;
+        break;      
+      default:
+        $rtn = array("id", "3", "error", "tipo  es valido");
+        http_response_code(500);
+        print json_encode($rtn);
+        exit;
+        break;
     }
+  }  
 
-echo $salida;
+
 }
 
 
