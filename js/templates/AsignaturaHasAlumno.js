@@ -4,7 +4,7 @@
 function ViewListaAsigHasAlum() {
   $.ajax({
     type: "GET",
-    url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php",
+    url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?tipo=HTML",
     data: {},
     success: (data) => {
       $("#renderbody").empty();
@@ -116,7 +116,7 @@ async function GetInsertAsignaturaHasAlumno() {
           </select>
       </div>
       <div class="d-flex flex-row justify-content-around mt-2">
-          <button class="btn btn-sm btn-outline-success bg-white">Agregar</button>
+          <button onclick='PostInsertAsignaturaHasAlumno()' class="btn btn-sm btn-outline-success bg-white">Agregar</button>
           <button class="btn btn-sm btn-outline-info bg-white">Regresar</button>
       </div>
     </div>
@@ -137,7 +137,7 @@ async function GetInsertAsignaturaHasAlumno() {
       for (let j = 0; j < arrayObjectsAlumnos.length; j++) {
         const element = arrayObjectsAlumnos[j];
         let tmpHTMl = document.createElement("option");
-        tmpHTMl.innerText = `${element.apellidos} ${element.nombre}` ;
+        tmpHTMl.innerText = `${element.apellidos} ${element.nombre}`;
         tmpHTMl.value = element.id;
         document.getElementById("select-alumno").appendChild(tmpHTMl);
       }
@@ -175,19 +175,36 @@ async function GetInsertAsignaturaHasAlumno() {
 /**
  * Envia un AsignaturaHasAlumno a la DB y trae la vista ViewAsignaturaHasAlumno si lo agrega
  */
-function PostInsertAsignaturaHasAlumno() {
-  alert("View");
-  $.ajax({
+async function PostInsertAsignaturaHasAlumno() {
+  const idAlumno = document.getElementById("select-alumno").value;
+  const idAsignatura = document.getElementById("selectAsignaturas").value;
+  var lastId = {};
+  await $.ajax({
     type: "GET",
-    url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php",
+    url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?tipo=JSON&dato=ultimoId",
     data: {},
     success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
+      lastId = JSON.parse(data);
+      lastId.id = lastId.id;
     },
     error: (error) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(error);
+      console.error(error);
+    },
+  });
+
+  lastId = parseInt(lastId.id);
+lastId =  lastId +1;
+
+  alert(`idAlumno ${idAlumno} - idAsignatura ${idAsignatura} - new id ${lastId}`);
+  
+  $.ajax({
+    type: "POST",
+    url: `http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?asigAlum_id=${lastId}&asignatura_id=${idAsignatura}&alumno_id=${idAlumno}`,
+    data: {},
+    success: (data) => {
+      ViewAsignaturaHasAlumno(lastId);
+    },
+    error: (error) => {
       console.error(error);
     },
   });
@@ -210,6 +227,7 @@ function GetUpdateAsignaturaHasAlumno() {
       $("#renderbody").empty();
       $("#renderbody").html(error);
       console.error(error);
+    
     },
   });
 }
@@ -218,7 +236,6 @@ function GetUpdateAsignaturaHasAlumno() {
  * Envia vista modifiada
  */
 function PostUpdateAsignaturaHasAlumno() {
-  alert("View");
   $.ajax({
     type: "GET",
     url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php",
@@ -239,7 +256,7 @@ function PostUpdateAsignaturaHasAlumno() {
  * modificar
  */
 function GetDeleteAsignaturaHasAlumno() {
-  alert("View");
+
   $.ajax({
     type: "GET",
     url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php",
