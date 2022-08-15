@@ -143,6 +143,7 @@ async function GetInsertAsignaturaHasAlumno() {
       }
     },
     error: function (error) {
+      console.error(error);
       arrayObjectsAlumnos = null;
     },
   });
@@ -211,25 +212,31 @@ lastId =  lastId +1;
 }
 
 /**
- * Trae vista para modificar
+    Trae el objecto de la DB
+    y muestra una vista
  */
-function GetUpdateAsignaturaHasAlumno() {
-  alert("View");
+function GetUpdateAsignaturaHasAlumno(id) {
+ 
+$("#renderbody").empty();
+$("#renderbody").html(htmlRender);
+
+  alert("GetUpdateAsignaturaHasAlumno");
+  // CARGA EL registro
+  let asignatura= {};
   $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php",
+    type: "VIEW",
+    url: `http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?asigAlum_id=${id}`,
     data: {},
     success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
+      asignatura= JSON.parse(data);      
     },
     error: (error) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(error);
-      console.error(error);
-    
+      asignatura= null;
+      console.error(error);    
     },
   });
+
+
 }
 
 /**
@@ -252,43 +259,26 @@ function PostUpdateAsignaturaHasAlumno() {
   });
 }
 
-/**
- * modificar
- */
-function GetDeleteAsignaturaHasAlumno() {
 
-  $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php",
-    data: {},
-    success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
-    },
-    error: (error) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(error);
-      console.error(error);
-    },
-  });
-}
 
 /**
  * confirma la eliminación
  */
-function PostDeleteAsignaturaHasAlumno() {
-  alert("View");
+function PostDeleteAsignaturaHasAlumno(id) {
   $.ajax({
-    type: "GET",
-    url: "http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php",
+    type: "DELETE",
+    url: `http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?asigAlum_id=${id}`,
     data: {},
     success: (data) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(data);
+      ViewListaAsigHasAlum();
     },
     error: (error) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(error);
+      const toast = document.getElementById("toast-base");
+      toast.style.display = "block";
+        const title = document.getElementById("toast-title").innerText= `Error!`;
+        const message = document.getElementById("toast-message").innerText= `Este dato no puede ser borrado \nExisten dependencias      `;
+    
+        toast.style.display = "block";
       console.error(error);
     },
   });

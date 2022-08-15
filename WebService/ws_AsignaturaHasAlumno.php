@@ -118,8 +118,7 @@ function GetAHA()
                     $htmlElements .= '  <td>' . $fila['asignaturaNombre'] . '</td>';
                     $htmlElements .= '  <td>' . $fila['alumnoNombre'] . $fila['alumnoApellidos'] . '</td>';
                     $htmlElements .= " <td onclick='ViewAsignaturaHasAlumno(" . $fila['id'] . ")' class='btn btn-sm text-dark btn-info mr-1' > <i class='bi bi-info-circle'></i></td>";
-                    $htmlElements .= " <td  class='btn btn-sm text-dark btn-primary' > <i class='bi bi-pencil-square'></i> </td>";
-                    $htmlElements .= " <td  class='btn btn-sm text-dark btn-danger' > <i class='bi bi-trash3'></i> </td>";
+                    $htmlElements .= " <td onclick='PostDeleteAsignaturaHasAlumno(" . $fila['id'] . ")' class='btn btn-sm text-dark btn-danger' > <i class='bi bi-trash3'></i> </td>";
                     $htmlElements .= '  </tr>';
                 }
                 $htmlElements .= '
@@ -194,16 +193,18 @@ function Delete()
         $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
         if (isset($_REQUEST['asigAlum_id'])) {
             $id = $_REQUEST['asigAlum_id'];
+        }else{
+            lanzarJson("asigAlum_id no especificado",true,500);
+            exit;
         }
         $sqlQuery = " DELETE FROM ASIGNATURA_HAS_ALUMNO ";
         $sqlQuery = $sqlQuery . " WHERE ID = $id ";
-
         $sqlResult = $linkConnection->query($sqlQuery);
+        echo $sqlResult -> error;
         /* RETORNA JSON */
-        header("Content-Type: application/json");
-        echo json_encode($sqlResult);
+        lanzarJson(true, false,200);
     } catch (\Throwable $th) {
-        lanzarJson("Error en funcion...", true,200);
+        lanzarJson("El registro presenta dependencias", true,500);
     }
 }
 

@@ -21,16 +21,16 @@
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"></script>
         <!--- Scripts para las acciones -->
+        <script src="js/templates/Home.js"  ></script>
+        <script src="js/templates/Generals.js" ></script>
         <script src="js/templates/Administradores.js"  ></script>
         <script src="js/templates/Alumno.js"  ></script>
-        <script src="js/templates/AsignaturaHasAlumno.js"  ></script>
-                <script src="js/templates/Home.js"  ></script>
+        <script src="js/templates/AsignaturaHasAlumno.js"  ></script>        
         <script src="js/templates/Asignatura.js"  ></script>
         <script src="js/templates/FaltaAsistencia.js"  ></script>
         <script src="js/templates/Horarios.js"  ></script>
         <script src="js/templates/Nivel.js"  ></script>
         <script src="js/templates/Nota.js"  ></script>
-        <script src="js/templates/Generals.js"  ></script>
         <script src="js/templates/Profesor.js"  ></script>
         <!--ICONS-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic.min.css" rel="stylesheet">

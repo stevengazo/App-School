@@ -1,3 +1,6 @@
+
+
+
 <div id="renderbody" class="border border-white rounded mt-3 p-3 border-secondary d-flex flex-column">
     <!--temporal-->
     <div class="d-flex flex-column justify-content-around">
@@ -31,9 +34,14 @@
     </div>
 
 </div>
-<div class="footer">
-    <div id="errorMessage" style="display:none;" class="alert alert-danger" role="alert">
-   
+<div id="toast-base" class="toast show  " style="display:none; position: absolute; button:5em; right:10px; min-height: 22px;">
+    <div class="toast-header">
+      <strong id="toast-title" class="me-auto">Toast Header</strong>
+      <button type="button" onclick="hideToast()" class="btn-close" data-bs-dismiss="toast"></button>
     </div>
+    <div class="toast-body alert alert-danger">
+      <p id="toast-message" >Some text inside the toast body</p>
+    </div>
+  </div>
 </div>
 </body>
