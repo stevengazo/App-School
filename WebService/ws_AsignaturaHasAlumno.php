@@ -145,6 +145,7 @@ function GetAHA()
                                 http_response_code(200);
                                 print json_encode($temporalObjecto);
                             }
+                            exit;
                             break;
                         case 'lista':
                             $sqlQuery = " select 	AsigAlumn.id, AsigAlumn.asignatura_id, 	ASG.nombre as asignaturaNombre,  AsigAlumn.alumno_id, AL.nombre as alumnoNombre, Al.apellidos as alumnoApellidos     ";
@@ -165,11 +166,13 @@ function GetAHA()
                             }
                             http_response_code(200);
                             print json_encode($arrayResult);
+                            exit;
                             break;
                         default:
                             $rtn = array("id", "3", "error", "dato no valido");
                             http_response_code(500);
                             print json_encode($rtn);
+                            exit;
                             break;
                     }
                 }

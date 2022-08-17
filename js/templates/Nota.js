@@ -136,8 +136,8 @@ function ViewNota(idNota) {
 /**
  * Trae vista para insertar Nota
  */
-function GetInsertNota() {
-  $.ajax({
+async function GetInsertNota() {
+  await $.ajax({
     type: "GET",
     url: "http://localhost/app_School/WebService/ws_Nota.php?type=lastId",
     data: {},
@@ -163,16 +163,13 @@ function GetInsertNota() {
                 </div>
                 <div class="form-group">
                     <label>Asignatura</label>
-                    <input type="text" list="listAsigAlum" name="asignatura_has_alumno_id"  class="form-control" id="asignatura_has_alumno_id" placeholder="Alumno - Asignatura" />
-                    <datalist id="listAsigAlum">                      
-                        <option value="">                        
-                        </option>
-                    </datalist>
+                    <select name="asignatura_has_alumno_id"  class="form-control" id="asignatura_has_alumno_id" placeholder="Alumno - Asignatura" >                                            
+                    </select>
                     <label id="AsignaturaMessage" class="text-danger"></label>            
                 </div>           
                 <div class="form-group">
                     <label>Trimestre</label>
-                    <select type="number" class="form-control" name="trimestre"  id="trimestre" placeholder="Numero de Trimestre" > 
+                    <select type="number" class="form-control" name="trimestre"  id="trimestre" placeholder="Numero de Trimestre" >                     
                      <option value="1">Primer Trimestre</option>
                         <option value="2">Segundo Trimestre</option>
                         <option value="2">Tercer Trimestre</option>
@@ -201,6 +198,26 @@ function GetInsertNota() {
       console.error(error);
     },
   });
+    // Trae las asignaturas-alumno
+     $.ajax({
+      type: "GET",
+      url: `http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?tipo=JSON&dato=lista`,
+      data: {},
+      success: (data) => {
+        debugger;
+        let tmpArray = JSON.parse(data);
+        for (let x = 0; x < tmpArray.length; x++) {
+          const element = tmpArray[x];    
+          let optionValue = document.createElement("option");
+          optionValue.value = element.id;
+          optionValue.innerText = `${element.asignaturaNombre} - ${element.alumnoNombre}`;
+          document.getElementById("asignatura_has_alumno_id").appendChild(optionValue);
+        }
+      },
+      error: (error) => {    
+        console.error(error);
+      },
+    });    
 }
 /**
  * Envia un Nota a la DB y trae la vista ViewNota si lo agrega
@@ -227,8 +244,10 @@ function PostInsertNota(id,asignatura_has_alumno,trimestre,nota) {
 /**
  * Trae vista para modificar
  */
-function GetUpdateNota(id) {
-  $.ajax({
+async function GetUpdateNota(id) {
+
+  
+  await $.ajax({
     type: "View",
     url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${id}`,
     data: {},
@@ -300,7 +319,7 @@ function GetUpdateNota(id) {
         </div>      
       `;
       $("#renderbody").empty();
-      $("#renderbody").html(htmlRender);
+      $("#renderbody").html(htmlRender);      
     },
     error: (error) => {
       $("#renderbody").empty();
@@ -308,6 +327,21 @@ function GetUpdateNota(id) {
       console.error(error);
     },
   });
+  // Trae las asignaturas-alumno
+  await $.ajax({
+    type: "View",
+    url: `http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?tipo=JSON&dato=lista`,
+    data: {},
+    success: (data) => {
+      debugger;
+      const tmpArray = JSON.parse(data);
+      var data = tmpArray[0];
+      debugger;
+    },
+    error: (error) => {    
+      console.error(error);
+    },
+  });  
 }
 
 /**
