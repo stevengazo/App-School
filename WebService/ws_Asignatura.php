@@ -3,6 +3,9 @@
     # RestFull
     $metodo = $_SERVER['REQUEST_METHOD'];
 
+    /**
+     * Administra los metodos del web service
+     */
     switch ($metodo) {
         case 'GET':
           fn_listar_asig();
@@ -25,7 +28,9 @@
             print json_encode($rtn);
             break;
     }
-
+    /**
+     * Valida los datos de una asignatura y la actualiza
+     */
    function UpdateAsignatura()
     {
         # CADENA DE CONEXIÓN
@@ -81,7 +86,9 @@
         }
     }
 
-
+    /**
+     * lista los elementos de la base de datos
+     */
     function fn_listar_asig(){
         if(ISSET($_REQUEST['tipo'])){ // COMPRUEBA EXISTENCIA
             $typo = $_REQUEST['tipo'];
@@ -164,6 +171,9 @@
 
     }
 
+    /**
+     * Borra una asignatura para
+     */
     function fn_borrar_asig(){
       $idAsign = $_REQUEST['idAsign'];
       $linkConect = mysqli_connect("localhost","root","","testingdb");
@@ -172,24 +182,23 @@
       echo "Asignatura Borrada!";
     }
 
+    /**
+     * Vista de edición de una asignatura
+     */
     function fn_mostrar_frm_asig_edicion(){
-      $idAsig = $_REQUEST['id'];
-      $linkConect = mysqli_connect("localhost","root","","testingdb");
-
-      $sql = "select id,nivel_id,profesor_id,nombre from asignatura where id =".$idAsig;
-      $rs = $linkConect->query($sql);
-
-      $nivel = "";
-      $profesor = "";
-      $nombre = "";
-
+        $idAsig = $_REQUEST['id'];
+        $linkConect = mysqli_connect("localhost","root","","testingdb");
+        $sql = "select id,nivel_id,profesor_id,nombre from asignatura where id =".$idAsig;
+        $rs = $linkConect->query($sql);
+        $nivel = "";
+        $profesor = "";
+        $nombre = "";
         while($fila = $rs->fetch_assoc()){
 
-           $nivel = $fila['nivel_id'];
-           $profesor = $fila['profesor_id'];
-           $nombre  = $fila['nombre'];
+            $nivel = $fila['nivel_id'];
+            $profesor = $fila['profesor_id'];
+            $nombre  = $fila['nombre'];
         }
-
         $salida = '<div class="container mt-3">';
           $salida .= '<h2>Edición de Asignatura</h2>';
             $salida .= '<form  method="post"  >';
@@ -198,25 +207,23 @@
                 $salida .= '<label for="text">Nivel:</label>';
                 $salida .= '<input type="text" class="form-control" id="txtnivel" name="txtnivel" value="'.$nivel.'" placeholder="Ingrese el nivel" required>';
               $salida .= '</div>';
-
               $salida .= '<div class="mb-3 mt-3">';
                 $salida .= '<label for="text">Profesor:</label>';
                 $salida .= '<input type="text" class="form-control" id="txtprof" name="txtprof" value="'.$profesor.'" placeholder="Ingrese el profesor" required>';
               $salida .= '</div>';
-
               $salida .= '<div class="mb-3 mt-3">';
                 $salida .= '<label for="text">Nombre:</label>';
                 $salida .= '<input type="text" class="form-control" id="txtnombre" name="txtnombre" value="'.$nombre.'" placeholder="Ingrese el nombre de la asignatura" required>';
               $salida .= '</div>';
-
               $salida .= '<button type="button" class="btn btn-primary" onclick="PostUpdateAsignatura();">Actualizar Asignatura</button>';
             $salida .= '</form>';
           $salida .= '</div>';
-
       echo $salida;
     }
 
-
+    /**
+     * Borra una asignatura
+     */
     function BorrarAsig(){
         if(ISSET($_REQUEST['id'])){ // COMPRUEBA EXISTENCIA
             $id = $_REQUEST['id'];
@@ -231,14 +238,7 @@
             header("Content-Type: application/json");
             echo json_encode($sqlResult);
         }else{
-            // id no definido
-            $rtn = array("id", "3", "error", "id no especificado");
-            http_response_code(500);
-            print json_encode($rtn);
+            lanzarJson("EL id no fue asignado", true, 500);
             exit;
         }
     }
-
-
-
-?>

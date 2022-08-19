@@ -290,8 +290,4 @@ function lanzarJson( $DataCodificar, $error=true, $CodigoError){
         http_response_code($CodigoError);
         print json_encode($DataCodificar);
     }
-
-    
-
-
 }

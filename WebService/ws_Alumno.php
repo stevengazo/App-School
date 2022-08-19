@@ -5,7 +5,21 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 
 switch ($metodo) {
   case 'GET':
-    fn_listar_alumnos();
+    if(isset($_REQUEST['tipo'])){
+        switch ($_REQUEST['tipo']) {
+          case 'elemento':
+            getAlumno();
+            break;
+          case 'lista':
+            fn_listar_alumnos();
+            break;          
+          default:
+          lanzarJson("tipo no definido (lista o elemento)",true,500);
+            break;
+        }
+    }else{
+      lanzarJson("tipo no definido",true,500);
+    }
     break;
   case 'DELETE':
       header("HTTP/1.1 200 SUCCESSFUL");
@@ -22,6 +36,162 @@ switch ($metodo) {
   default:
     // code...
     break;
+}
+
+/**
+ * Trae la información de un alumno
+ */
+function getAlumno(){
+  $id =$_REQUEST['id'];
+  $AlumnoObjeto = new stdClass();
+  $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+  $localQuery= '
+  select * from alumno where id = '.$id.'
+  ';
+  $Resultado = $linkConnection->query($localQuery);
+  while($fila = $Resultado->fetch_assoc()){
+    $AlumnoObjeto->id = $fila['id'];
+    $AlumnoObjeto->nombre = $fila['nombre'];
+    $AlumnoObjeto->apellidos = $fila['apellidos'];
+  }
+  $AlumnoObjeto->asignaturas = getAsignaturas($id);
+  $AlumnoObjeto->ausencias = getFaltasAsistencia($id);
+  $AlumnoObjeto->Notas = getNotas($id);
+  lanzarJson($AlumnoObjeto,false,200);
+  exit;
+}
+
+/**
+ * Trae asignaturas de alumno
+ */
+function getAsignaturas($id){
+  $ArregloAsignaturas= array();
+  if($id == 0){
+    return $ArregloAsignaturas;
+  }else{
+    $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+    $localQuery= '
+    select 
+      Asignatura.*, 
+      Profesor.apellidos, 
+      Profesor.Nombre as profesorNombre,
+      Nivel.nivel,
+      Nivel.Curso,
+      Nivel.Aula
+    from Asignatura
+    inner join (SELECT asignatura_id FROM ASIGNATURA_HAS_ALUMNO
+    where alumno_id = '.$id.') as TmpTable
+      on Asignatura.id = TmpTable.asignatura_id
+    inner join Profesor on Profesor.id = Asignatura.profesor_id
+    inner join Nivel on Nivel.id = Asignatura.nivel_id
+    ';
+    $Resultado = $linkConnection->query($localQuery);
+
+    while($fila = $Resultado->fetch_assoc()){
+      $tmpAsignatura = new stdClass();
+      $tmpAsignatura->idAsignatura= $fila['id'];
+      $tmpAsignatura->nivelId= $fila['nivel_id'];
+      $tmpAsignatura->profesorId= $fila['profesor_id'];
+      $tmpAsignatura->nombreAsignatura= $fila['nombre'];
+      $tmpAsignatura->apellidos= $fila['apellidos'];
+      $tmpAsignatura->profesorNombre= $fila['profesorNombre'];
+      $tmpAsignatura->nivel= $fila['nivel'];
+      $tmpAsignatura->curso= $fila['Curso'];
+      $tmpAsignatura->aula= $fila['Aula'];
+      array_push($ArregloAsignaturas,$tmpAsignatura);
+    }    
+    return $ArregloAsignaturas;
+    exit;
+  }
+}
+
+
+/**
+ * Trae asignaturas de alumno
+ */
+function getNotas($id){
+  $ArregloNotas= array();
+  if($id == 0){
+    return $ArregloNotas;
+  }else{
+    $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+    $localQuery= '
+        SELECT 
+        Nota.id as NotaId ,
+        Nota.trimestre,
+        Nota.nota ,
+        Asig.id as AsignaturaId,
+        Asig.nombre as AsignaturaNombre,
+        Profesor.nombre as NombreProfesor, 
+        Profesor.Apellidos as ProfesorApellidos,
+        Alumno.nombre  as NombreAlumno, 
+        Alumno.apellidos as NombreApellidos
+      FROM NOTA
+      INNER JOIN (SELECT asignatura_id, alumno_id, id AS AsigAlum FROM ASIGNATURA_HAS_ALUMNO where alumno_id = '.$id.') AS tmpRelacion 
+        on NOTA.asignatura_has_alumno_id = tmpRelacion.AsigAlum
+      inner join Asignatura as Asig on Asig.id = tmpRelacion.asignatura_id
+      inner Join Profesor on Asig.Profesor_id = Profesor.id
+      inner Join Alumno on Alumno.id = tmpRelacion.alumno_id
+    ';
+    $Resultado = $linkConnection->query($localQuery);
+
+    while($fila = $Resultado->fetch_assoc()){
+      $tmpNota = new stdClass();
+      $tmpNota->notaId= $fila['NotaId'];
+      $tmpNota->trimestre= $fila['trimestre'];
+      $tmpNota->nota= $fila['nota'];
+      $tmpNota->asignaturaNombre= $fila['AsignaturaNombre'];
+      $tmpNota->nombreProfesor= $fila['NombreProfesor'].' '.$fila['ProfesorApellidos'];
+      array_push($ArregloNotas,$tmpNota);
+    }    
+    return $ArregloNotas;
+    exit;
+  }
+
+}
+
+
+
+function getFaltasAsistencia($id){
+  $ArregloAusencias= array();
+  if($id == 0){
+    return $ArregloAusencias;
+  }else{
+    $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+    $localQuery= '
+        select 
+        FA.id as FaltaAsistenciaId,
+          FA.alumno_id as AlumnoId,
+          FA.Fecha,
+          FA.Justificada,
+        Asig.id as AsignaturaId,
+          Asig.nombre as AsignaturaNombre,
+          Prof.id as ProfesorId,
+          Prof.nombre as NombreProfesor,
+          Prof.Apellidos as ApellidosProfesor,
+          FA.alumno_id as AlumnoId
+      from falta_asistencia as FA
+      inner join asignatura as Asig on Asig.id = FA.asignatura_id
+      inner Join Profesor as Prof on Prof.id = Asig.profesor_id
+      Where FA.Alumno_id = '.$id.'
+      order by FA.fecha asc 
+    ';
+    $Resultado = $linkConnection->query($localQuery);
+
+    while($fila = $Resultado->fetch_assoc()){
+      $tmpAusencia = new stdClass();
+      $tmpAusencia->faltaAsistenciaId = $fila['FaltaAsistenciaId'];
+      $tmpAusencia->fecha = $fila['Fecha'];
+      $tmpAusencia->justificada = $fila['Justificada'];
+      $tmpAusencia->asignaturaId = $fila['AsignaturaId'];      
+      $tmpAusencia->asignaturaNombre = $fila['AsignaturaNombre'];      
+      $tmpAusencia->ProfesorId = $fila['ProfesorId'];      
+      $tmpAusencia->NombreProfesor =  $fila['NombreProfesor'].' '.$fila['ApellidosProfesor'];
+      array_push($ArregloAusencias,$tmpAusencia);
+    }    
+    return $ArregloAusencias;
+    exit;
+  }  
 }
 
 function PostUpdateAlumno()
@@ -161,32 +331,7 @@ function fn_borrar_alumno(){
   echo "Alumno Borrado!";
 }
 function fn_listar_alumnos(){
-  if(!isset($_REQUEST['tipo'])){
-    $rtn = array("id", "3", "error", "tipo  no especificado");
-    http_response_code(500);
-    print json_encode($rtn);
-    exit;
-  }else{
-    $tipoDato = $_REQUEST['tipo'];
-    $linkConect = mysqli_connect("localhost","root","","testingdb");
-    switch ($tipoDato) {
-      case 'JSON':
-        $sql = "select id,nivel_id,login,nombre,apellidos from alumno";
-        $sql .= " order by apellidos asc";
-        $rs = $linkConect->query($sql);
-        $tmpArray = array();
-        while($fila = $rs->fetch_assoc()){
-          $tmpObject = new stdClass();
-          $tmpObject->id = $fila['id'];
-          $tmpObject->nombre = $fila['nombre'];
-          $tmpObject->apellidos = $fila['apellidos'];          
-          array_push($tmpArray,$tmpObject);
-        }
-        http_response_code(200);
-        print json_encode($tmpArray);
-        exit;
-        break;
-      case 'HTML':
+    $linkConect = mysqli_connect("localhost","root","","testingdb");    
         $sql = "select count(*) canti_reg from alumno";
         $rs = $linkConect->query($sql);
         $cantidad_alumno = 0;
@@ -215,6 +360,7 @@ function fn_listar_alumnos(){
                   $salida .= "<td>".$fila['login']."</td>";
                   $salida .= "<td>".$fila['nombre']."</td>";
                   $salida .= "<td>".$fila['apellidos']."</td>";
+                  $salida .= " <td class='btn btn-sm text-dark btn-primary'  onclick='verAlumno(".$fila['id'].")'> <i class='bi bi-info'></i> </td> ";
                   $salida .= " <td class='btn btn-sm text-dark btn-primary'  onclick='fn_editar_alumno(".$fila['id'].")'> <i class='bi bi-pencil-square'></i> </td> ";
                   $salida .= " <td class='btn btn-sm text-dark btn-danger' onclick='fn_borrar_alumno(".$fila['id'].")'> <i class='bi bi-trash3'></i> </td> ";
                   $salida .= "</tr>";      
@@ -225,23 +371,23 @@ function fn_listar_alumnos(){
           }
         header("HTTP/1.1 200 SUCCESSFUL");
         echo $salida;
-        break;      
-      default:
-        $rtn = array("id", "3", "error", "tipo  es valido");
-        http_response_code(500);
-        print json_encode($rtn);
-        exit;
-        break;
     }
-  }  
 
 
+/**
+ * Lanza una respuesta en formato JSON
+ */
+function lanzarJson( $DataCodificar, $error=true, $CodigoError){
+  if($error){
+      $rtn = array("id", "1", "error", $DataCodificar);
+      http_response_code($CodigoError);
+      print json_encode($rtn);
+  }else{
+      http_response_code($CodigoError);
+      print json_encode($DataCodificar);
+  }
 }
 
-
-
-
-
-
-
 ?>
+
+

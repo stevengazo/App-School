@@ -1,21 +1,14 @@
-async function listaAlumnosJSON(){
-  await $.ajax({
-        type: "GET",
-        url: 'http://localhost/app_School/WebService/ws_Alumno.php?accion=listar&tipo=JSON',
-        success: function(data) {
-            var tmp = JSON.parse(data);
-            return tmp[0];
-        },
-        error: function(error) {
-            return null;
-        }
-      });
+function verAlumno(id){
+  prompt(id);
 }
+
+
+
 
 function fn_listar_alumnos(){
   $.ajax({
         type: "GET",
-        url: 'http://localhost/app_School/WebService/ws_Alumno.php?accion=listar&tipo=HTML',
+        url: 'http://localhost/app_School/WebService/ws_Alumno.php?tipo=lista',
         success: function(data) {
             $("#renderbody").html(data);
         },
