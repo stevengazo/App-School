@@ -33,6 +33,9 @@ switch ($metodo) {
       header("HTTP/1.1 200 SUCCESSFUL");
       PostUpdateAlumno();
       break;
+  case 'VIEW':
+      getAlumno();
+      break;
   default:
     // code...
     break;
