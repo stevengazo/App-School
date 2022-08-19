@@ -64,7 +64,14 @@ class control
      * Define un dato en el cliente que permita identificar si el usuario
      * puede modificar o solo leer datos
      */
-    // Seteo y envio de datos a la interfaz    
+    $LocalStorageScript = '
+      <script>
+        sessionStorage.setItem("tipoUsuario", "'.$tipoUsuario.'"); 
+        sessionStorage.setItem("editable", '.$_SESSION['isEditable'].');
+        sessionStorage.setItem("idUser", '.$_SESSION['ID'].' );
+      </script>         
+    ';
+    $this->Smarty->setAssign("scriptStorage", $LocalStorageScript);
     $this->Smarty->setAssign("editable",$_SESSION['isEditable']);
     $this->Smarty->setAssign("saludo", "Inicio del proyecto");
     $this->Smarty->setAssign("titulo", "Sistema Academico");
@@ -156,6 +163,10 @@ class control
 
   function cerrar_sesion()
   {
+    $LocalStorageScript = '
+      storage.removeItem("tipoUsuario");    
+    ';
+
     //Removemos sesión.
     session_unset();
     //Destruimos sesión.
