@@ -1,3 +1,9 @@
+
+function ViewAsignatura(id){
+  alert(`Asignatura id : ${id}`);
+}
+
+
 function fn_listar_asig(){
   $.ajax({
       type: "GET",

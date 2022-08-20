@@ -1,8 +1,6 @@
 <?php
-
     # RestFull
     $metodo = $_SERVER['REQUEST_METHOD'];
-
     /**
      * Administra los metodos del web service
      */
@@ -19,6 +17,9 @@
         case 'PUT':
             UpdateAsignatura();
             break;
+        case 'VIEW':
+            viewAsignatura();
+            break;            
         default:
             /**
              * SI EL METODO ES DIFERENTE, DEVUELVE ESTA RESPUESTA
@@ -28,6 +29,148 @@
             print json_encode($rtn);
             break;
     }
+
+
+    function viewAsignatura(){
+        if (isset($_REQUEST['id'])) {
+            $id = $_REQUEST['id'];
+            $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+            $AsignaturaObjecto = new stdClass();
+            $sqlQuery = 'SELECT * FROM ASIGNATURA WHERE ID = '.$id;
+            $SQLResult = $linkConnection->query($sqlQuery);            
+            while($fila = $SQLResult->fetch_assoc()){
+                $AsignaturaObjecto->id = $fila['id'];
+                $AsignaturaObjecto->nivelId = $fila['nivel_id'];
+                $AsignaturaObjecto->id = $fila['id'];
+                $AsignaturaObjecto->profesorId  = $fila['profesor_id'];
+                $AsignaturaObjecto->nombreAsignatura = $fila['nombre'];
+            }
+            $AsignaturaObjecto->Horarios =  listaHorarios($id);
+            $AsignaturaObjecto->Ausencias = listaAusencias($id);
+            $AsignaturaObjecto->Alumnos = listaAlumnos($id);
+            $AsignaturaObjecto->Notas = listaNotas($id);
+
+            lanzarJson($AsignaturaObjecto,false,200);
+        } else {
+            lanzarJson("Error id no especificado",true,500);
+            exit;
+        }
+    }
+
+
+    function listaHorarios($id){
+        if (isset($id)) {
+            $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+            $sqlQuery = 'SELECT * FROM HORARIO WHERE ASIGNATURA_ID = '.$id;
+            $SQLResult = $linkConnection->query($sqlQuery);            
+            $tmpArray = array();
+            while($fila = $SQLResult->fetch_assoc()){
+                $horarioTMP = new stdClass();
+                $horarioTMP->id = $fila['id'];                                                              
+                $horarioTMP->dia = $fila['dia'];                    
+                $horarioTMP->horaInicio = $fila['horaInicio'];    
+                $horarioTMP->horaFin = $fila['horaFin'];    
+                array_push($tmpArray,$horarioTMP);
+            }
+            return $tmpArray;
+        } else {
+            return array();
+        }
+    }    
+
+
+    function listaNotas($id){
+        if (isset($id)) {
+            $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+            $sqlQuery = '
+            SELECT 
+                N.id as notaId, 
+                N.nota,
+                N.trimestre,
+                A.id as alumnoId,
+                CONCAT(A.nombre ," ",   A.apellidos) as nombreAlumno 
+            FROM NOTA AS N
+            INNER JOIN (select id, alumno_id from Asignatura_has_alumno where asignatura_id ='.$id.') AS TMP 
+            inner join Alumno as A on A.id = TMP.alumno_id 
+            ON TMP.ID = N.asignatura_has_alumno_id        
+            ';
+            $SQLResult = $linkConnection->query($sqlQuery);            
+            $tmpArray = array();
+            while($fila = $SQLResult->fetch_assoc()){
+                $notaTmp = new stdClass();
+                $notaTmp->notaId = $fila['notaId'];
+                $notaTmp->alumnoId = $fila['alumnoId'];
+                $notaTmp->nota = $fila['nota'];
+                $notaTmp->trimestre = $fila['trimestre'];
+                $notaTmp->nombreAlumno = $fila['nombreAlumno'];                                                                
+                array_push($tmpArray,$notaTmp);
+            }
+            return $tmpArray;
+        } else {
+            return array();
+        }
+    }    
+
+    function listaAlumnos($id){
+        if (isset($id)) {
+            $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+            $sqlQuery = '
+            SELECT 
+                Alum.id as AlumnoId,
+                Alum.Nombre as NombreAlumno,
+                Alum.Apellidos as ApellidosAlumno
+            FROM ASIGNATURA_HAS_Alumno as AHA
+            inner join Alumno as Alum on Alum.id = AHA.alumno_id
+            where AHA.asignatura_id = '.$id;
+            $SQLResult = $linkConnection->query($sqlQuery);            
+            $tmpArray = array();
+            while($fila = $SQLResult->fetch_assoc()){
+                $Alumnotmp = new stdClass();
+                $Alumnotmp->Id = $fila['AlumnoId'];
+                $Alumnotmp->nombreAlumno = $fila['NombreAlumno'];
+                $Alumnotmp->apellidosAlumno = $fila['ApellidosAlumno'];
+                array_push($tmpArray,$Alumnotmp);
+            }
+            return $tmpArray;
+        } else {
+            return array();
+        }
+    }    
+
+    function listaAusencias($id){
+        if (isset($id)) {
+            $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+            $sqlQuery = '
+            SELECT 
+                FA.id as faltaAsistenciaId,
+                Fa.fecha,
+                FA.Asignatura_id,
+                Alum.id as alumnoId,
+                Alum.nombre as alumnoNombre,
+                Alum.apellidos as alumnoApellidos
+            FROM FALTA_ASISTENCIA AS FA
+            inner join  Alumno as Alum on Alum.id = FA.alumno_id
+            WHERE FA.asignatura_id = '.$id.'
+            order by fecha desc';
+            $SQLResult = $linkConnection->query($sqlQuery);            
+            $tmpArray = array();
+            while($fila = $SQLResult->fetch_assoc()){
+                $Ausencia = new stdClass();
+                $Ausencia->id = $fila['faltaAsistenciaId'];
+                $Ausencia->fecha = $fila['fecha'];
+                $Ausencia->signaturaId = $fila['Asignatura_id'];
+                $Ausencia->alumnoId = $fila['alumnoId'];
+                $Ausencia->alumnoNombre = $fila['alumnoNombre'];
+                $Ausencia->alumnoApellidos = $fila['alumnoApellidos'];
+                array_push($tmpArray,$Ausencia);
+            }
+            return $tmpArray;
+        } else {
+            return array();
+        }
+    }
+
+
     /**
      * Valida los datos de una asignatura y la actualiza
      */
@@ -125,6 +268,7 @@
                                 onclick='fn_editar_asignatura(".$fila['id'].");'>
                                                 <img src='images/delete.png' title='Borrar Asignatura'
                                                 onclick='fn_borrar_asig(".$fila['id'].");'></td>";
+                                $salida .= ' <td onclick="ViewAsignatura('.$fila['id'].')" class="btn btn-sm text-dark btn-danger" > <i class="bi-info-circle"></i> </td>';        
                                 $salida .= "</tr>";
                                 }
                             $salida .= "</table>";
@@ -242,3 +386,17 @@
             exit;
         }
     }
+
+    /**
+ * Lanza una respuesta en formato JSON
+ */
+function lanzarJson( $DataCodificar, $error=true, $CodigoError){
+    if($error){
+        $rtn = array("id", "1", "error", $DataCodificar);
+        http_response_code($CodigoError);
+        print json_encode($rtn);
+    }else{
+        http_response_code($CodigoError);
+        print json_encode($DataCodificar);
+    }
+  }

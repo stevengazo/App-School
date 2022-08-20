@@ -4,3 +4,6 @@
     $control = control::getInstancia();
     $control->gestor();    
 ?>
+
+
+
