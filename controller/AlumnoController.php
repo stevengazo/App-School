@@ -51,7 +51,24 @@
                     // llamada a la interfaz    
                     $this->Smarty->setDisplay("Shared/LayoutInit.tpl");       
                     $this->Smarty->setDisplay("Shared/Head.tpl");       
-                    $this->Smarty->setDisplay("Shared/NavBar.tpl");       
+
+                    switch ($_SESSION['tipoUsuario']) {
+                        case 'Alumno':
+                          $this->Smarty->setDisplay("Shared/NavBarAlumno.tpl");
+                          break;
+                        case 'Administrador':
+                          $this->Smarty->setDisplay("Shared/NavBarAdministrador.tpl");
+                          break;
+                        case 'Profesor':
+                          $this->Smarty->setDisplay("Shared/NavBarProfesor.tpl");
+                          break;
+                        case 'Padre':
+                          $this->Smarty->setDisplay("Shared/NavBarPadre.tpl");
+                          break;
+                        default:
+                          $this->Smarty->setDisplay("Shared/NavBarDefault.tpl");
+                          break;
+                      }     
                     $this->Smarty->setDisplay("Shared/LayoutClose.tpl");                      
                     break;
             }

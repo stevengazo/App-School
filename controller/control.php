@@ -72,13 +72,17 @@ class control
       </script>         
     ';
     $this->Smarty->setAssign("scriptStorage", $LocalStorageScript);
+
     $this->Smarty->setAssign("editable",$_SESSION['isEditable']);
+
     $this->Smarty->setAssign("saludo", "Inicio del proyecto");
     $this->Smarty->setAssign("titulo", "Sistema Academico");
     // llamada a la interfaz
     $this->Smarty->setDisplay("Shared/LayoutInit.tpl");
     $this->Smarty->setDisplay("Shared/Head.tpl");
-    switch ($tipoUsuario) {
+
+
+    switch ($_SESSION['tipoUsuario']) {
       case 'Alumno':
         $this->Smarty->setDisplay("Shared/NavBarAlumno.tpl");
         break;
@@ -291,37 +295,142 @@ class control
 
   function frm_profe()
   {
+    $this->Smarty->setAssign("titulo", "Sistema Academico");
+    $LocalStorageScript = '
+      <script>
+        sessionStorage.setItem("tipoUsuario", "'.$_SESSION['tipoUsuario'].'"); 
+        sessionStorage.setItem("editable", '.$_SESSION['isEditable'].');
+        sessionStorage.setItem("idUser", '.$_SESSION['ID'].' );
+      </script>         
+    ';
+    $this->Smarty->setAssign("scriptStorage", $LocalStorageScript);
+    
     $this->Smarty->setDisplay("Shared/LayoutInit.tpl");
     $this->Smarty->setDisplay("Shared/Head.tpl");
-    $this->Smarty->setDisplay("Shared/NavBarProfesor.tpl");
+    switch ($_SESSION['tipoUsuario']) {
+      case 'Alumno':
+        $this->Smarty->setDisplay("Shared/NavBarAlumno.tpl");
+        break;
+      case 'Administrador':
+        $this->Smarty->setDisplay("Shared/NavBarAdministrador.tpl");
+        break;
+      case 'Profesor':
+        $this->Smarty->setDisplay("Shared/NavBarProfesor.tpl");
+        break;
+      case 'Padre':
+        $this->Smarty->setDisplay("Shared/NavBarPadre.tpl");
+        break;
+      default:
+        $this->Smarty->setDisplay("Shared/NavBarDefault.tpl");
+        break;
+    }
     $this->Smarty->setDisplay("profesores/Insertar_Profesor.tpl");
     $this->Smarty->setDisplay("Shared/LayoutClose.tpl");
   }
 
   function frm_alumno()
   {
+    $this->Smarty->setAssign("titulo", "Sistema Academico");
+    $LocalStorageScript = '
+      <script>
+        sessionStorage.setItem("tipoUsuario", "'.$_SESSION['tipoUsuario'].'"); 
+        sessionStorage.setItem("editable", '.$_SESSION['isEditable'].');
+        sessionStorage.setItem("idUser", '.$_SESSION['ID'].' );
+      </script>         
+    ';
+    $this->Smarty->setAssign("scriptStorage", $LocalStorageScript);
+
+
     $this->Smarty->setDisplay("Shared/LayoutInit.tpl");
-    $this->Smarty->setDisplay("Shared/Head.tpl");
-    $this->Smarty->setDisplay("Shared/NavBarProfesor.tpl");
+    $this->Smarty->setDisplay("Shared/Head.tpl");  
+    switch ($_SESSION['tipoUsuario']) {
+      case 'Alumno':
+        $this->Smarty->setDisplay("Shared/NavBarAlumno.tpl");
+        break;
+      case 'Administrador':
+        $this->Smarty->setDisplay("Shared/NavBarAdministrador.tpl");
+        break;
+      case 'Profesor':
+        $this->Smarty->setDisplay("Shared/NavBarProfesor.tpl");
+        break;
+      case 'Padre':
+        $this->Smarty->setDisplay("Shared/NavBarPadre.tpl");
+        break;
+      default:
+        $this->Smarty->setDisplay("Shared/NavBarDefault.tpl");
+        break;
+    }
     $this->Smarty->setDisplay("Alumno/Insertar_alumno.tpl");
     $this->Smarty->setDisplay("Shared/LayoutClose.tpl");
   }
 
   function frm_asig()
   {
+    $this->Smarty->setAssign("titulo", "Sistema Academico");
+    $LocalStorageScript = '
+      <script>
+        sessionStorage.setItem("tipoUsuario", "'.$_SESSION['tipoUsuario'].'"); 
+        sessionStorage.setItem("editable", '.$_SESSION['isEditable'].');
+        sessionStorage.setItem("idUser", '.$_SESSION['ID'].' );
+      </script>         
+    ';
+    $this->Smarty->setAssign("scriptStorage", $LocalStorageScript);
+
     $this->Smarty->setDisplay("Shared/LayoutInit.tpl");
     $this->Smarty->setDisplay("Shared/Head.tpl");
-    $this->Smarty->setDisplay("Shared/NavBarProfesor.tpl");
+    switch ($_SESSION['tipoUsuario']) {
+      case 'Alumno':
+        $this->Smarty->setDisplay("Shared/NavBarAlumno.tpl");
+        break;
+      case 'Administrador':
+        $this->Smarty->setDisplay("Shared/NavBarAdministrador.tpl");
+        break;
+      case 'Profesor':
+        $this->Smarty->setDisplay("Shared/NavBarProfesor.tpl");
+        break;
+      case 'Padre':
+        $this->Smarty->setDisplay("Shared/NavBarPadre.tpl");
+        break;
+      default:
+        $this->Smarty->setDisplay("Shared/NavBarDefault.tpl");
+        break;
+    }
     $this->Smarty->setDisplay("Asignatura/Insertar_asignatura.tpl");
     $this->Smarty->setDisplay("Shared/LayoutClose.tpl");
   }
 
   function frm_nivel()
   {
+    $this->Smarty->setAssign("titulo", "Sistema Academico");
+    $LocalStorageScript = '
+      <script>
+        sessionStorage.setItem("tipoUsuario", "'.$_SESSION['tipoUsuario'].'"); 
+        sessionStorage.setItem("editable", '.$_SESSION['isEditable'].');
+        sessionStorage.setItem("idUser", '.$_SESSION['ID'].' );
+      </script>         
+    ';
+    $this->Smarty->setAssign("scriptStorage", $LocalStorageScript);
     $this->Smarty->setDisplay("Shared/LayoutInit.tpl");
     $this->Smarty->setDisplay("Shared/Head.tpl");
-    $this->Smarty->setDisplay("Shared/NavBarProfesor.tpl");
+    switch ($_SESSION['tipoUsuario']) {
+      case 'Alumno':
+        $this->Smarty->setDisplay("Shared/NavBarAlumno.tpl");
+        break;
+      case 'Administrador':
+        $this->Smarty->setDisplay("Shared/NavBarAdministrador.tpl");
+        break;
+      case 'Profesor':
+        $this->Smarty->setDisplay("Shared/NavBarProfesor.tpl");
+        break;
+      case 'Padre':
+        $this->Smarty->setDisplay("Shared/NavBarPadre.tpl");
+        break;
+      default:
+        $this->Smarty->setDisplay("Shared/NavBarDefault.tpl");
+        break;
+    }
     $this->Smarty->setDisplay("Nivel/Insertar_nivel.tpl");
+
     $this->Smarty->setDisplay("Shared/LayoutClose.tpl");
   }
 
