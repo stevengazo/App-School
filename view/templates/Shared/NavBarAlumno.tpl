@@ -20,7 +20,7 @@
                             Ausencias
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">                    
-                            <li class="dropdown-item" onclick="">
+                            <li class="dropdown-item" onclick="miInformación()">
                                 Mis ausencias Ausencias
                             </li>
                         </ul>
@@ -82,7 +82,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li class="dropdown-item" onclick="">
+                            <li class="dropdown-item" onclick="fn_listar_asig()">
                                 Ver Asignaturas existentes
                             </li>
                         </ul>

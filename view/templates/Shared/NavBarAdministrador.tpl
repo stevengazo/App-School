@@ -27,25 +27,7 @@
                                 Lista Ausencias
                             </li>
                         </ul>
-                    </li>
-                    <!-- ESTUDIANTES-->                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Estudiantes
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="index.php?action=abrir_alumno">Agregar
-                                Estudiante</a>
-                            <!--  <li><hr class="dropdown-divider"></li> -->
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li class="dropdown-item" onclick="fn_listar_alumnos()">
-                                Ver Estudiantes
-                            <li>
-                        </ul>
-                    </li>
+                    </li>                   
                     <!-- NIVELES-->                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -60,23 +42,6 @@
                             </li>
                             <li class="dropdown-item" onclick="fn_listar_nivel()">
                                 Ver Niveles
-                            <li>
-                        </ul>
-                    </li>
-                    <!-- PROFESORES-->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Profesores
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="index.php?action=abrir_profe">Agregar Profesor</a>
-                            <!--  <li><hr class="dropdown-divider"></li> -->
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li class="dropdown-item" onclick="fn_listar_profesor()">
-                                Ver Profesores
                             <li>
                         </ul>
                     </li>
@@ -122,25 +87,29 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li class="dropdown-item">
-                                Matricular Estudiante
+                                 <a class="dropdown-item" href="index.php?action=abrir_alumno">Matricular Estudiante
+                                 </a>
                             </li>
-                            <li class="dropdown-item">
-                                Listar Estudiantes
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li class="dropdown-item">
-                                Inscripción Profesor
-                            </li>
-                            <li class="dropdown-item">
-                                Busqueda Profesor
+                            <li class="dropdown-item" onclick="fn_listar_alumnos()" >
+                                <label>
+                                    Listar Estudiantes
+                                </label>
+
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li class="dropdown-item">
-                                Nuevo Perfil de Padre
+                                <a class="dropdown-item" href="index.php?action=abrir_profe">Agregar Profesor</a>
+                            </li>
+                            <li class="dropdown-item" onclick="fn_listar_profesor()">
+                                Ver Profesores
+                            <li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li class="dropdown-item">
+                                Agregar Padre
                             </li>
                             <li class="dropdown-item">
                                 Listar Padres

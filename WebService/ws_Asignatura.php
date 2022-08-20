@@ -36,14 +36,30 @@
             $id = $_REQUEST['id'];
             $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
             $AsignaturaObjecto = new stdClass();
-            $sqlQuery = 'SELECT * FROM ASIGNATURA WHERE ID = '.$id;
+            $sqlQuery = '
+            Select 
+                A.id,
+                A.nombre as nombreAsignatura,
+                P.id as profesorId,
+                Concat(P.nombre, " ",P.apellidos) as nombreProfesor,
+                N.id as nivelId,
+                N.nivel,
+                N.Curso,
+                N.Aula
+            from Asignatura as A
+            Inner join Profesor as P on P.id = A.profesor_id
+            Inner Join Nivel as N on N.id = A.nivel_id
+            Where A.id ='.$id;
             $SQLResult = $linkConnection->query($sqlQuery);            
             while($fila = $SQLResult->fetch_assoc()){
                 $AsignaturaObjecto->id = $fila['id'];
-                $AsignaturaObjecto->nivelId = $fila['nivel_id'];
-                $AsignaturaObjecto->id = $fila['id'];
-                $AsignaturaObjecto->profesorId  = $fila['profesor_id'];
-                $AsignaturaObjecto->nombreAsignatura = $fila['nombre'];
+                $AsignaturaObjecto->nombreAsignatura = $fila['nombreAsignatura'];
+                $AsignaturaObjecto->profesorId = $fila['profesorId'];
+                $AsignaturaObjecto->nombreProfesor = $fila['nombreProfesor'];
+                $AsignaturaObjecto->nivelId = $fila['nivelId'];
+                $AsignaturaObjecto->nivel = $fila['nivel'];
+                $AsignaturaObjecto->Curso = $fila['Curso'];
+                $AsignaturaObjecto->Aula = $fila['Aula'];
             }
             $AsignaturaObjecto->Horarios =  listaHorarios($id);
             $AsignaturaObjecto->Ausencias = listaAusencias($id);
@@ -238,7 +254,7 @@
             $linkConect = mysqli_connect("localhost","root","","testingdb");
             switch ($typo) {
                 case 'listaHtml':
-                        $sql = "select count(*) canti_reg from asignatura";
+                        $sql = "select count(*) canti_reg from asignatura ";
                         $rs = $linkConect->query($sql);
                         $cantidad_asig = 0;
                         $salida = "";
@@ -247,7 +263,7 @@
                         }
                         if($cantidad_asig>0){
 
-                            $sql = "select id,nivel_id,profesor_id,nombre from asignatura";
+                            $sql = "select id,nivel_id,profesor_id,nombre from asignatura ";
                             $rs = $linkConect->query($sql);
 
                             $salida = "<table class='table'>";
@@ -264,13 +280,12 @@
                                 $salida .= "<td>".$fila['nivel_id']."</td>";
                                 $salida .= "<td>".$fila['profesor_id']."</td>";
                                 $salida .= "<td>".$fila['nombre']."</td>";
-                                $salida .= "<td><img src='images/lapiz.png' title='Editar Asignatura'
-                                onclick='fn_editar_asignatura(".$fila['id'].");'>
-                                                <img src='images/delete.png' title='Borrar Asignatura'
-                                                onclick='fn_borrar_asig(".$fila['id'].");'></td>";
-                                $salida .= ' <td onclick="ViewAsignatura('.$fila['id'].')" class="btn btn-sm text-dark btn-danger" > <i class="bi-info-circle"></i> </td>';        
+                                $salida .= ' <td onclick="ViewAsignatura('.$fila['id'].')" class="btn btn-sm text-dark btn-info mr-1" > <i class="bi bi-info-circle"></i></td>';
+                                $salida .= ' <td onclick="fn_editar_asignatura('.$fila['id'].')"   class="btn btn-sm text-dark btn-primary" > <i class="bi bi-pencil-square"></i> </td>';
+                                $salida .= ' <td onclick="fn_borrar_asig('.$fila['id'].')" class="btn btn-sm text-dark btn-danger" > <i class="bi bi-trash3"></i> </td>';                                        
                                 $salida .= "</tr>";
                                 }
+
                             $salida .= "</table>";
                         }else{
                             $salida .= "No existen datos para mostrar";

@@ -198,6 +198,7 @@ function ListarElementos()
                 $sqlQuery = "select falta_asistencia.id, alumno.nombre, alumno.apellidos, asignatura.nombre as nombreAsignatura  , fecha, justificada from falta_asistencia";
                 $sqlQuery = $sqlQuery . " inner join alumno on alumno.id = falta_asistencia.alumno_id ";
                 $sqlQuery = $sqlQuery . " inner join asignatura on falta_asistencia.asignatura_id = asignatura.id";
+                $sqlQuery = $sqlQuery . " order by falta_asistencia.fecha desc ";                
                 $sqlResults = $linkConnection->query($sqlQuery);
                 # Procesado de la respuesta
                 $htmlResult  = " <div class='d-flex flex-column'> ";

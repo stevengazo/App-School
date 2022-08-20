@@ -151,7 +151,8 @@
                     $sqlQuery = "select N.id, trimestre, nota, A.id as alumnoId , A.nombre, A.apellidos, ASG.id as asignaturaId, ASG.nombre as asignaturaNombre from nota as N ";
                     $sqlQuery = $sqlQuery." inner join asignatura_has_alumno as AA on N.asignatura_has_alumno_id = AA.id ";
                     $sqlQuery = $sqlQuery." inner join alumno as A on AA.alumno_id = A.id ";
-                    $sqlQuery = $sqlQuery." inner join asignatura as ASG on AA.asignatura_id = ASG.id; ";                                
+                    $sqlQuery = $sqlQuery." inner join asignatura as ASG on AA.asignatura_id = ASG.id ";                                
+                    $sqlQuery = $sqlQuery." order by A.apellidos asc ";                                                    
                     $sqlResult = $linkConnection->query($sqlQuery);
                     $arrayResult = array();
                     $HtmlResults = '
