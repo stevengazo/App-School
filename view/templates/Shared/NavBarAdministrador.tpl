@@ -108,10 +108,10 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li class="dropdown-item">
+                            <li class="dropdown-item" >
                                 Agregar Padre
                             </li>
-                            <li class="dropdown-item">
+                            <li class="dropdown-item" onclick="verPadres()">
                                 Listar Padres
                             </li>                            
                             <li>

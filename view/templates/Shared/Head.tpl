@@ -31,6 +31,7 @@
         <script src="js/templates/Horarios.js"  ></script>
         <script src="js/templates/Nivel.js"  ></script>
         <script src="js/templates/Nota.js"  ></script>
+        <script src="js/templates/Padre.js"  ></script>
         <script src="js/templates/Profesor.js"  ></script>
         <!--ICONS-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic.min.css" rel="stylesheet">
