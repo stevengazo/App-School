@@ -108,12 +108,15 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li class="dropdown-item" >
+                            <li class="dropdown-item" onclick="GetAgregarPadre()" >
                                 Agregar Padre
                             </li>
                             <li class="dropdown-item" onclick="verPadres()">
                                 Listar Padres
                             </li>                            
+                            <li class="dropdown-item" onclick="">
+                                Vincular Padre - Alumno
+                            </li>          
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
