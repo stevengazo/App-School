@@ -25,22 +25,167 @@ switch ($metodo) {
 
 
 function ViewPadreHasAlumno(){
-    lanzarJson("Funcion no implentada no implementado",true,500);
+    if(!isset($_REQUEST['id'])){
+        lanzarJson("id no definido",true,500);
+    }else{        
+        $id = $_REQUEST['id'];
+        $linkConnection =  mysqli_connect("localhost","root","","testingdb");                            
+        $sqlQuery = '
+        select 
+            PHA.ID AS id, 
+            P.id as padreid,
+            P.nombre as padreNombre,
+            P.apellidos as padreApellidos,
+            A.id as alumnoId,
+            A.nombre as alumnoNombre,
+            A.apellidos as alumnoApellidos
+        from padre_has_alumno as PHA
+        inner join alumno AS A on A.id = PHA.alumno_id
+        inner join padre  AS P ON P.id =  PHA.padre_id
+        where PHA.ID ='.$id;        
+        $sqlResult = $linkConnection->query($sqlQuery);
+        $ObjectoTemporal = new stdClass();    
+        while($fila = $sqlResult->fetch_assoc()){
+            $ObjectoTemporal->id = $fila['id'];
+            $ObjectoTemporal->padreId = $fila['padreid'];
+            $ObjectoTemporal->padreNombre = $fila['padreNombre'].' '.$fila['padreApellidos'];
+            $ObjectoTemporal->alumnoId = $fila['alumnoId'];
+            $ObjectoTemporal->alumnoNombre = $fila['alumnoNombre'].' '.$fila['alumnoApellidos'];
+        }
+        # Implementar funcion para agregar hijos
+        lanzarJson($ObjectoTemporal,false,200);
+        exit;
+    }
 }
 
 function DeletePadreHasAlumno(){    
-    lanzarJson("Funcion no implentada no implementado",true,500);    
+    if(!isset($_REQUEST['id'])){
+        lanzarJson("id no definido",true,500);
+        exit;
+    }
+    try {
+        $id = $_REQUEST['id'];        
+        $linkConnection =  mysqli_connect("localhost","root","","testingdb");                            
+        $sqlQuery = '                    
+            DELETE FROM PADRE_HAS_ALUMNO
+            WHERE ID ='.$id; 
+        $sqlResult = $linkConnection->query($sqlQuery);
+        lanzarJson($sqlResult,false,200);
+        exit;
+    } catch (Exception $e) {
+        lanzarJson($e->getMessage(), true,500);
+        exit;
+    }     
 }
 
-function UpdatePadreHasAlumno(){
-    lanzarJson("Funcion no implentada no implementado",true,500);    
+function UpdatePadreHasAlumno(){    
+    if(!isset($_REQUEST['id'])){
+        lanzarJson("id no definido",true,500);
+        exit;
+    }
+    if(!isset($_REQUEST['idPadre'])){
+        lanzarJson("idPadre no definido",true,500);
+        exit;
+    }
+    if(!isset($_REQUEST['idAlumno'])){
+        lanzarJson("idAlumno no definido",true,500);
+        exit;
+    }    
+    try {
+        $id = $_REQUEST['id'];        
+        $idPadre = $_REQUEST['idPadre'];        
+        $idAlumno = $_REQUEST['idAlumno'];        
+        $linkConnection =  mysqli_connect("localhost","root","","testingdb");                            
+        $sqlQuery = '
+        UPDATE PADRE_HAS_ALUMNO
+        SET
+            PADRE_ID = '.$idPadre.',
+            ALUMNO_ID = '.$idAlumno.'
+        where ID ='.$id; 
+        $sqlResult = $linkConnection->query($sqlQuery);
+        lanzarJson($sqlResult,false,200);
+        exit;
+    } catch (Exception $e) {
+        lanzarJson("Error interno: ".$e->getMessage(), true,500);
+        exit;
+    }     
 }
 
 function AddPadreHasAlumno(){
-    lanzarJson("Funcion no implentada no implementado",true,500);    
+    if(!isset($_REQUEST['id'])){
+        lanzarJson("id no definido",true,500);
+        exit;
+    }
+    if(!isset($_REQUEST['idPadre'])){
+        lanzarJson("idPadre no definido",true,500);
+        exit;
+    }
+    if(!isset($_REQUEST['idAlumno'])){
+        lanzarJson("idAlumno no definido",true,500);
+        exit;
+    }    
+    try {
+        $id = $_REQUEST['id'];        
+        $idPadre = $_REQUEST['idPadre'];        
+        $idAlumno = $_REQUEST['idAlumno'];        
+        $linkConnection =  mysqli_connect("localhost","root","","testingdb");                            
+        $sqlQuery = '
+        INSERT INTO PADRE_HAS_ALUMNO 	(ID,PADRE_ID,ALUMNO_ID)
+                            VALUES		('.$id.', '.$idPadre.', '.$idAlumno.')
+        '; 
+        $sqlResult = $linkConnection->query($sqlQuery);
+        lanzarJson($sqlResult,false,200);
+        exit;
+    } catch (Exception $e) {
+        lanzarJson("Error interno: ".$e->getMessage(), true,500);
+        exit;
+    }     
 }
 function GetPadreHasAlumno(){
-    lanzarJson("Funcion no implentada no implementado",true,500);
+    if(!isset($_REQUEST['tipo'])){
+        lanzarJson("tipo no definido",true,500);
+    }else{
+        $tipo = $_REQUEST['tipo'];
+        $linkConnection =  mysqli_connect("localhost","root","","testingdb");                            
+        $sqlQuery = '';        
+        switch ($tipo) {
+            case 'lista':
+                $sqlQuery = '                 
+                    select 
+                        PHA.ID AS id, 
+                        P.id as padreid,
+                        P.nombre as padreNombre,
+                        P.apellidos as padreApellidos,
+                        A.id as alumnoId,
+                        A.nombre as alumnoNombre,
+                        A.apellidos as alumnoApellidos
+                    from padre_has_alumno as PHA
+                    inner join alumno AS A on A.id = PHA.alumno_id
+                    inner join padre  AS P ON P.id =  PHA.padre_id        
+                ';
+                $sqlResult = $linkConnection->query($sqlQuery);
+                $arrayObjectos = array();
+                while($fila = $sqlResult->fetch_assoc()){
+                    $ObjectoTemporal = new stdClass();
+                    $ObjectoTemporal->id = $fila['id'];
+                    $ObjectoTemporal->padreId = $fila['padreid'];
+                    $ObjectoTemporal->padreNombre = $fila['padreNombre'].' '.$fila['padreApellidos'];
+                    $ObjectoTemporal->alumnoId = $fila['alumnoId'];
+                    $ObjectoTemporal->alumnoNombre = $fila['alumnoNombre'].' '.$fila['alumnoApellidos'];
+                    array_push($arrayObjectos,$ObjectoTemporal);
+                }
+                lanzarJson($arrayObjectos,false,200);
+                exit;
+                break;
+            case 'elemento':
+                # code...
+                break;            
+            default:
+                lanzarJson("tipo no especificado (lista, elemento)", true,404);
+                exit;
+                break;
+        }
+    }
 }
 
 /**
