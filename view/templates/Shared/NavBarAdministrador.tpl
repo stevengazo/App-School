@@ -146,7 +146,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li class="dropdown-item" onclick="">
+                            <li class="dropdown-item" onclick="getInsertAdmin()">
                                 Agregar Administrador
                             </li>
                             <li class="dropdown-item" onclick="verAdministradores()">

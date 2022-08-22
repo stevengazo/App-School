@@ -76,8 +76,24 @@ function BorrarNota()
 {
     # CADENA DE CONEXIÓN
     $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
-    # CODIGO SQL
-    $sqlQuery = " ";
+    try {        
+        if (!isset($_REQUEST['id'])) {
+            lanzarJson("id no especificado", true, 500);
+            exit;
+        } else{
+            $id =$_REQUEST['id'];        
+            # CODIGO SQL
+            
+            $sqlQuery = "DELETE FROM ADMINISTRADOR WHERE id=".$id;            
+            $sqlResult = $linkConnection->query($sqlQuery);
+            lanzarJson($sqlResult,false,200);
+            exit;    
+        }
+    }catch (Exception $e) {
+        lanzarJson("Error interno: ".$e->getMessage(), true,500);
+        exit;
+    }     
+
 }
 
 
@@ -86,10 +102,38 @@ function BorrarNota()
  */
 function InsertarElemento()
 {
-    # CADENA DE CONEXIÓN
-    $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
-    # CODIGO SQL
-    $sqlQuery = " ";
+    if (!isset($_REQUEST['id'])) {
+        lanzarJson("id no especificado", true, 500);
+        exit;
+    } 
+    if (!isset($_REQUEST['login'])) {
+        lanzarJson("login no especificado", true, 500);
+        exit;
+    } 
+    if (!isset($_REQUEST['password'])) {
+        lanzarJson("password no especificado", true, 500);
+        exit;
+    }     
+    if (!isset($_REQUEST['email'])) {
+        lanzarJson("email no especificado", true, 500);
+        exit;
+    }         
+    try {
+        $id= $_REQUEST['id'];
+        $login= $_REQUEST['login'];        
+        $password= $_REQUEST['password'];
+        $email= $_REQUEST['email'];
+        $linkConnection =  mysqli_connect("localhost", "root", "", "testingdb");
+        $sql = '
+        INSERT INTO ADMINISTRADOR(ID,LOGING,CLAVE,EMAIL)
+        VALUES('.$id.',"'.$login.'","'.$password.'","'.$email.'")';    
+        $sqlResult = $linkConnection->query($sql);
+        lanzarJson($sqlResult,false,200);
+        exit;    
+    }catch (Exception $e) {
+        lanzarJson("Error interno: ".$e->getMessage(), true,500);
+        exit;
+    } 
 }
 
 /**
