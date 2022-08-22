@@ -104,22 +104,39 @@ async function GetInsertAsignaturaHasAlumno() {
           Seleccione el estudiante que desee matricular en la asignatura          
         </p>
       </div>
-      <div class="d-flex flex-column">
-        <div class="form-group">
-          <label>Alumno</label>
-          <select id="select-alumno" class="form-control">
-          </select>
-        </div>
-      <div class="form-group">
-          <label>Asignatura</label>
-          <select class="form-control" id="selectAsignaturas">          
-          </select>
-      </div>
-      <div class="d-flex flex-row justify-content-around mt-2">
-          <button onclick='PostInsertAsignaturaHasAlumno()' class="btn btn-sm btn-outline-success bg-white">Agregar</button>
-          <button class="btn btn-sm btn-outline-info bg-white">Regresar</button>
-      </div>
-    </div>
+
+    <table class="table">
+      <tbody>
+          <tr>
+              <th>
+                  <label>Alumno</label>
+              </th>
+              <td>
+                  <select id="select-alumno" class="form-control">
+                  </select>
+              </td>
+          </tr>
+          <tr>
+              <th>
+                  <label>Asignatura</label>
+              </th>
+              <td>
+                  <select class="form-control" id="selectAsignaturas">
+                  </select>
+              </td>
+          </tr>
+          <tr>
+              <td colspan="2">
+                  <button onclick='PostInsertAsignaturaHasAlumno()'
+                      class="btn btn-sm btn-outline-success bg-white">Agregar</button>
+                  <button class="btn btn-sm btn-outline-info bg-white">Regresar</button>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+     
     `;
 
   $("#renderbody").empty();
@@ -129,7 +146,7 @@ async function GetInsertAsignaturaHasAlumno() {
 
   await $.ajax({
     type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Alumno.php?accion=listar&tipo=JSON",
+    url: "http://localhost/app_School/WebService/ws_Alumno.php?tipo=lista&formato=JSON",
     success: function (data) {
       arrayObjectsAlumnos.push(JSON.parse(data));
       arrayObjectsAlumnos = arrayObjectsAlumnos[0];
