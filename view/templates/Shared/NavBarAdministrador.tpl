@@ -127,10 +127,10 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li class="dropdown-item">
+                            <li class="dropdown-item" onclick="getInsertHorario()">
                                 Creación Horarios
                             </li>
-                            <li class="dropdown-item">
+                            <li class="dropdown-item" onclick="VerListaHorarios()">
                                 Consultar Horarios
                             </li>
                             <!--  <li><hr class="dropdown-divider"></li> -->

@@ -4,13 +4,20 @@
     $metodo = $_SERVER['REQUEST_METHOD'];
 
     switch ($metodo) {
-        case 'GET':        
-            ListarElementos();
+        case 'GET': 
+            switch ($_REQUEST['tipo']) {
+                case 'lista':
+                    ListarElementos();
+                    break;
+                    case 'lastid':
+                        getUltimoId();
+                    break;    
+            }       
             break;
         case 'POST':
             InsertarElemento();
             break;
-        case 'VIEW':
+        case 'VIEW':            
             GetElement();
             break;
         case 'DELETE':
@@ -27,6 +34,26 @@
             http_response_code(500);
             print json_encode($rtn);
             break;
+    }
+
+    function getUltimoId(){
+            # CADENA DE CONEXIÓN
+            $linkConnection =  mysqli_connect("localhost","root","","testingdb");            
+            # codigo SQL
+            $sqlQuery = '
+            SELECT id FROM Horario
+            order by id desc
+            limit 1
+            ';               
+            # EJECUTA EL CODIGO   
+            $sqlResult= $linkConnection->query($sqlQuery);
+            #PROCESADO DE RESULTADOS
+            while($file = $sqlResult->fetch_assoc()){
+                $tmpresult= new stdClass();
+                $tmpresult->ultimoId = $file['id'];
+                lanzarJson($tmpresult,false,200);
+            }  
+            exit;    
     }
 
     /**
@@ -124,7 +151,7 @@
             $id = $_REQUEST['idHorario'];
         }else{
             // id no definido
-            $rtn = array("id", "3", "error", "id no especificado");
+            $rtn = array("id", "3", "error", "idHorario no especificado");
             http_response_code(500);
             print json_encode($rtn);
             exit;
@@ -192,18 +219,17 @@
         # PROCESADO DE RESULTADOS
         $arrayResult = array();
         while($file = $sqlResult->fetch_assoc()){
-            $arrayTemp = array();
-            $arrayTemp['id'] = $file['id'];
-            $arrayTemp['asignatura_id'] = $file['asignatura_id'];            
-            $arrayTemp['nombre'] = $file['nombre'];           
-            $arrayTemp['dia'] = $file['dia'];                       
-            $arrayTemp['horaInicio'] = $file['horaInicio'];                       
-            $arrayTemp['horaFin'] = $file['horaFin'];                       
-            $arrayResult[] =$arrayTemp;
+            $ObjectTmp = new stdClass();
+            $ObjectTmp->id = $file['id'];
+            $ObjectTmp->asignaturaId = $file['asignatura_id'];            
+            $ObjectTmp->nombre = $file['nombre'];           
+            $ObjectTmp->dia = $file['dia'];                       
+            $ObjectTmp->horaInicio = $file['horaInicio'];                       
+            $ObjectTmp->horaFin = $file['horaFin'];                       
+            array_push($arrayResult, $ObjectTmp);
         }      
         /* RETORNA JSON */             
-        header("Content-Type: application/json");
-        echo json_encode($arrayResult);  
+        lanzarJson($arrayResult,false,200);
     }
 
     /**
@@ -233,13 +259,28 @@
                 $arrayResult=$arrayTemp;
             }      
             /* RETORNA JSON */             
-            header("Content-Type: application/json");
-            echo json_encode($arrayResult);   
+            lanzarJson($arrayResult,false,200);
         }else{
             $rtn = array("id", "3", "error", "IdHorario no especificado");
             http_response_code(500);
             print json_encode($rtn);
         }    
     }
+
+
+   
+/**
+ * Lanza una respuesta en formato JSON
+ */
+function lanzarJson( $DataCodificar, $error=true, $CodigoError){
+    if($error){
+        $rtn = array("id", "1", "error", $DataCodificar);
+        http_response_code($CodigoError);
+        print json_encode($rtn);
+    }else{
+        http_response_code($CodigoError);
+        print json_encode($DataCodificar);
+    }
+}    
     
 ?>
