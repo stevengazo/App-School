@@ -467,6 +467,11 @@ class control
     $vmsg = "";
     if ($rs) {
       $vmsg = "Alumno creado correctamente!";
+      $this->sendMenu('
+      <script >
+        verAlumno('.$id.')
+      </script>
+      ');
     } else {
       $vmsg = "Error creando el alumno";
     }
@@ -483,6 +488,11 @@ class control
     $vmsg = "";
     if ($rs) {
       $vmsg = "Asignatura creada correctamente!";
+      $this->sendMenu('
+      <script >
+      ViewAsignatura('.$id.')
+      </script>
+      ');
     } else {
       $vmsg = "Error creando la asignatura";
     }
@@ -499,8 +509,55 @@ class control
     $vmsg = "";
     if ($rs) {
       $vmsg = "Asignatura creada correctamente!";
+      $this->sendMenu('<script >fn_listar_nivel();</script>');
     } else {
       $vmsg = "Error creando la asignatura";
     }
   }
+
+  function sendMenu($script){
+      /**
+     * Define un dato en el cliente que permita identificar si el usuario
+     * puede modificar o solo leer datos
+     */
+    $LocalStorageScript = '
+      <script>
+        sessionStorage.setItem("tipoUsuario", "'.$_SESSION['tipoUsuario'].'"); 
+        sessionStorage.setItem("editable", '.$_SESSION['isEditable'].');
+        sessionStorage.setItem("idUser", '.$_SESSION['ID'].' );
+      </script>         
+    ';
+    $this->Smarty->setAssign("scriptStorage", $LocalStorageScript);
+    $this->Smarty->setAssign("script", $script);
+    $this->Smarty->setAssign("editable",$_SESSION['isEditable']);
+
+    $this->Smarty->setAssign("saludo", "Inicio del proyecto");
+    $this->Smarty->setAssign("titulo", "Sistema Academico");
+    // llamada a la interfaz
+    $this->Smarty->setDisplay("Shared/LayoutInit.tpl");
+    $this->Smarty->setDisplay("Shared/Head.tpl");
+
+
+    switch ($_SESSION['tipoUsuario']) {
+      case 'Alumno':
+        $this->Smarty->setDisplay("Shared/NavBarAlumno.tpl");
+        break;
+      case 'Administrador':
+        $this->Smarty->setDisplay("Shared/NavBarAdministrador.tpl");
+        break;
+      case 'Profesor':
+        $this->Smarty->setDisplay("Shared/NavBarProfesor.tpl");
+        break;
+      case 'Padre':
+        $this->Smarty->setDisplay("Shared/NavBarPadre.tpl");
+        break;
+      default:
+        $this->Smarty->setDisplay("Shared/NavBarDefault.tpl");
+        break;
+    }
+    $this->Smarty->setDisplay("Shared/body.tpl");
+    $this->Smarty->setDisplay("Shared/script.tpl");
+    $this->Smarty->setDisplay("Shared/LayoutClose.tpl");
+  }
+
 }

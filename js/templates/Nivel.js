@@ -9,7 +9,7 @@ function fn_listar_nivel(){
             $("#renderbody").html('<div class="alert alert-warning" role="alert">Error Borrando datos</div>');
         }
       });
-
+            
 }
 
 function fn_borrar_nivel(id){
