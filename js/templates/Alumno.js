@@ -1,4 +1,4 @@
-async function miInformación(){
+async function miInformación() {
   const idUsuario = sessionStorage.getItem("idUser");
   var Alumno = {};
   await $.ajax({
@@ -14,7 +14,7 @@ async function miInformación(){
         '<div class="alert alert-warning" role="alert">error al mirar elemento</div>'
       );
     },
-  });  
+  });
   var htmlRender = `
   <div class="d-flex flex-column justify-content-center">
     <table class="table border-secondary rounded p-2">
@@ -40,15 +40,15 @@ async function miInformación(){
   /**
    * RENDERIZA LAS ASIGNATURAS
    */
-   var htmlRenderAsignaturas = ` 
+  var htmlRenderAsignaturas = ` 
    <h4 class="h4">Asignaturas del Estudiante</h4>
    <p>
      Asignaturas en las cuales se encuentra matriculado el estudiante
    </p>
    <div class="d-flex"> `;
-   for (let x = 0; x < Alumno.asignaturas.length; x++) {
-     const element = Alumno.asignaturas[x];
-     const card = `     
+  for (let x = 0; x < Alumno.asignaturas.length; x++) {
+    const element = Alumno.asignaturas[x];
+    const card = `     
        <div class="card" style="width: 18rem;">
          <div class="card-body">
            <h5 class="card-title">${element.nombreAsignatura}</h5>
@@ -59,16 +59,13 @@ async function miInformación(){
          </div>
        </div>    
      `;
-     htmlRenderAsignaturas = `${htmlRenderAsignaturas} ${card}`;
-   }
-   htmlRenderAsignaturas = `${htmlRenderAsignaturas} </div> <hr/>`;
-
+    htmlRenderAsignaturas = `${htmlRenderAsignaturas} ${card}`;
+  }
+  htmlRenderAsignaturas = `${htmlRenderAsignaturas} </div> <hr/>`;
 
   // RENDERIZADO
   $("#renderbody").empty();
   $("#renderbody").html(`${htmlRender} ${htmlRenderAsignaturas}`);
-
-
 }
 
 async function verAlumno(id) {
@@ -287,36 +284,80 @@ function fn_listar_alumnos() {
 }
 
 function fn_borrar_alumno(id) {
-  $.ajax({
-    type: "DELETE",
-    url: "http://localhost/app_School/WebService/ws_Alumno.php?idAlumno=" + id,
-    success: function (data) {
-      fn_listar_alumnos();
-    },
-    error: function (error) {
-      $("#renderbody").html(
-        '<div class="alert alert-warning" role="alert">Error Borrando datos</div>'
-      );
-    },
-  });
+  var isEditable = sessionStorage.getItem("editable");
+  debugger;
+  if (isEditable != "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
+
+    toast.style.display = "block";
+    console.error(error);
+  } else {
+    $.ajax({
+      type: "DELETE",
+      url:
+        "http://localhost/app_School/WebService/ws_Alumno.php?idAlumno=" + id,
+      success: function (data) {
+        fn_listar_alumnos();
+      },
+      error: function (error) {
+        $("#renderbody").html(
+          '<div class="alert alert-warning" role="alert">Error Borrando datos</div>'
+        );
+      },
+    });
+  }
 }
 
 function fn_editar_alumno(id) {
-  $.ajax({
-    type: "POST",
-    url: "http://localhost/app_School/WebService/ws_Alumno.php?idAlumno=" + id,
-    success: function (data) {
-      $("#renderbody").html(data);
-    },
-    error: function (error) {
-      $("#renderbody").html(
-        '<div class="alert alert-warning" role="alert">Error editando datos</div>'
-      );
-    },
-  });
+  var isEditable = sessionStorage.getItem("editable");
+  debugger;
+  if (isEditable != "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
+    toast.style.display = "block";
+    console.error(error);
+  } else {
+    $.ajax({
+      type: "POST",
+      url:
+        "http://localhost/app_School/WebService/ws_Alumno.php?idAlumno=" + id,
+      success: function (data) {
+        $("#renderbody").html(data);
+      },
+      error: function (error) {
+        $("#renderbody").html(
+          '<div class="alert alert-warning" role="alert">Error editando datos</div>'
+        );
+      },
+    });
+  }
 }
 
 function UpdateAlumno() {
+  var isEditable = sessionStorage.getItem("editable");
+    debugger;
+  if (isEditable!= "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
+
+    toast.style.display = "block";
+    console.error(error);
+  } else {
+
+
   const input_id = document.getElementById("txtIdAlumno").value;
   const input_nivel = document.getElementById("txtnivelid").value;
   const input_login = document.getElementById("txtlogin").value;
@@ -341,4 +382,5 @@ function UpdateAlumno() {
       console.error(error);
     },
   });
+}
 }

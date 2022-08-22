@@ -41,10 +41,7 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Horarios
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li class="dropdown-item" onclick="">
-                                Ver Mis Horarios
-                            <li>                            
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">                            
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -58,10 +55,7 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Profesores
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li class="dropdown-item" onclick="">
-                                Ver Mis Profesores
-                            <li>                            
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">                          
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -75,13 +69,7 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Asignaturas
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">                            
-                            <li class="dropdown-item" onclick="">
-                                Ver Mis Asignaturas
-                            </li>                                                        
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">                                                                                  
                             <li class="dropdown-item" onclick="fn_listar_asig()">
                                 Ver Asignaturas existentes
                             </li>

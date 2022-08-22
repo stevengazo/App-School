@@ -1,39 +1,53 @@
-async function deleteHorario(id){
+async function deleteHorario(id) {
+  var isEditable = sessionStorage.getItem("editable");
+  debugger;
+  if (isEditable != "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
+
+    toast.style.display = "block";
+    console.error(error);
+  } else {
     await $.ajax({
-        type: "DELETE",
-        url: `http://localhost/app_School/WebService/ws_Horarios.php?idHorario=${id}`,
-        data: {},
-        success: (data) => {
-            VerListaHorarios();
-        },
-        error: (error) => {
-          console.error("NO LOGRO BORRAR LOS DATOS");
-          arrayObjectsAlumnos = null;
-        },
-      });         
+      type: "DELETE",
+      url: `http://localhost/app_School/WebService/ws_Horarios.php?idHorario=${id}`,
+      data: {},
+      success: (data) => {
+        VerListaHorarios();
+      },
+      error: (error) => {
+        console.error("NO LOGRO BORRAR LOS DATOS");
+        arrayObjectsAlumnos = null;
+      },
+    });
+  }
 }
 
-async function InsertarHorario(){
-    const id = document.getElementById("id").value;
-    const idAsignatura = document.getElementById("idAsignaturas").value;
-    const dia = document.getElementById("dia").value;
-    const horaInicio = document.getElementById("horainicio").value;
-    const horafinal = document.getElementById("horafinal").value;
-    await $.ajax({
-        type: "GET",
-        url: `http://localhost/app_School/WebService/ws_Horarios.php?idHorario=${id}&asignatura_id=${idAsignatura}&dia=${dia}&horaInicio=${horaInicio}&horaFin=${horafinal}`,
-        data: {},
-        success: (data) => {
-            VerListaHorarios();
-        },
-        error: (error) => {
-          console.error("no adquirio los datos");
-          arrayObjectsAlumnos = null;
-        },
-      });     
+async function InsertarHorario() {
+  const id = document.getElementById("id").value;
+  const idAsignatura = document.getElementById("idAsignaturas").value;
+  const dia = document.getElementById("dia").value;
+  const horaInicio = document.getElementById("horainicio").value;
+  const horafinal = document.getElementById("horafinal").value;
+  await $.ajax({
+    type: "GET",
+    url: `http://localhost/app_School/WebService/ws_Horarios.php?idHorario=${id}&asignatura_id=${idAsignatura}&dia=${dia}&horaInicio=${horaInicio}&horaFin=${horafinal}`,
+    data: {},
+    success: (data) => {
+      VerListaHorarios();
+    },
+    error: (error) => {
+      console.error("no adquirio los datos");
+      arrayObjectsAlumnos = null;
+    },
+  });
 }
-async function getInsertHorario(){
-          const htmlRenderHorarios = `
+async function getInsertHorario() {
+  const htmlRenderHorarios = `
                 <div>
                 <h3>
                     Información del horario
@@ -95,54 +109,50 @@ async function getInsertHorario(){
                 </table>
             </div>               
                     `;
-          // RENDERIZADO DE DATOS
-          $("#renderbody").empty();
-          $("#renderbody").html(htmlRenderHorarios);
+  // RENDERIZADO DE DATOS
+  $("#renderbody").empty();
+  $("#renderbody").html(htmlRenderHorarios);
 
-          let arrayObjectsAsignaturas = [];
-          await $.ajax({
-            type: "GET",
-            url: "http://localhost/app_School/WebService/ws_Asignatura.php?tipo=Json",
-            data: {},
-            success: (data) => {
-              // parsea los datos
-              arrayObjectsAsignaturas.push(JSON.parse(data));
-              arrayObjectsAsignaturas = arrayObjectsAsignaturas[0];
-              // Construye elemento Option y los mueve a la vista con los datos resultantes
-              for (let j = 0; j < arrayObjectsAsignaturas.length; j++) {
-                const element = arrayObjectsAsignaturas[j];
-                let tmpHTMl = document.createElement("option");
-                tmpHTMl.innerText = element.nombre + " - " + element.nombreProfesor;
-                tmpHTMl.value = element.id;
-                document.getElementById("idAsignaturas").appendChild(tmpHTMl);
-              }
-            },
-            error: (error) => {
-              console.error("no adquirio los datos");
-              arrayObjectsAlumnos = null;
-            },
-          }); 
-          
-          
-          await $.ajax({
-            type: "GET",
-            url: "http://localhost/app_School/WebService/ws_Horarios.php?tipo=lastid",
-            data: {},
-            success: (data) => {
-                const valor= JSON.parse(data);
-                var numero = parseInt(valor.ultimoId);
-                numero = numero+ 1;
-                document.getElementById("id").value= numero;
+  let arrayObjectsAsignaturas = [];
+  await $.ajax({
+    type: "GET",
+    url: "http://localhost/app_School/WebService/ws_Asignatura.php?tipo=Json",
+    data: {},
+    success: (data) => {
+      // parsea los datos
+      arrayObjectsAsignaturas.push(JSON.parse(data));
+      arrayObjectsAsignaturas = arrayObjectsAsignaturas[0];
+      // Construye elemento Option y los mueve a la vista con los datos resultantes
+      for (let j = 0; j < arrayObjectsAsignaturas.length; j++) {
+        const element = arrayObjectsAsignaturas[j];
+        let tmpHTMl = document.createElement("option");
+        tmpHTMl.innerText = element.nombre + " - " + element.nombreProfesor;
+        tmpHTMl.value = element.id;
+        document.getElementById("idAsignaturas").appendChild(tmpHTMl);
+      }
+    },
+    error: (error) => {
+      console.error("no adquirio los datos");
+      arrayObjectsAlumnos = null;
+    },
+  });
 
-            },
-            error: (error) => {
-              console.error("no adquirio los datos");
-              arrayObjectsAlumnos = null;
-            },
-          });           
-
+  await $.ajax({
+    type: "GET",
+    url: "http://localhost/app_School/WebService/ws_Horarios.php?tipo=lastid",
+    data: {},
+    success: (data) => {
+      const valor = JSON.parse(data);
+      var numero = parseInt(valor.ultimoId);
+      numero = numero + 1;
+      document.getElementById("id").value = numero;
+    },
+    error: (error) => {
+      console.error("no adquirio los datos");
+      arrayObjectsAlumnos = null;
+    },
+  });
 }
-
 
 async function verHorario(id) {
   await $.ajax({

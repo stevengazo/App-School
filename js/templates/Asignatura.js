@@ -88,9 +88,9 @@ async function ViewAsignatura(id) {
       </table>
     `;
 
-    if(tipoUsuario !== "Alumno"){
-    // Renderizado de Ausencias
-    htmlRenderAsignaturas = `${htmlRenderAsignaturas}
+    if (tipoUsuario !== "Alumno") {
+      // Renderizado de Ausencias
+      htmlRenderAsignaturas = `${htmlRenderAsignaturas}
     <hr>
     <h5>
       Ausencias
@@ -123,8 +123,8 @@ async function ViewAsignatura(id) {
       </tbody>
     </table>
     `;
-    // Renderizado de Notas
-    htmlRenderAsignaturas = `${htmlRenderAsignaturas}
+      // Renderizado de Notas
+      htmlRenderAsignaturas = `${htmlRenderAsignaturas}
       <hr>
       <h5>
         Notas
@@ -145,10 +145,10 @@ async function ViewAsignatura(id) {
       </thead>
       <tbody>    
     `;
-    // Renderizado de Alumnos
-    for (let fx = 0; fx < ObjectoAsignatura.Notas.length; fx++) {
-      const element = ObjectoAsignatura.Notas[fx];
-      const row = `
+      // Renderizado de Alumnos
+      for (let fx = 0; fx < ObjectoAsignatura.Notas.length; fx++) {
+        const element = ObjectoAsignatura.Notas[fx];
+        const row = `
         <tr>
           <td>${element.notaId}</td>
           <td>${element.trimestre}</td>
@@ -157,17 +157,13 @@ async function ViewAsignatura(id) {
           <td><button onclick="ViewNota(${element.notaId})"  class="btn btn-info btn-sm" >Ver</button></td>
         </tr>
       `;
-      htmlRenderAsignaturas = `${htmlRenderAsignaturas} ${row}`;
-    }
-    htmlRenderAsignaturas = `${htmlRenderAsignaturas}
+        htmlRenderAsignaturas = `${htmlRenderAsignaturas} ${row}`;
+      }
+      htmlRenderAsignaturas = `${htmlRenderAsignaturas}
       </tbody>
     </table>
-    `;  
+    `;
     }
-
-
-
-
 
     // Renderizado de Horarios
     htmlRenderAsignaturas = `${htmlRenderAsignaturas}
@@ -205,8 +201,7 @@ async function ViewAsignatura(id) {
     htmlRenderAsignaturas = `${htmlRenderAsignaturas}
     </tbody>
     </table>
-    `;    
-
+    `;
 
     // RENDERIZADO DEL BODY
     $("#renderbody").html(htmlRenderAsignaturas);
@@ -229,33 +224,61 @@ function fn_listar_asig() {
 }
 
 function fn_borrar_asig(id) {
-  $.ajax({
-    type: "DELETE",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php?id=" + id,
-    success: function (data) {
-      fn_listar_asig();
-    },
-    error: function (error) {
-      $("#renderbody").html(
-        '<div class="alert alert-warning" role="alert">Error Borrando datos</div>'
-      );
-    },
-  });
+  var isEditable = sessionStorage.getItem("editable");
+    debugger;
+  if (isEditable!= "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
+
+    toast.style.display = "block";
+    console.error(error);
+  } else {
+    $.ajax({
+      type: "DELETE",
+      url: "http://localhost/app_School/WebService/ws_Asignatura.php?id=" + id,
+      success: function (data) {
+        fn_listar_asig();
+      },
+      error: function (error) {
+        $("#renderbody").html(
+          '<div class="alert alert-warning" role="alert">Error Borrando datos</div>'
+        );
+      },
+    });
+  }
 }
 
 function fn_editar_asignatura(id) {
-  $.ajax({
-    type: "POST",
-    url: "http://localhost/app_School/WebService/ws_Asignatura.php?id=" + id,
-    success: function (data) {
-      $("#renderbody").html(data);
-    },
-    error: function (error) {
-      $("#renderbody").html(
-        '<div class="alert alert-warning" role="alert">Error Borrando datos</div>'
-      );
-    },
-  });
+  var isEditable = sessionStorage.getItem("editable");
+    debugger;
+  if (isEditable!= "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
+
+    toast.style.display = "block";
+    console.error(error);
+  } else {
+    $.ajax({
+      type: "POST",
+      url: "http://localhost/app_School/WebService/ws_Asignatura.php?id=" + id,
+      success: function (data) {
+        $("#renderbody").html(data);
+      },
+      error: function (error) {
+        $("#renderbody").html(
+          '<div class="alert alert-warning" role="alert">Error Borrando datos</div>'
+        );
+      },
+    });
+  }
 }
 
 function PostUpdateAsignatura() {

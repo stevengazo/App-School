@@ -1,31 +1,29 @@
-async function AgregarAdmin(){
-    const id = document.getElementById("id").value; 
-    const login = document.getElementById("userName").value; 
-    const pass1 = document.getElementById("pass1").value;
-    const pass2 = document.getElementById("pass2").value;
-    const email = document.getElementById("email").value;
-    const phareError = document.getElementById("adminErrorMessage");
-    if(pass2 !== pass1 || pass1 === "" || pass2 === ""){
-        phareError.innerText = "Verifique la contraseña";
-    }else{
-        await $.ajax({
-            type: "POST",
-            url: `http://localhost/app_School/WebService/ws_Administradores.php?id=${id}&login=${login}&password=${pass1}&email=${email}` ,
-            data: {},
-            success: (data) => {        
-              verAdministradores();
-            },
-            error: (error) => {
-                phareError.innerText = "Errror..";
-            },
-          });              
-    }    
+async function AgregarAdmin() {
+  const id = document.getElementById("id").value;
+  const login = document.getElementById("userName").value;
+  const pass1 = document.getElementById("pass1").value;
+  const pass2 = document.getElementById("pass2").value;
+  const email = document.getElementById("email").value;
+  const phareError = document.getElementById("adminErrorMessage");
+  if (pass2 !== pass1 || pass1 === "" || pass2 === "") {
+    phareError.innerText = "Verifique la contraseña";
+  } else {
+    await $.ajax({
+      type: "POST",
+      url: `http://localhost/app_School/WebService/ws_Administradores.php?id=${id}&login=${login}&password=${pass1}&email=${email}`,
+      data: {},
+      success: (data) => {
+        verAdministradores();
+      },
+      error: (error) => {
+        phareError.innerText = "Errror..";
+      },
+    });
+  }
 }
 
-async function getInsertAdmin(){
-    
-  
-        var htmlRenderAdmin = `
+async function getInsertAdmin() {
+  var htmlRenderAdmin = `
               <div>
               <h3>
                   Actualizar información de Administrador
@@ -88,52 +86,62 @@ async function getInsertAdmin(){
               </table>
           </div>    
           `;
-        // RENDERIZADO DE DATOS
-        $("#renderbody").empty();
-        $("#renderbody").html(htmlRenderAdmin); 
+  // RENDERIZADO DE DATOS
+  $("#renderbody").empty();
+  $("#renderbody").html(htmlRenderAdmin);
 }
 
+async function BorrarAdmin(id) {
+  var isEditable = sessionStorage.getItem("editable");
+  debugger;
+  if (isEditable != "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
 
-
-async function BorrarAdmin(id){    
-        await $.ajax({
-            type: "DELETE",
-            url: `http://localhost/app_School/WebService/ws_Administradores.php?id=${id}` ,
-            data: {},
-            success: (data) => {        
-              verAdministradores();
-            },
-            error: (error) => {
-                phareError.innerText = "Errror..";
-            },
-          });              
+    toast.style.display = "block";
+    console.error(error);
+  } else {
+    await $.ajax({
+      type: "DELETE",
+      url: `http://localhost/app_School/WebService/ws_Administradores.php?id=${id}`,
+      data: {},
+      success: (data) => {
+        verAdministradores();
+      },
+      error: (error) => {
+        phareError.innerText = "Errror..";
+      },
+    });
+  }
 }
 
-
-async function ActualizarAdmin(){
-    const id = document.getElementById("id").value; 
-    const login = document.getElementById("userName").value; 
-    const pass1 = document.getElementById("pass1").value;
-    const pass2 = document.getElementById("pass2").value;
-    const email = document.getElementById("email").value;
-    const phareError = document.getElementById("adminErrorMessage");
-    if(pass2 !== pass1 || pass1 === "" || pass2 === ""){
-        phareError.innerText = "Verifique la contraseña";
-    }else{
-        await $.ajax({
-            type: "PUT",
-            url: `http://localhost/app_School/WebService/ws_Administradores.php?id=${id}&login=${login}&password=${pass1}&email=${email}` ,
-            data: {},
-            success: (data) => {        
-              verAdministradores();
-            },
-            error: (error) => {
-                phareError.innerText = "Errror..";
-            },
-          });              
-    }
+async function ActualizarAdmin() {
+  const id = document.getElementById("id").value;
+  const login = document.getElementById("userName").value;
+  const pass1 = document.getElementById("pass1").value;
+  const pass2 = document.getElementById("pass2").value;
+  const email = document.getElementById("email").value;
+  const phareError = document.getElementById("adminErrorMessage");
+  if (pass2 !== pass1 || pass1 === "" || pass2 === "") {
+    phareError.innerText = "Verifique la contraseña";
+  } else {
+    await $.ajax({
+      type: "PUT",
+      url: `http://localhost/app_School/WebService/ws_Administradores.php?id=${id}&login=${login}&password=${pass1}&email=${email}`,
+      data: {},
+      success: (data) => {
+        verAdministradores();
+      },
+      error: (error) => {
+        phareError.innerText = "Errror..";
+      },
+    });
+  }
 }
-
 
 async function GetUpdateAdmin(id = 0) {
   id = id.toString();
@@ -168,7 +176,9 @@ async function GetUpdateAdmin(id = 0) {
                             Nombre de Usuario
                         </th>
                         <td>
-                            <input id="userName" type="text" class="form-control" value="${result.login}" placeholder="SGazo">
+                            <input id="userName" type="text" class="form-control" value="${
+                              result.login
+                            }" placeholder="SGazo">
                         </td>
                     </tr>
                     <tr>
@@ -192,7 +202,9 @@ async function GetUpdateAdmin(id = 0) {
                             Correo
                         </th>
                         <td>
-                            <input id="email" type="email" class="form-control" value="${result.email}"
+                            <input id="email" type="email" class="form-control" value="${
+                              result.email
+                            }"
                                 placeholder="ejemplo@email.com">
                         </td>
                     </tr>

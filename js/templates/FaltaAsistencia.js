@@ -152,13 +152,26 @@ function PostInsertFaltaAsistencia(
  * Trae vista para modificar
  */
 function GetUpdateFaltaAsistencia(id) {
-  $.ajax({
-    type: "GET",
-    url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?type=elementById&id=${id}`,
-    data: {},
-    success: (data) => {
-      const objectElement = JSON.parse(data);
-      const htmlElements = `
+  var isEditable = sessionStorage.getItem("editable");
+  debugger;
+  if (isEditable != "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
+
+    toast.style.display = "block";
+    console.error(error);
+  } else {
+    $.ajax({
+      type: "GET",
+      url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?type=elementById&id=${id}`,
+      data: {},
+      success: (data) => {
+        const objectElement = JSON.parse(data);
+        const htmlElements = `
         <div>
           <div>
               <h4>
@@ -215,11 +228,12 @@ function GetUpdateFaltaAsistencia(id) {
           </div>
       </div>
         `;
-      $("#renderbody").empty();
-      $("#renderbody").html(htmlElements);
-    },
-    error: (error) => {},
-  });
+        $("#renderbody").empty();
+        $("#renderbody").html(htmlElements);
+      },
+      error: (error) => {},
+    });
+  }
 }
 
 /**
@@ -245,14 +259,27 @@ function PostUpdateFaltaAsistencia(id, alumno, asignatura, fecha, justificada) {
  * modificar
  */
 function GetDeleteFaltaAsistencia(idFaltaAsistencia) {
-  const faltaAsistenciaId = idFaltaAsistencia;
-  $.ajax({
-    type: "GET",
-    url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?type=elementById&id=${idFaltaAsistencia}`,
-    data: {},
-    success: (data) => {
-      const jsonObject = JSON.parse(data);
-      const htmlRender = `
+  var isEditable = sessionStorage.getItem("editable");
+  debugger;
+  if (isEditable != "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
+
+    toast.style.display = "block";
+    console.error(error);
+  } else {
+    const faltaAsistenciaId = idFaltaAsistencia;
+    $.ajax({
+      type: "GET",
+      url: `http://localhost/app_School/WebService/ws_FaltaAsistencia.php?type=elementById&id=${idFaltaAsistencia}`,
+      data: {},
+      success: (data) => {
+        const jsonObject = JSON.parse(data);
+        const htmlRender = `
           <div>
           <div>
             <h4>Borrar la información de la Falta en la Asistencia</h4>
@@ -268,27 +295,27 @@ function GetDeleteFaltaAsistencia(idFaltaAsistencia) {
               <tr>
                 <th>id Falta de Asistencia</th>
                 <!--id-->
-                <td id="objId"> ${jsonObject['id']}</td>
+                <td id="objId"> ${jsonObject["id"]}</td>
               </tr>
               <tr>
                 <th>id Estudiante</th>
                 <!--id Estudiante-->
-                <td>  ${jsonObject['nombre']} ${jsonObject['apellidos']} </td>
+                <td>  ${jsonObject["nombre"]} ${jsonObject["apellidos"]} </td>
               </tr>
               <tr>
                 <th>Asignatura</th>
                 <!--Id Materia-->
-                <td>${jsonObject['asignatura']}</td>
+                <td>${jsonObject["asignatura"]}</td>
               </tr>
               <tr>
                 <th>Fecha</th>
                 <!--Dia-->
-                <td>${jsonObject['fecha']}</td>
+                <td>${jsonObject["fecha"]}</td>
               </tr>
               <tr>
                 <th>Justificación</th>
                 <!--Motivo-->
-                <td>${jsonObject['justificada']}</td>
+                <td>${jsonObject["justificada"]}</td>
               </tr>
             </tbody>
           </table>
@@ -296,7 +323,7 @@ function GetDeleteFaltaAsistencia(idFaltaAsistencia) {
             <button
               class="btn btn-outline-danger"
               type="text"
-              onclick="PostDeleteFaltaAsistencia(${jsonObject['id']})"
+              onclick="PostDeleteFaltaAsistencia(${jsonObject["id"]})"
             >
               Eliminar Archivo
             </button>
@@ -306,15 +333,16 @@ function GetDeleteFaltaAsistencia(idFaltaAsistencia) {
       </body>
 
       `;
-      $("#renderbody").empty();
-      $("#renderbody").html(htmlRender);
-    },
-    error: (error) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(error);
-      console.error(error);
-    },
-  });
+        $("#renderbody").empty();
+        $("#renderbody").html(htmlRender);
+      },
+      error: (error) => {
+        $("#renderbody").empty();
+        $("#renderbody").html(error);
+        console.error(error);
+      },
+    });
+  }
 }
 
 /**
@@ -403,8 +431,6 @@ function onvalid() {
     );
   }
 }
-
-
 
 function editData() {
   const id = document.getElementById("id");

@@ -1,4 +1,7 @@
 async function DeletePadre(id){
+    var isEditable = sessionStorage.getItem("editable");
+    debugger;
+    if(isEditable){    
     await $.ajax({
         type: "DELETE",
         url: `http://localhost/app_School/WebService/ws_Padre.php?id=${id}`,
@@ -15,7 +18,15 @@ async function DeletePadre(id){
             console.error(error);            
 
         },
-    });    
+    });    }else{
+        const toast = document.getElementById("toast-base");
+        toast.style.display = "block";
+          const title = document.getElementById("toast-title").innerText= `Error!`;
+          const message = document.getElementById("toast-message").innerText= `Este dato no puede ser borrado \nExisten dependencias      `;
+      
+          toast.style.display = "block";
+        console.error(error);
+    }
 }
 
 async function GetUpdatePadre(id){

@@ -12,6 +12,20 @@ function fn_listar_profesor(){
 }
 
 function fn_borrar_profesor(id){
+  var isEditable = sessionStorage.getItem("editable");
+  debugger;
+if (isEditable!= "true") {
+  const toast = document.getElementById("toast-base");
+  toast.style.display = "block";
+  const title = (document.getElementById("toast-title").innerText = `Error!`);
+  const message = (document.getElementById(
+    "toast-message"
+  ).innerText = `No posees permisos para borrar esto`);
+
+  toast.style.display = "block";
+  console.error(error);
+} else {
+
   $.ajax({
         type: "DELETE",
         url: 'http://localhost/app_School/WebService/ws_Profesor.php?idProfesor='+id,
@@ -22,9 +36,24 @@ function fn_borrar_profesor(id){
             $("#renderbody").html('<div class="alert alert-warning" role="alert">Error Borrando datos</div>');
         }
       });
+    }
 }
 
 function fn_editar_profesor(id){
+  var isEditable = sessionStorage.getItem("editable");
+  debugger;
+if (isEditable!= "true") {
+  const toast = document.getElementById("toast-base");
+  toast.style.display = "block";
+  const title = (document.getElementById("toast-title").innerText = `Error!`);
+  const message = (document.getElementById(
+    "toast-message"
+  ).innerText = `No posees permisos para borrar esto`);
+
+  toast.style.display = "block";
+  console.error(error);
+} else {
+
   $.ajax({
         type: "POST",
         url: 'http://localhost/app_School/WebService/ws_Profesor.php?idProfesor='+id,
@@ -36,6 +65,7 @@ function fn_editar_profesor(id){
             $("#renderbody").html('<div class="alert alert-warning" role="alert">Error editando datos</div>');
         }
       });
+    }
 }
 
 function PostUpdateProfesor() {

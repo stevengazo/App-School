@@ -18,9 +18,8 @@ function ViewListaNotas() {
   });
 }
 
-
-function GetNotasByAlumno(alumnoid= null){
-  if(alumnoid === null){
+function GetNotasByAlumno(alumnoid = null) {
+  if (alumnoid === null) {
     $.ajax({
       type: "VIEW",
       url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${idNota}`,
@@ -32,7 +31,7 @@ function GetNotasByAlumno(alumnoid= null){
         console.log(error);
       },
     });
-  }else{
+  } else {
     return null;
   }
 }
@@ -198,31 +197,33 @@ async function GetInsertNota() {
       console.error(error);
     },
   });
-    // Trae las asignaturas-alumno
-     $.ajax({
-      type: "GET",
-      url: `http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?tipo=JSON&dato=lista`,
-      data: {},
-      success: (data) => {
-        debugger;
-        let tmpArray = JSON.parse(data);
-        for (let x = 0; x < tmpArray.length; x++) {
-          const element = tmpArray[x];    
-          let optionValue = document.createElement("option");
-          optionValue.value = element.id;
-          optionValue.innerText = `${element.asignaturaNombre} - ${element.alumnoNombre}`;
-          document.getElementById("asignatura_has_alumno_id").appendChild(optionValue);
-        }
-      },
-      error: (error) => {    
-        console.error(error);
-      },
-    });    
+  // Trae las asignaturas-alumno
+  $.ajax({
+    type: "GET",
+    url: `http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?tipo=JSON&dato=lista`,
+    data: {},
+    success: (data) => {
+      debugger;
+      let tmpArray = JSON.parse(data);
+      for (let x = 0; x < tmpArray.length; x++) {
+        const element = tmpArray[x];
+        let optionValue = document.createElement("option");
+        optionValue.value = element.id;
+        optionValue.innerText = `${element.asignaturaNombre} - ${element.alumnoNombre}`;
+        document
+          .getElementById("asignatura_has_alumno_id")
+          .appendChild(optionValue);
+      }
+    },
+    error: (error) => {
+      console.error(error);
+    },
+  });
 }
 /**
  * Envia un Nota a la DB y trae la vista ViewNota si lo agrega
  */
-function PostInsertNota(id,asignatura_has_alumno,trimestre,nota) {
+function PostInsertNota(id, asignatura_has_alumno, trimestre, nota) {
   debugger;
   $.ajax({
     type: "POST",
@@ -245,15 +246,26 @@ function PostInsertNota(id,asignatura_has_alumno,trimestre,nota) {
  * Trae vista para modificar
  */
 async function GetUpdateNota(id) {
+  var isEditable = sessionStorage.getItem("editable");
+  debugger;
+  if (isEditable != "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
 
-  
-  await $.ajax({
-    type: "View",
-    url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${id}`,
-    data: {},
-    success: (data) => {
-      const Objectjson = JSON.parse(data);
-      const htmlRender = `
+    toast.style.display = "block";
+    console.error(error);
+  } else {
+    await $.ajax({
+      type: "View",
+      url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${id}`,
+      data: {},
+      success: (data) => {
+        const Objectjson = JSON.parse(data);
+        const htmlRender = `
           <div>
           <h4>
               Editar Nota
@@ -318,43 +330,44 @@ async function GetUpdateNota(id) {
           </div>
         </div>      
       `;
-      $("#renderbody").empty();
-      $("#renderbody").html(htmlRender);      
-    },
-    error: (error) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(error);
-      console.error(error);
-    },
-  });
-  // Trae las asignaturas-alumno
-  await $.ajax({
-    type: "View",
-    url: `http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?tipo=JSON&dato=lista`,
-    data: {},
-    success: (data) => {
-      debugger;
-      const tmpArray = JSON.parse(data);
-      var data = tmpArray[0];
-      debugger;
-    },
-    error: (error) => {    
-      console.error(error);
-    },
-  });  
+        $("#renderbody").empty();
+        $("#renderbody").html(htmlRender);
+      },
+      error: (error) => {
+        $("#renderbody").empty();
+        $("#renderbody").html(error);
+        console.error(error);
+      },
+    });
+    // Trae las asignaturas-alumno
+    await $.ajax({
+      type: "View",
+      url: `http://localhost/app_School/WebService/ws_AsignaturaHasAlumno.php?tipo=JSON&dato=lista`,
+      data: {},
+      success: (data) => {
+        debugger;
+        const tmpArray = JSON.parse(data);
+        var data = tmpArray[0];
+        debugger;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
 }
 
 /**
  * Envia vista modifiada
  */
-function PostUpdateNota(id,asignatura_has_alumno,trimestre,nota) {
+function PostUpdateNota(id, asignatura_has_alumno, trimestre, nota) {
   alert("View");
   $.ajax({
     type: "PUT",
     url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${id}&asignaturaHasAlumnoId=${asignatura_has_alumno}&trimestre=${trimestre}&nota=${nota}`,
     data: {},
     success: (data) => {
-      ViewNota(id)
+      ViewNota(id);
     },
     error: (error) => {
       $("#renderbody").empty();
@@ -368,13 +381,26 @@ function PostUpdateNota(id,asignatura_has_alumno,trimestre,nota) {
  * modificar
  */
 function GetDeleteNota(id) {
-  $.ajax({
-    type: "VIEW",
-    url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${id}`,
-    data: {},
-    success: (data) => {
-      const Objectjson = JSON.parse(data);
-      const htmlRender =`
+  var isEditable = sessionStorage.getItem("editable");
+  debugger;
+  if (isEditable != "true") {
+    const toast = document.getElementById("toast-base");
+    toast.style.display = "block";
+    const title = (document.getElementById("toast-title").innerText = `Error!`);
+    const message = (document.getElementById(
+      "toast-message"
+    ).innerText = `No posees permisos para borrar esto`);
+
+    toast.style.display = "block";
+    console.error(error);
+  } else {
+    $.ajax({
+      type: "VIEW",
+      url: `http://localhost/app_School/WebService/ws_Nota.php?idNota=${id}`,
+      data: {},
+      success: (data) => {
+        const Objectjson = JSON.parse(data);
+        const htmlRender = `
       <div>
       <div>
           <h4>
@@ -445,15 +471,16 @@ function GetDeleteNota(id) {
         </button>   
       </div>      
       `;
-      $("#renderbody").empty();
-      $("#renderbody").html(htmlRender);
-    },
-    error: (error) => {
-      $("#renderbody").empty();
-      $("#renderbody").html(error);
-      console.error(error);
-    },
-  });
+        $("#renderbody").empty();
+        $("#renderbody").html(htmlRender);
+      },
+      error: (error) => {
+        $("#renderbody").empty();
+        $("#renderbody").html(error);
+        console.error(error);
+      },
+    });
+  }
 }
 
 /**
@@ -522,13 +549,20 @@ function onvalidation() {
 
   if (flagValid) {
     debugger;
-    PostInsertNota(id.value,asignatura_has_alumno_id.value,trimestre.value,nota.value);
+    PostInsertNota(
+      id.value,
+      asignatura_has_alumno_id.value,
+      trimestre.value,
+      nota.value
+    );
   }
 }
 
 function onEdit() {
   const idInput = document.getElementById("id").value;
-  const asignatura_has_alumnoInput = document.getElementById("asignatura_has_alumno_id").value;
+  const asignatura_has_alumnoInput = document.getElementById(
+    "asignatura_has_alumno_id"
+  ).value;
   const trimestreInput = document.getElementById("trimestre").value;
   const notaInput = document.getElementById("nota").value;
   let flagValid = true;
@@ -563,6 +597,11 @@ function onEdit() {
   // send the data to the controller
   if (flagValid) {
     debugger;
-    PostUpdateNota(idInput,asignatura_has_alumnoInput,trimestreInput,notaInput);
+    PostUpdateNota(
+      idInput,
+      asignatura_has_alumnoInput,
+      trimestreInput,
+      notaInput
+    );
   }
 }
