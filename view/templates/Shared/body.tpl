@@ -1,7 +1,7 @@
 
 
 
-<div id="renderbody" class="border border-white rounded mt-3 p-3 border-secondary d-flex flex-column">
+<div id="renderbody" class=" bg-light border border-primary rounded mt-3 p-3 border-secondary d-flex flex-column">
     <!--temporal-->
     <div class="d-flex flex-column justify-content-around">
         <div class="d-flex flex-row justify-content-around">

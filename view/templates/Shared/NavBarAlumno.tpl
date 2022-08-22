@@ -1,8 +1,8 @@
 <!--SIMPLE NAV VAR-->
 
-<body class="container " style="background-color:#DBFFAA;">
-        <h6 class="h6 text-primary mb-0">Modo Alumno</h6>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded mt-3 ">
+<body class="container " style="background-color:#ff4800;">
+        <h6 class="h6 text-light mb-0">Modo Alumno</h6>
+    <nav class="border-primary navbar navbar-expand-lg navbar-light bg-light rounded mt-3 ">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php?action=index">
                 <img src="images/logo.png" style="width:8rem;height:4rem;" alt="logo">

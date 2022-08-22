@@ -1,6 +1,6 @@
 <!--SIMPLE NAV VAR-->
 
-<body class="container " style="background-color:#B9AAFF;">
+<body class="container " style="background-color:#00171f; ">
             <h6 class="h6 text-primary mb-0">Modo Profesor</h6>
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded mt-3 ">
 

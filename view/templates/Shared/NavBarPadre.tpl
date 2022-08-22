@@ -1,7 +1,7 @@
 <!--SIMPLE NAV VAR-->
 
-<body class="container " style="background-color:#FEB96F;">
-    <h6 class="h6 text-primary mb-0">Modo Padre</h6>
+<body class="container " style="background-color:#00652b;">
+    <h6 class="h6 text-light text-primary mb-0">Modo Padre</h6>
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded mt-3 ">
 
         <div class="container-fluid">
