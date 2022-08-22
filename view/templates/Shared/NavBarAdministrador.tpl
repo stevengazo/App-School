@@ -114,9 +114,12 @@
                             <li class="dropdown-item" onclick="verPadres()">
                                 Listar Padres
                             </li>                            
-                            <li class="dropdown-item" onclick="">
-                                Vincular Padre - Alumno
+                            <li class="dropdown-item" onclick="verListaPadresAlumnos()">
+                                Padre - Alumno
                             </li>          
+                            <li class="dropdown-item" onclick="GetinsertPadreAlumno()">
+                            Agregar Relacion
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

@@ -123,44 +123,45 @@ class control
     } else {
       $action = $_REQUEST['action'];
       $this->validarInactividad();
-      switch ($action) {
-        case "login":
-          $this->procesar_login();
-          break;
-        case "index":
-          $this->index($_SESSION['tipoUsuario']);
-          break;
-        case "cerrar_sesion":
-          $this->cerrar_sesion();
-          break;
-        case "abrir_profe":
-          $this->frm_profe();
-          break;
-        case "frmRegistroProfesor":
-          $this->guardar_nuevo_profesor();
-          break;
-        case "abrir_alumno":
-          $this->frm_alumno();
-          break;
-        case "frmRegistroAlumno":
-          $this->guardar_nuevo_alumno();
-          break;
-        case "abrir_asig":
-          $this->frm_asig();
-          break;
-        case "frmRegistroAsignatura":
-          $this->guardar_nueva_asignatura();
-          break;
-        case "abrir_nivel":
-          $this->frm_nivel();
-          break;
-        case "frmRegistroNivel":
-          $this->guardar_nuevo_nivel();
-          break;
-          //default:
-          //$this->index();
-          //break;
-      }
+        switch ($action) {
+          case "login":
+            $this->procesar_login();
+            break;
+          case "index":
+            $this->index($_SESSION['tipoUsuario']);
+            break;
+          case "cerrar_sesion":
+            $this->cerrar_sesion();
+            break;
+          case "abrir_profe":
+            $this->frm_profe();
+            break;
+          case "frmRegistroProfesor":
+            $this->guardar_nuevo_profesor();
+            break;
+          case "abrir_alumno":
+            $this->frm_alumno();
+            break;
+          case "frmRegistroAlumno":
+            $this->guardar_nuevo_alumno();
+            break;
+          case "abrir_asig":
+            $this->frm_asig();
+            break;
+          case "frmRegistroAsignatura":
+            $this->guardar_nueva_asignatura();
+            break;
+          case "abrir_nivel":
+            $this->frm_nivel();
+            break;
+          case "frmRegistroNivel":
+            $this->guardar_nuevo_nivel();
+            break;
+            default:
+            $this->Smarty->setAssign("msg", "");
+            $this->Smarty->setDisplay("login.tpl");
+            break;      
+      }      
     }
   }
 

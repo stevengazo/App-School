@@ -274,7 +274,7 @@ async function verAlumno(id) {
 function fn_listar_alumnos() {
   $.ajax({
     type: "GET",
-    url: "http://localhost/app_School/WebService/ws_Alumno.php?tipo=lista",
+    url: "http://localhost/app_School/WebService/ws_Alumno.php?tipo=lista&formato=HTML",
     success: function (data) {
       $("#renderbody").html(data);
     },
