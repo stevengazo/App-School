@@ -1,4 +1,5 @@
 <!--SIMPLE NAV VAR-->
+
 <body class="container " style="background-color:#E9E6F7;">
     <h6 class="h6 text-primary mb-0">Modo Administrador</h6>
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded mt-3 ">
@@ -27,8 +28,8 @@
                                 Lista Ausencias
                             </li>
                         </ul>
-                    </li>                   
-                    <!-- NIVELES-->                    
+                    </li>
+                    <!-- NIVELES-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,7 +46,7 @@
                             <li>
                         </ul>
                     </li>
-                    <!-- NOTAS-->                    
+                    <!-- NOTAS-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,7 +62,7 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- ASIGNATURA-->                    
+                    <!-- ASIGNATURA-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -79,7 +80,7 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- ADMINISTRACION-->                    
+                    <!-- ADMINISTRACION-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -87,10 +88,10 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li class="dropdown-item">
-                                 <a class="dropdown-item" href="index.php?action=abrir_alumno">Matricular Estudiante
-                                 </a>
+                                <a class="dropdown-item" href="index.php?action=abrir_alumno">Matricular Estudiante
+                                </a>
                             </li>
-                            <li class="dropdown-item" onclick="fn_listar_alumnos()" >
+                            <li class="dropdown-item" onclick="fn_listar_alumnos()">
                                 <label>
                                     Listar Estudiantes
                                 </label>
@@ -108,17 +109,20 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li class="dropdown-item" onclick="GetAgregarPadre()" >
+                            <li class="dropdown-item" onclick="GetAgregarPadre()">
                                 Agregar Padre
                             </li>
                             <li class="dropdown-item" onclick="verPadres()">
                                 Listar Padres
-                            </li>                            
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li class="dropdown-item" onclick="verListaPadresAlumnos()">
                                 Padre - Alumno
-                            </li>          
+                            </li>
                             <li class="dropdown-item" onclick="GetinsertPadreAlumno()">
-                            Agregar Relacion
+                                Agregar Relacion
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -138,6 +142,15 @@
                             </li>
                             <li class="dropdown-item" onclick="ViewListaAsigHasAlum()">
                                 Estudiantes - Asignatura
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li class="dropdown-item" onclick="">
+                                Agregar Administrador
+                            </li>
+                            <li class="dropdown-item" onclick="verAdministradores()">
+                                Ver Administradores
                             </li>
                         </ul>
                     </li>
