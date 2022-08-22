@@ -1,5 +1,5 @@
 
-        <div>
+        <div class=" bg-light border border-primary rounded mt-3 p-3 border-secondary d-flex flex-column">
             <h4>
                 Insertar Asignatura
             </h4>
