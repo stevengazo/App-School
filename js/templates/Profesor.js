@@ -64,3 +64,100 @@ debugger;
     },
   });
 }
+
+
+async function verProfesor(id){
+  $Profesor= {};
+  await $.ajax({
+    type: "VIEW",
+    url: `http://localhost/app_School/WebService/ws_Profesor.php?id=${id}`,
+    data: {},
+    success: (data) => {
+    console.log(data);
+      Profesor = JSON.parse(data);
+    },
+    error: (error) => {
+      $("#renderbody").empty();
+      $("#renderbody").html(error);
+      console.error(error);
+    },
+  });
+  var htmlRender = `
+  <div>
+  <h4>
+      Información de Profesor
+  </h4>
+
+  <p>
+      Información existente del profesor
+  </p>
+  <hr/>
+  <table class="table">
+      <tbody>
+          <tr>
+              <th>
+                  Cedula
+              </th>
+              <td>
+              ${Profesor.id}
+              </td>
+          </tr>
+          <tr>
+              <th>
+                  Nombre
+              </th>
+              <td>
+              ${Profesor.nombre}                  
+              </td>
+          </tr>
+          <tr>
+              <th>
+                  Apellidos
+              </th>
+              <td>
+                  ${Profesor.apellidos}
+              </td>
+          </tr>
+          <tr>
+              <th>
+                  Correo
+              </th>
+              <td>
+                  ${Profesor.email}
+              </td>
+          </tr>                                    
+      </tbody>
+  </table>
+  <hr/>
+
+  <h5>
+      Lista de Cursos
+  </h5>
+  <div class="d-flex">
+
+  
+  `;
+
+for (let dsf = 0; dsf < Profesor.Asignaturas.length; dsf++) {
+  const element =Profesor.Asignaturas[dsf];
+  const card = `
+    <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">${element.nombre}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Asignatura Impartida</h6>
+      <p class="card-text"> Aula: ${element.aula} - Curso ${element.curso}.</p>
+      <button class="btn btn-" onclick="ViewAsignatura(${element.id})">
+        Ver Curso
+      </button>
+    </div>
+  </div>  
+  `;
+  htmlRender=`  ${htmlRender} ${card}`;  
+}
+htmlRender=`  ${htmlRender} 
+  </div>
+  </div>
+`;
+  $("#renderbody").empty();
+  $("#renderbody").html(htmlRender);
+}

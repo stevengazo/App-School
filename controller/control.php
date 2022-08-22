@@ -449,6 +449,7 @@ class control
     $vmsg = "";
     if ($rs) {
       $vmsg = "Profesor creado correctamente!";
+      $this->sendMenu('<script >verProfesor('.$id.');</script>');
     } else {
       $vmsg = "Error creando el profesor";
     }
