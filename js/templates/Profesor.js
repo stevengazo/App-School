@@ -75,13 +75,14 @@ const input_clave= document.getElementById('txtpass').value;
 const input_nombre= document.getElementById('txtnombre').value;
 const input_apellidos= document.getElementById('txtap').value;
 const input_email= document.getElementById('txtemail').value;
-const input_especialista= 0;
+const input_especialista= document.getElementById('espe').value;                    
+alert(`El valor es: ${input_especialista}`);
 console.log(input_usuario);
 debugger;
 
   $.ajax({
     type: "PUT",
-    url: `http://localhost/app_School/WebService/ws_Profesor.php?id=${input_id}&login=${input_usuario}&clave=${input_clave}&nombre=${input_nombre}&apellidos=${input_apellidos}&email=${input_email}&especialista=0`,
+    url: `http://localhost/app_School/WebService/ws_Profesor.php?id=${input_id}&login=${input_usuario}&clave=${input_clave}&nombre=${input_nombre}&apellidos=${input_apellidos}&email=${input_email}&especialista=${input_especialista}`,
     data: {},
     success: (data) => {
     console.log(data);

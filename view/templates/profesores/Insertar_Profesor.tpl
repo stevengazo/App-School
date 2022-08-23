@@ -37,9 +37,9 @@
                     </div>
                     <div class="from-group">
                       <label>Especialista</label>
-                      <select class="form-control" name="cbo_especialista">
-                        <option>Si</option>
-                        <option>No</option>
+                      <select class="form-control" name="cbo_especialista" id="espe">
+                        <option value="1" >Si</option>
+                        <option value="0">No</option>
                       </select>
                     </div>
                     <div class="from-group row">

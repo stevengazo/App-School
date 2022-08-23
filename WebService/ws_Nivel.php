@@ -107,11 +107,28 @@ function fn_mortrar_frm_nivel_edicion(){
        $salida .= '<input type="hidden" id="txtIdNivel" value="'.$idNivel.'">';
           $salida .= '<div class="mb-3 mt-3">';
             $salida .= '<label for="text">Nivel:</label>';
-            $salida .= '<input type="text" class="form-control" id="txtnivel" name="txtnivel" value="'.$nivel.'" placeholder="Ingrese un nivel" required>';
+            $salida .= '<select type="text" class="form-control" id="txtnivel" name="txtnivel" value="'.$nivel.'">
+              <option value="Infantil">Infantil</option>
+              <option value="Primaria">Primaria</option>
+            </select>';
           $salida .= '</div>';
           $salida .= '<div class="mb-3 mt-3">';
             $salida .= '<label for="text">Curso:</label>';
-            $salida .= '<input type="text" class="form-control" id="txtcurso" name="txtcurso" value="'.$curso.'" placeholder="Ingrese un curso" required>';
+            $salida .= '<input type="text" datalist="lista-cursos" class="form-control" id="txtcurso" name="txtcurso" value="'.$curso.'" placeholder="Ingrese un curso" required>';
+            $salida .= '
+            <datalist id="lista-cursos">
+                            <option value="3i">3 años</option>
+                            <option value="4i">3 años</option>
+                            <option value="5i">3 años</option>
+                            <option value="1p">1ª Grado</option>
+                            <option value="2p">2º Grado</option>
+                            <option value="3p">3º Grado</option>
+                            <option value="4p">4º Grado</option>
+                            <option value="5p">5º Grado</option>
+                            <option value="6p">6º Grado</option>                            
+                        </datalist>
+
+            ';
           $salida .= '</div>';
           $salida .= '<div class="mb-3">';
           $salida .= '<label for="text">Aula:</label>';

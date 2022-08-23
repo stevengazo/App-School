@@ -30,11 +30,11 @@ async function GuardarRegistro(){
       console.error(error);
     },
     });
-
     const idPadre = document.getElementById("idPadre").value;
     const idAlumno = document.getElementById("idAlumno").value;
     _numero = _numero +1;
     _numero = _numero.toString();
+    debugger;
   await $.ajax({
     type: "POST",
     url: `http://localhost/app_School/WebService/ws_Padre_has_alumno.php?id=${_numero}&idPadre=${idPadre}&idAlumno=${idAlumno}`,

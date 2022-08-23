@@ -17,11 +17,11 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            Ausencias
+                            Personal
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">                    
                             <li class="dropdown-item" onclick="miInformación()">
-                                Mis ausencias Ausencias
+                                Datos
                             </li>
                         </ul>
                     </li>
@@ -45,7 +45,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li class="dropdown-item" onclick="fn_listar_profesor()">
+                            <li class="dropdown-item" onclick="VerListaHorarios()">
                                 Ver Horarios
                             <li>
                         </ul>

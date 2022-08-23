@@ -8,16 +8,6 @@
             <h4>
                 Bienvenido a Escuelita Hispanoamericana
             </h4>
-            <div>
-                <h6>
-                    Sistema de Administraciòn
-                    <br />
-                    Modo Profesor
-                </h6>
-                <p>
-                    Sistema en modo de prueba. Puede presentar fallos
-                </p>
-            </div>
         </div>
         <p>
             Sistema administración academico, para el uso de la comunidad estudiantil, docentes y padres.

@@ -18,11 +18,25 @@
                     </div>
                     <div class="from-group">
                         <label>Nivel</label>
-                        <input id="nivel" type="text" name="txtnivel" class="form-control">
+                        <select id="nivel" type="text" name="txtnivel" class="form-control">
+                        <option value="Infantil">Infantil</option>
+                        <option value="Primaria">Primaria</option>                        
+                        </select>
                     </div>
                     <div class="from-group">
                         <label>Curso</label>
-                        <input type="text" id="curso" name="txtcurso" class="form-control">
+                        <input type="text" datalist="listacursos" id="curso" name="txtcurso" class="form-control">
+                        <datalist id="listacursos">
+                            <option value="3i">3 años</option>
+                            <option value="4i">3 años</option>
+                            <option value="5i">3 años</option>
+                            <option value="1p">1ª Grado</option>
+                            <option value="2p">2º Grado</option>
+                            <option value="3p">3º Grado</option>
+                            <option value="4p">4º Grado</option>
+                            <option value="5p">5º Grado</option>
+                            <option value="6p">6º Grado</option>                            
+                        </datalist>
                     </div>
                     <div class="from-group">
                         <label>Aula</label>

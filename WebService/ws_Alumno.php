@@ -52,6 +52,9 @@ switch ($metodo) {
     break;
 }
 
+
+
+
 function LISTAJSON()
 {
   $linkConect = mysqli_connect("localhost", "root", "", "testingdb");

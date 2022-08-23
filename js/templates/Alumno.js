@@ -1,3 +1,5 @@
+
+
 async function miInformación() {
   const idUsuario = sessionStorage.getItem("idUser");
   var Alumno = {};
@@ -5,10 +7,11 @@ async function miInformación() {
     type: "VIEW",
     url: `http://localhost/app_School/WebService/ws_Alumno.php?id=${idUsuario}`,
     success: function (data) {
-      Alumno = JSON.parse(data);
+      Alumno = JSON.parse(data);      
       console.log("Alumno sucess: ");
       console.log(Alumno);
     },
+
     error: function (error) {
       $("#renderbody").html(
         '<div class="alert alert-warning" role="alert">error al mirar elemento</div>'
@@ -37,6 +40,23 @@ async function miInformación() {
   <hr/>
   `;
 
+  await $.ajax({
+    type: "VIEW",
+    url: `http://localhost/app_School/WebService/ws_Alumno.php?id=${idUsuario}`,
+    success: function (data) {
+      Alumno = JSON.parse(data);
+      console.log("Alumno sucess: ");
+      console.log(Alumno);
+    },
+    error: function (error) {
+      $("#renderbody").html(
+        '<div class="alert alert-warning" role="alert">error al mirar elemento</div>'
+      );
+    },
+  });
+
+
+
   /**
    * RENDERIZA LAS ASIGNATURAS
    */
@@ -63,9 +83,92 @@ async function miInformación() {
   }
   htmlRenderAsignaturas = `${htmlRenderAsignaturas} </div> <hr/>`;
 
+
+
+  /**
+   * RENDERIZA Las asuencias
+   */
+   var htmlRenderAusencias = ` 
+   <h4 class="h4">Ausencias del Estudiante</h4>
+   <p>
+     lista de ausencias del estudiante
+   </p>
+   <table class="table table-bordered">
+    <tbody>
+   `;
+   debugger;
+  for (let x = 0; x < Alumno.ausencias.length; x++) {
+    const element = Alumno.ausencias[x];
+    const ROW = `     
+        <tr>
+          <td>
+            ${element.faltaAsistenciaId}
+          </td>
+
+          <td>
+          ${element.fecha}
+          </td>
+          <td>
+          ${element.asignaturaNombre}
+          </td>
+          <td>
+          ${element.NombreProfesor}
+          </td>
+        </tr>
+     `;
+    htmlRenderAusencias = `${htmlRenderAusencias} ${ROW}`;
+  }
+  htmlRenderAusencias = `${htmlRenderAusencias} 
+    </tbody>
+  </table>`;
+
+
+
+  /**
+   * RENDERIZA Las notas
+   */
+   var HTMLrENDERnOTAS = ` 
+   <h4 class="h4">Notas del Estudiante</h4>
+   <p>
+     Lista de notas del estudiante
+   </p>
+   <table class="table table-bordered">
+   <thead>
+   <tr>
+    <th>Trimestre</th>
+    <th>Nota</th>
+    <th>Asignatura</th>
+   </tr>
+   </thead>
+    <tbody>
+   `;
+   debugger;
+  for (let x = 0; x < Alumno.Notas.length; x++) {
+    const element = Alumno.Notas[x];
+    const ROW = `     
+        <tr>
+          <td>
+            ${element.trimestre}
+          </td>
+
+          <td>
+          ${element.nota}
+          </td>
+          <td>
+          ${element.asignaturaNombre}
+          </td>          
+          <td class='btn btn-sm text-dark btn-primary'  onclick='ViewNota(${element.notaId})'> <i class='bi bi-info'></i> </td>          
+        </tr>
+     `;
+    HTMLrENDERnOTAS = `${HTMLrENDERnOTAS} ${ROW}`;
+  }
+  HTMLrENDERnOTAS = `${HTMLrENDERnOTAS} 
+    </tbody>
+  </table>`;
+
   // RENDERIZADO
   $("#renderbody").empty();
-  $("#renderbody").html(`${htmlRender} ${htmlRenderAsignaturas}`);
+  $("#renderbody").html(`${htmlRender} ${htmlRenderAsignaturas} ${htmlRenderAusencias} ${HTMLrENDERnOTAS}`);
 }
 
 async function verAlumno(id) {
@@ -117,6 +220,7 @@ async function verAlumno(id) {
   <div class="d-flex"> `;
   for (let x = 0; x < Alumno.asignaturas.length; x++) {
     const element = Alumno.asignaturas[x];
+    debugger;
     const card = `     
       <div class="card" style="width: 18rem;">
         <div class="card-body">
@@ -124,12 +228,12 @@ async function verAlumno(id) {
           <h6 class="card-subtitle mb-2 text-muted">Profesor ${element.profesorNombre} ${element.apellidos}</h6>
           <p class="card-text">Id del curso ${element.idAsignatura}. El nivel corresponde a ${element.nivel}, aula ${element.aula}</p>
           <button  onclick="ViewAsignatura(${element.idAsignatura})" class="btn btn-sm btn-info"> Ver curso</button>  
-          <a href="#" class="card-link">Ver Profesor</a>
+          <button  onclick="verProfesor(${element.profesorId})" class="btn btn-sm btn-info"> Ver profesor</button>  
         </div>
       </div>    
     `;
     htmlRenderAsignaturas = `${htmlRenderAsignaturas} ${card}`;
-    debugger;
+
   }
   htmlRenderAsignaturas = `${htmlRenderAsignaturas} </div> <hr/>`;
   debugger;

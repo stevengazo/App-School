@@ -284,9 +284,9 @@ function editar_p()
 
     $salida .= '<div class="mb-3">';
     $salida .= '<label for="pwd">Especialista:</label>';
-    $salida .= '<select name="cbo_espe">';
-    $salida .= '<option>Si</option>';
-    $salida .= '<option>No</option>';
+    $salida .= '<select class="form-control"  name="cbo_espe" id="espe">';
+    $salida .= '<option value="1">Si</option>';
+    $salida .= '<option value="0">No</option>';
     $salida .= '</select>';
     $salida .= '</div>';
 
