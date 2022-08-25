@@ -48,7 +48,7 @@ function ViewFaltaAsistencia(idFaltaAsistencia) {
 /**
  * Trae vista para insertar FaltaAsistencia
  */
-function GetInsertFaltaAsistencia() {
+async function GetInsertFaltaAsistencia() {
   $.ajax({
     type: "GET",
     url: "http://localhost/app_School/WebService/ws_FaltaAsistencia.php?type=lastId",
@@ -74,21 +74,14 @@ function GetInsertFaltaAsistencia() {
                       </div>
                       <div class="from-group">
                           <label>Id de Alumno</label>
-                          <input id="alumno_id" type="text" name="alumno_id" list="lista-Estudiantes" class="form-control">
-                          <datalist id="lista-Estudiantes">
-                          <option value="0">Seleccione</option>
-                              <option value=""></option>
-                          </datalist>
+                          <select  id="alumno_id" type="text" name="alumno_id"  class="form-control">
+                          </select>
                           <label id="alumnoMessage" class="text-danger"></label>
                       </div>
                       <div class="from-group">
-                          <label>Id de Asignatura </label>
-                          <input type="text" id="asignatura_id" name="asignatura_id" list="lista-asignatura"
-                              class="form-control">
-                          <datalist id="lista-asignatura">
-                              <option value=""></option>
-                              {/section}
-                          </datalist>
+                          <label> Asignatura </label>                          
+                          <select type="text" id="asignatura_id" name="asignatura_id"  class="form-control">
+                          </select>                          
                           <label id="asignaturaMessage" class="text-danger"></label>
                       </div>
                       <div class="from-group">
@@ -116,6 +109,54 @@ function GetInsertFaltaAsistencia() {
       $("#renderbody").html(htmlElements);
     },
     error: (error) => {},
+  });
+
+  let arrayObjectsAsignaturas = [];
+  await $.ajax({
+    type: "GET",
+    url: "http://localhost/app_School/WebService/ws_Asignatura.php?tipo=Json",
+    data: {},
+    success: (data) => {
+      // parsea los datos
+      arrayObjectsAsignaturas.push(JSON.parse(data));
+      arrayObjectsAsignaturas = arrayObjectsAsignaturas[0];
+      // Construye elemento Option y los mueve a la vista con los datos resultantes
+      for (let j = 0; j < arrayObjectsAsignaturas.length; j++) {
+        const element = arrayObjectsAsignaturas[j];
+        let tmpHTMl = document.createElement("option");
+        tmpHTMl.innerText = element.nombre + " - " + element.nombreProfesor;
+        tmpHTMl.value = element.id;
+        document.getElementById("asignatura_id").appendChild(tmpHTMl);
+      }
+    },
+    error: (error) => {
+      console.error("no adquirio los datos");
+      arrayObjectsAlumnos = null;
+    },
+  });
+
+
+  await $.ajax({
+    type: "GET",
+    url: "http://localhost/app_School/WebService/ws_Alumno.php?tipo=lista&formato=JSON",
+    success: function (data) {
+      var result = JSON.parse(data);
+      console.table(result);
+      var ArregloAlumnos = result;
+      debugger;
+      for (let dfg = 0; dfg < ArregloAlumnos.length; dfg++) {
+        const element = ArregloAlumnos[dfg];
+        const option = document.createElement("option");
+        option.value = element.id;
+        option.innerText = `${element.nombre} ${element.apellidos}`;
+        document.getElementById("alumno_id").appendChild(option);
+      }
+    },
+    error: function (error) {
+      $("#renderbody").empty();
+      $("#renderbody").html(error);
+      console.error(error);
+    },
   });
 }
 

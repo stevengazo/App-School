@@ -22,7 +22,7 @@
                             Estudiantes
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li class="dropdown-item" onclick="">
+                            <li class="dropdown-item" onclick="vermiInfoPadre()">
                                 Mis estudiantes
                             <li>
                             <li>
@@ -63,12 +63,7 @@
                             Asignaturas
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="index.php?action=abrir_asig" >Agregar
-                                Asignaturas</a>
-                            <!--  <li><hr class="dropdown-divider"></li> -->
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+
                             <li class="dropdown-item" onclick="fn_listar_asig()">
                                 Ver Asignaturas
                             </li>

@@ -41,16 +41,13 @@ function ViewPadre(){
             $ObjectoTemporal->apellidos = $fila['apellidos'];            
         }
         # Implementar funcion para agregar hijos
-        $ObjectoTemporal->Alumnos= getAlumnos($id);
+        $ObjectoTemporal->Alumnos= GetAlumnos($id);
         lanzarJson($ObjectoTemporal,false,200);
         exit;
     }
 }
 
 function GetAlumnos($idPadre){
-    if($idPadre ==0 ){
-       return array();
-    }else{
         $linkConnection =  mysqli_connect("localhost","root","","testingdb");                            
         $sqlQuery = ' 
         SELECT
@@ -59,7 +56,7 @@ function GetAlumnos($idPadre){
             A.nombre,
             A.apellidos
         FROM PADRE_HAS_ALUMNO AS PHA
-        INNER JOIN ALUMNO AS A ON A.ID = PHA.ALUMNO_ID
+        INNER JOIN ALUMNO AS A ON A.ID = PHA.ALUMNO_ID    
         WHERE PHA.Padre_id ='.$idPadre;
         $sqlResult = $linkConnection->query($sqlQuery);
         $arrayObjectos = array();
@@ -72,7 +69,7 @@ function GetAlumnos($idPadre){
             array_push($arrayObjectos,$ObjectoTemporal);
         }
         return $arrayObjectos;
-    }
+    
 }
 
 function DeletePadre(){    

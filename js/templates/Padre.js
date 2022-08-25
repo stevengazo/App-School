@@ -252,6 +252,12 @@ async function ValidarInfo(){
     }
 }
 
+
+async function vermiInfoPadre(){
+    const id = sessionStorage.getItem("idUser");
+    verPadre(id);
+}
+
 async function verPadre(id){
     var Padre ={};
     await $.ajax({
